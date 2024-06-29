@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Intro from '@/components/Intro';
+
 const page = () => {
-  return <main className="text-4xl font-bold text-cyan-500">page</main>;
+  return (
+    <main className="flex flex-col items-center px-4">
+      <Intro />
+    </main>
+  );
 };
 
 export default page;
