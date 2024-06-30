@@ -2,12 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
+import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 import { links } from '@/lib/data';
 import { NavLink } from '@/types/data';
 
 const Header = () => {
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
+
   return (
     <header className="relative z-[999]">
       <motion.div
@@ -21,14 +26,34 @@ const Header = () => {
             <motion.li
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="flex h-3/4 items-center justify-center"
+              className="relative flex h-3/4 items-center justify-center"
               key={link.hash}
             >
               <Link
-                className="flex w-full items-center justify-center p-3 transition hover:text-gray-950"
+                className={clsx(
+                  'flex w-full items-center justify-center p-3 transition hover:text-gray-950',
+                  {
+                    'text-gray-950': activeSection === link.name,
+                  }
+                )}
                 href={link.hash}
+                onClick={() => {
+                  setActiveSection(link.name);
+                  setTimeOfLastClick(Date.now());
+                }}
               >
                 {link.name}
+                {link.name === activeSection && (
+                  <motion.span
+                    layoutId="activeSection"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 380,
+                      damping: 30,
+                    }}
+                    className="absolute inset-0 -z-10 rounded-full bg-gray-200"
+                  ></motion.span>
+                )}
               </Link>
             </motion.li>
           ))}
