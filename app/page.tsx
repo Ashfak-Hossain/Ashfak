@@ -4,6 +4,7 @@ import About from '@/components/About';
 import Intro from '@/components/Intro';
 import Projects from '@/components/Projects';
 import SectionDivider from '@/components/SectionDivider';
+import Skills from '@/components/Skills';
 
 const page = () => {
   return (
@@ -12,6 +13,7 @@ const page = () => {
       <SectionDivider />
       <About />
       <Projects />
+      <Skills />
     </main>
   );
 };
