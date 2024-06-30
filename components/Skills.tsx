@@ -23,6 +23,7 @@ const Skills = () => {
   return (
     <section
       ref={ref}
+      id="skills"
       className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40"
     >
       <SectionHeading>My Skills</SectionHeading>
