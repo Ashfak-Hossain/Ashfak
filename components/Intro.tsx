@@ -80,7 +80,7 @@ const Intro = () => {
         <a
           href="/CV.pdf"
           download
-          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
+          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105 dark:bg-white/10"
         >
           Download CV{' '}
           <HiDownload className="opacity-60 transition group-hover:translate-y-1" />
@@ -90,7 +90,7 @@ const Intro = () => {
         <a
           href={socialInfo.linkedin.url}
           target="_blank"
-          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700  transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className=" borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15]  hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
         >
           <BsLinkedin />
         </a>
@@ -99,7 +99,7 @@ const Intro = () => {
         <a
           href={socialInfo.github.url}
           target="_blank"
-          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className=" borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
         >
           <FaGithubSquare />
         </a>

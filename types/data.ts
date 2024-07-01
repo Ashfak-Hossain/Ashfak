@@ -21,6 +21,17 @@ export interface ActiveSectionContextProviderProps {
   children: React.ReactNode;
 }
 
+export interface ThemeContextProviderProps {
+  children: React.ReactNode;
+}
+
+export type Theme = 'light' | 'dark';
+
+export interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
 export interface ActiveSectionContextType {
   activeSection: SectionName;
   setActiveSection: Dispatch<React.SetStateAction<SectionName>>;

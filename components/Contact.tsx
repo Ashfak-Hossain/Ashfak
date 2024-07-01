@@ -23,7 +23,7 @@ const Contact = () => {
       className="mb-20 w-[min(100%,38rem)] text-center sm:mb-28"
     >
       <SectionHeading>Contact Me</SectionHeading>
-      <p className="-mt-6 text-gray-700">
+      <p className="-mt-6 text-gray-700 dark:text-white/80">
         Please contact me directly at{' '}
         <a
           className="underline"
@@ -37,7 +37,7 @@ const Contact = () => {
       </p>
 
       <form
-        className="group mt-10 flex flex-col"
+        className="mt-10 flex flex-col dark:text-black"
         action={async (formData) => {
           const { error } = await sendEmail(formData);
           error
@@ -46,7 +46,7 @@ const Contact = () => {
         }}
       >
         <input
-          className="borderBlack h-14 rounded-lg px-4 transition-all"
+          className="borderBlack h-14 rounded-lg px-4 transition-all dark:bg-white/80 dark:outline-none dark:focus:bg-white/100"
           type="email"
           name="senderEmail"
           required
@@ -58,7 +58,7 @@ const Contact = () => {
           required
           name="message"
           maxLength={5000}
-          className="borderBlack my-3 h-52 rounded-lg p-4"
+          className="borderBlack my-3 h-52 rounded-lg p-4 transition-all dark:bg-white/80 dark:outline-none dark:focus:bg-white/100"
           placeholder="Your message"
         />
 

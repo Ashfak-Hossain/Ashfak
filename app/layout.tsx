@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import IntroBackGround from '@/components/IntroBackGround';
 import ThemeSwitch from '@/components/Theme-switch';
 import ActiveSectionContextProvider from '@/context/active-section-context';
+import ThemeContextProvider from '@/context/theme-context';
 
 import '@/app/globals.css';
 
@@ -30,14 +31,16 @@ export default function RootLayout({
         className={`${font.className} relative bg-gray-50 pt-28 text-gray-950 dark:bg-gray-900 dark:text-gray-50/90 sm:pt-36`}
       >
         <IntroBackGround />
-        <ActiveSectionContextProvider>
-          <Header />
-          {children}
-          <Footer />
+        <ThemeContextProvider>
+          <ActiveSectionContextProvider>
+            <Header />
+            {children}
+            <Footer />
 
-          <Toaster position="top-right" />
-          <ThemeSwitch />
-        </ActiveSectionContextProvider>
+            <Toaster position="top-right" />
+            <ThemeSwitch />
+          </ActiveSectionContextProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );

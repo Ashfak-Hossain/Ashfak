@@ -5,7 +5,7 @@ import Contact from '@/components/Contact';
 import Experience from '@/components/Experience';
 import Intro from '@/components/Intro';
 import Projects from '@/components/Projects';
-import SectionDivider from '@/components/SectionDivider';
+import SectionDivider from '@/components/Section-divider';
 import Skills from '@/components/Skills';
 
 const page = () => {
