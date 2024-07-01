@@ -5,6 +5,8 @@ import { Toaster } from 'react-hot-toast';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import IntroBackGround from '@/components/IntroBackGround';
+import ThemeSwitch from '@/components/Theme-switch';
 import ActiveSectionContextProvider from '@/context/active-section-context';
 
 import '@/app/globals.css';
@@ -25,15 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth">
       <body
-        className={`${font.className} relative bg-gray-50 pt-28 text-gray-950 sm:pt-36`}
+        className={`${font.className} relative bg-gray-50 pt-28 text-gray-950 dark:bg-gray-900 dark:text-gray-50/90 sm:pt-36`}
       >
-        <div className="absolute -top-24 right-44 -z-10 size-[31.25rem] rounded-full bg-[#fbe2e3] blur-[10rem] sm:w-[68.75rem]"></div>
-        <div className="absolute -top-4 left-[-35rem] -z-10 h-[31.25rem] w-[50rem] rounded-full bg-[#dbd7fb] blur-[10rem] sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:-left-60 2xl:-left-20"></div>
+        <IntroBackGround />
         <ActiveSectionContextProvider>
           <Header />
           {children}
-          <Toaster position="top-right" />
           <Footer />
+
+          <Toaster position="top-right" />
+          <ThemeSwitch />
         </ActiveSectionContextProvider>
       </body>
     </html>
