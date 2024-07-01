@@ -10,6 +10,7 @@ import { HiDownload } from 'react-icons/hi';
 
 import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 import { useSectionInView } from '@/hooks/useSectionInView';
+import { socialInfo } from '@/lib/socialInfo';
 
 const Intro = () => {
   const { ref } = useSectionInView('Home', 0.5);
@@ -87,7 +88,7 @@ const Intro = () => {
 
         {/* linkedin button */}
         <a
-          href="https://www.linkedin.com/in/ashfak-hossain-evan-6b5605203/"
+          href={socialInfo.linkedin.url}
           target="_blank"
           className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700  transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
         >
@@ -96,7 +97,7 @@ const Intro = () => {
 
         {/* github button */}
         <a
-          href="https://github.com/Ashfak-Hossain"
+          href={socialInfo.github.url}
           target="_blank"
           className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
         >

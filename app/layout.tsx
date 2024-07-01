@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import ActiveSectionContextProvider from '@/context/active-section-context';
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Toaster position="top-right" />
+          <Footer />
         </ActiveSectionContextProvider>
       </body>
     </html>
