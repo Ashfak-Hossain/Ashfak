@@ -21,9 +21,14 @@ export interface ActiveSectionContextProviderProps {
   children: React.ReactNode;
 }
 
-export type ActiveSectionContextType = {
+export interface ActiveSectionContextType {
   activeSection: SectionName;
   setActiveSection: Dispatch<React.SetStateAction<SectionName>>;
   timeOfLastClick: number;
   setTimeOfLastClick: Dispatch<React.SetStateAction<number>>;
-};
+}
+
+export interface ContactFormEmailProps {
+  message: string;
+  senderEmail: string;
+}

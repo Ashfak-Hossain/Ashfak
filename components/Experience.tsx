@@ -7,13 +7,16 @@ import {
 } from 'react-vertical-timeline-component';
 
 import SectionHeading from '@/components/Section-heading';
+import { useSectionInView } from '@/hooks/useSectionInView';
 import { experiencesData } from '@/lib/data';
 
 import 'react-vertical-timeline-component/style.min.css';
 
 const Experience = () => {
+  const { ref } = useSectionInView('Experience');
+
   return (
-    <section id="experience" className="mb-28 scroll-mt-28 sm:mb-40">
+    <section ref={ref} id="experience" className="mb-28 scroll-mt-28 sm:mb-40">
       <SectionHeading>My Experience</SectionHeading>
       <VerticalTimeline lineColor="">
         {experiencesData.map((item, index) => (
@@ -23,7 +26,7 @@ const Experience = () => {
               contentStyle={{
                 background: '#f3f4f6',
                 boxShadow: 'none',
-                border: '1px solid rbga(0, 0, 0, 0.05)',
+                border: '1px solid rgba(0, 0, 0, 0.07)',
                 textAlign: 'left',
                 padding: '1.3rem, 2rem',
               }}

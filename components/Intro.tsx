@@ -8,10 +8,12 @@ import { BsArrowRight, BsLinkedin } from 'react-icons/bs';
 import { FaGithubSquare } from 'react-icons/fa';
 import { HiDownload } from 'react-icons/hi';
 
+import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 const Intro = () => {
   const { ref } = useSectionInView('Home', 0.5);
+  const { setTimeOfLastClick, setActiveSection } = useActiveSectionContext();
 
   return (
     <section
@@ -62,6 +64,10 @@ const Intro = () => {
       >
         {/* contact button */}
         <Link
+          onClick={() => {
+            setActiveSection('Contact');
+            setTimeOfLastClick(Date.now());
+          }}
           href="#contact"
           className="group flex items-center gap-2 rounded-full bg-gray-900 px-7 py-3 text-white outline-none transition hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105"
         >
@@ -73,7 +79,7 @@ const Intro = () => {
         <a
           href="/CV.pdf"
           download
-          className="group flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
+          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
         >
           Download CV{' '}
           <HiDownload className="opacity-60 transition group-hover:translate-y-1" />
@@ -83,7 +89,7 @@ const Intro = () => {
         <a
           href="https://www.linkedin.com/in/ashfak-hossain-evan-6b5605203/"
           target="_blank"
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white p-4 text-gray-700  transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700  transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
         >
           <BsLinkedin />
         </a>
@@ -92,7 +98,7 @@ const Intro = () => {
         <a
           href="https://github.com/Ashfak-Hossain"
           target="_blank"
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
         >
           <FaGithubSquare />
         </a>

@@ -20,6 +20,7 @@ const fadeInAnimationVariants = {
 
 const Skills = () => {
   const { ref } = useSectionInView('Skills');
+
   return (
     <section
       ref={ref}
@@ -35,7 +36,7 @@ const Skills = () => {
             whileInView="animate"
             viewport={{ once: true }}
             custom={index}
-            className="rounded-xl border border-black/[0.1] bg-white px-5 py-3"
+            className="borderBlack rounded-xl bg-white px-5 py-3"
             key={index}
           >
             {skill}
