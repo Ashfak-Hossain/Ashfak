@@ -1,39 +1,21 @@
 'use server';
 
-import React from 'react';
-import { Resend } from 'resend';
+import { z } from 'zod';
 
-import ContactFormEmail from '@/email/contact-form-email';
-import { getErrorMessage, validateString } from '@/lib/utils';
+import { sendMeAnEmail } from '@/lib/mail';
+import { contactFormSchema } from '@/schema/contact-form-schema';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export const sendEmail = async (formData: FormData) => {
-  const senderEmail = formData.get('senderEmail');
-  const message = formData.get('message');
-
-  if (!validateString(senderEmail, 500)) {
-    return { error: 'Invalid email' };
+export const sendEmail = async (values: z.infer<typeof contactFormSchema>) => {
+  const validatedValues = contactFormSchema.safeParse(values);
+  if (!validatedValues.success) {
+    return { error: 'Invalid fields!' };
   }
+  const { email, message } = values;
 
-  if (!validateString(message, 5000)) {
-    return { error: 'Invalid message' };
-  }
-
-  let data;
   try {
-    data = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
-      to: 'evan1234.ek@gmail.com',
-      subject: 'Message from contact form',
-      reply_to: senderEmail as string,
-      react: React.createElement(ContactFormEmail, {
-        message: message as string,
-        senderEmail: senderEmail as string,
-      }),
-    });
+    await sendMeAnEmail(email, message);
+    return { success: 'Email sent successfully!' };
   } catch (error: unknown) {
-    return { error: getErrorMessage(error) };
+    return { error: 'Failed to send email!' };
   }
-  return { data };
 };

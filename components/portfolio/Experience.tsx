@@ -7,31 +7,32 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component';
 
-import SectionHeading from '@/components/portfolio/Section-heading';
 import { useSectionInView } from '@/hooks/useSectionInView';
 import { experiencesData } from '@/lib/data';
 
+import SectionHeading from './Section-heading';
+
 import 'react-vertical-timeline-component/style.min.css';
 
-const Experience = () => {
+export default function Experience() {
   const { ref } = useSectionInView('Experience');
   const { theme } = useTheme();
 
   return (
-    <section ref={ref} id="experience" className="mb-28 scroll-mt-28 sm:mb-40">
-      <SectionHeading>My Experience</SectionHeading>
+    <section id="experience" ref={ref} className="mb-28 scroll-mt-28 sm:mb-40">
+      <SectionHeading>My experience</SectionHeading>
       <VerticalTimeline lineColor="">
         {experiencesData.map((item, index) => (
           <React.Fragment key={index}>
             <VerticalTimelineElement
-              visible={true}
+              visible
               contentStyle={{
                 background:
                   theme === 'light' ? '#f3f4f6' : 'rgba(255, 255, 255, 0.05)',
                 boxShadow: 'none',
-                border: '1px solid rgba(0, 0, 0, 0.07)',
+                border: '1px solid rgba(0, 0, 0, 0.05)',
                 textAlign: 'left',
-                padding: '1.3rem, 2rem',
+                padding: '1.3rem 2rem',
               }}
               contentArrowStyle={{
                 borderRight:
@@ -42,8 +43,7 @@ const Experience = () => {
               date={item.date}
               icon={item.icon}
               iconStyle={{
-                background:
-                  theme === 'light' ? 'white' : 'rgba(255, 255, 255, 0.15)',
+                background: theme === 'light' ? 'white' : '#404652',
                 fontSize: '1.5rem',
               }}
             >
@@ -58,6 +58,4 @@ const Experience = () => {
       </VerticalTimeline>
     </section>
   );
-};
-
-export default Experience;
+}
