@@ -7,18 +7,21 @@ import Intro from '@/components/portfolio/Intro';
 import Projects from '@/components/portfolio/Projects';
 import SectionDivider from '@/components/portfolio/Section-divider';
 import Skills from '@/components/portfolio/Skills';
+import { TracingBeam } from '@/components/ui/tracing-beam';
 
 const page = () => {
   return (
-    <main className="flex flex-col items-center px-4">
-      <Intro />
-      <SectionDivider />
-      <About />
-      <Projects />
-      <Skills />
-      <Experience />
-      <Contact />
-    </main>
+    <TracingBeam className="p-6">
+      <main className="flex flex-col items-center px-4">
+        <Intro />
+        <SectionDivider />
+        <About />
+        <Projects />
+        <Skills />
+        <Experience />
+        <Contact />
+      </main>
+    </TracingBeam>
   );
 };
 
