@@ -4,6 +4,12 @@
 
 html {
   --line-color: #e5e7eb;
+
+  scroll-behavior: smooth !important;
+}
+
+body {
+  @apply relative bg-gray-50 pt-28 text-gray-950 dark:bg-gray-900 dark:text-gray-50/90 sm:pt-36;
 }
 
 html.dark {

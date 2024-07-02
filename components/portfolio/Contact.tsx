@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 import { sendEmail } from '@/actions/sendEmail';
-import SectionHeading from '@/components/Section-heading';
-import SubmitButton from '@/components/Submit-Button';
+import SectionHeading from '@/components/portfolio/Section-heading';
+import SubmitButton from '@/components/portfolio/Submit-Button';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 const Contact = () => {

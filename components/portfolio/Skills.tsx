@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import SectionHeading from '@/components/Section-heading';
+import SectionHeading from '@/components/portfolio/Section-heading';
 import { useSectionInView } from '@/hooks/useSectionInView';
 import { skillsData } from '@/lib/data';
 

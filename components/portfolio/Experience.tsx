@@ -6,7 +6,7 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component';
 
-import SectionHeading from '@/components/Section-heading';
+import SectionHeading from '@/components/portfolio/Section-heading';
 import { useSectionInView } from '@/hooks/useSectionInView';
 import { useTheme } from '@/hooks/useTheme';
 import { experiencesData } from '@/lib/data';

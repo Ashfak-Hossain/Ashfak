@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import Project from '@/components/Project';
-import SectionHeading from '@/components/Section-heading';
+import Project from '@/components/portfolio/Project';
+import SectionHeading from '@/components/portfolio/Section-heading';
 import { useSectionInView } from '@/hooks/useSectionInView';
 import { projectsData } from '@/lib/data';
 import { ProjectProps } from '@/types/data';

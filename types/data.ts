@@ -43,3 +43,7 @@ export interface ContactFormEmailProps {
   message: string;
   senderEmail: string;
 }
+
+export interface ProvidersProps {
+  children: React.ReactNode;
+}

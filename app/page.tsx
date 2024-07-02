@@ -1,12 +1,12 @@
 import React from 'react';
 
-import About from '@/components/About';
-import Contact from '@/components/Contact';
-import Experience from '@/components/Experience';
-import Intro from '@/components/Intro';
-import Projects from '@/components/Projects';
-import SectionDivider from '@/components/Section-divider';
-import Skills from '@/components/Skills';
+import About from '@/components/portfolio/About';
+import Contact from '@/components/portfolio/Contact';
+import Experience from '@/components/portfolio/Experience';
+import Intro from '@/components/portfolio/Intro';
+import Projects from '@/components/portfolio/Projects';
+import SectionDivider from '@/components/portfolio/Section-divider';
+import Skills from '@/components/portfolio/Skills';
 
 const page = () => {
   return (

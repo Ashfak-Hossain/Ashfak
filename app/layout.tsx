@@ -1,23 +1,47 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'react-hot-toast';
 
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import IntroBackGround from '@/components/IntroBackGround';
-import ThemeSwitch from '@/components/Theme-switch';
-import ActiveSectionContextProvider from '@/context/active-section-context';
-import ThemeContextProvider from '@/context/theme-context';
+import Providers from '@/components/Providers';
 
 import '@/app/globals.css';
 
 const font = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Ashfak | Software Engineer',
+const data = {
+  title: 'Ashfak Hossain - Software Engineer',
   description:
     'Personal website of Ashfak Hossain, a software engineer. I write about software engineering, programming, and technology and share my thoughts on various topics.',
+  url: '/',
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://ashfak.me'),
+  title: data.title,
+  description: data.description,
+  openGraph: {
+    title: data.title,
+    description: data.description,
+    url: data.url,
+    siteName: 'Ashfak Hossain',
+    images: [
+      {
+        url: '/_static/meta-image.png',
+        width: 800,
+        height: 600,
+        alt: 'Ashfak Hossain - Software Engineer',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: data.title,
+    description: data.description,
+    creator: '@ashfak_hossain',
+    images: ['/_static/meta-image.png'],
+  },
 };
 
 export default function RootLayout({
@@ -26,21 +50,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="!scroll-smooth">
-      <body
-        className={`${font.className} relative bg-gray-50 pt-28 text-gray-950 dark:bg-gray-900 dark:text-gray-50/90 sm:pt-36`}
-      >
-        <IntroBackGround />
-        <ThemeContextProvider>
-          <ActiveSectionContextProvider>
-            <Header />
-            {children}
-            <Footer />
-
-            <Toaster position="top-right" />
-            <ThemeSwitch />
-          </ActiveSectionContextProvider>
-        </ThemeContextProvider>
+    <html lang="en">
+      <body className={font.className}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
