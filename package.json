@@ -2,11 +2,12 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "My portfolio website built with Next.js",
   "repository": "https://github.com/Ashfak-Hossain/Ashfak",
   "homepage": "https://www.ashfak.me/",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
