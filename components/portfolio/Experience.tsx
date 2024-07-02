@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTheme } from 'next-themes';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -8,7 +9,6 @@ import {
 
 import SectionHeading from '@/components/portfolio/Section-heading';
 import { useSectionInView } from '@/hooks/useSectionInView';
-import { useTheme } from '@/hooks/useTheme';
 import { experiencesData } from '@/lib/data';
 
 import 'react-vertical-timeline-component/style.min.css';

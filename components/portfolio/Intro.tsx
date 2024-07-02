@@ -38,7 +38,7 @@ const Intro = () => {
             width="192"
             height="192"
             quality="95"
-            priority={true}
+            priority
             className="size-24 rounded-full border-[0.35rem] border-white object-cover shadow-xl"
           />
         </motion.div>
@@ -78,6 +78,7 @@ const Intro = () => {
 
         {/* cv button */}
         <a
+          aria-label="Download CV"
           href="/CV.pdf"
           download
           className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105 dark:bg-white/10"
@@ -88,8 +89,10 @@ const Intro = () => {
 
         {/* linkedin button */}
         <a
+          aria-label="LinkedIn profile"
           href={socialInfo.linkedin.url}
           target="_blank"
+          rel="noreferrer noopener"
           className=" borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15]  hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
         >
           <BsLinkedin />
@@ -97,8 +100,10 @@ const Intro = () => {
 
         {/* github button */}
         <a
+          aria-label="GitHub profile"
           href={socialInfo.github.url}
           target="_blank"
+          rel="noreferrer noopener"
           className=" borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
         >
           <FaGithubSquare />
