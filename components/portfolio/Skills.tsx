@@ -34,7 +34,7 @@ const Skills = () => {
             variants={fadeInAnimationVariants}
             initial="initial"
             whileInView="animate"
-            // viewport={{ once: false }}
+            viewport={{ once: true }}
             custom={index}
             key={index}
             className="borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80"
