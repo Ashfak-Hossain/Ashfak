@@ -11,17 +11,20 @@ import { TracingBeam } from '@/components/ui/tracing-beam';
 
 const page = () => {
   return (
-    <TracingBeam className="p-6">
-      <main className="flex flex-col items-center px-4">
-        <Intro />
-        <SectionDivider />
-        <About />
-        <Projects />
-        <Skills />
-        <Experience />
-        <Contact />
-      </main>
-    </TracingBeam>
+    <React.Fragment>
+      {/* <TracingBeam className="p-5"> */}
+      <TracingBeam className="">
+        <main className="flex w-full flex-col items-center">
+          <Intro />
+          <SectionDivider />
+          <About />
+          <Projects />
+          <Skills />
+          <Experience />
+          <Contact />
+        </main>
+      </TracingBeam>
+    </React.Fragment>
   );
 };
 

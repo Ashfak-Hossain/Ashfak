@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
+import SocialLinks from '@/components/portfolio/SocialLinks';
 import { cn } from '@/lib/utils';
 
 export const TracingBeam = ({
@@ -22,7 +23,7 @@ export const TracingBeam = ({
 
   useEffect(() => {
     if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
+      setSvgHeight(contentRef.current.offsetHeight - 200);
     }
   }, []);
 
@@ -44,9 +45,13 @@ export const TracingBeam = ({
   return (
     <motion.div
       ref={ref}
-      className={cn('relative w-full max-w-4xl mx-auto h-full', className)}
+      className={cn(
+        'relative w-full max-w-screen-lg mx-auto h-full px-10 sm:px-0',
+        className
+      )}
     >
-      <div className="absolute -left-4 top-3 md:-left-52">
+      <div className="absolute -left-4 top-4 md:-left-0 lg:-left-52">
+        <SocialLinks />
         <motion.div
           transition={{
             duration: 0.2,

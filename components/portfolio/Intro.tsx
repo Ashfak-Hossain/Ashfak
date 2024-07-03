@@ -4,9 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+import IntroButtons from '@/components/portfolio/Intro-Buttons';
 import { useSectionInView } from '@/hooks/useSectionInView';
-
-import IntroLinks from './Intro-Links';
 
 const Intro = () => {
   const { ref } = useSectionInView('Home', 0.5);
@@ -52,7 +51,7 @@ const Intro = () => {
       </motion.h1>
 
       {/* Buttons */}
-      <IntroLinks />
+      <IntroButtons />
     </section>
   );
 };

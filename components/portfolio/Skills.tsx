@@ -34,10 +34,10 @@ const Skills = () => {
             variants={fadeInAnimationVariants}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            // viewport={{ once: false }}
             custom={index}
-            className="borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80"
             key={index}
+            className="borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80"
           >
             {skill}
           </motion.li>
