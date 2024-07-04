@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { BsArrowRight } from 'react-icons/bs';
-import { HiDownload } from 'react-icons/hi';
+import { ArrowDownToLineIcon, MoveRightIcon } from 'lucide-react';
 
 import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 
@@ -25,7 +24,7 @@ const IntroButtons = () => {
         className="group flex items-center gap-2 rounded-full bg-gray-900 px-7 py-3 text-white outline-none transition hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105"
       >
         Contact me here
-        <BsArrowRight className="opacity-70 transition group-hover:translate-x-1" />
+        <MoveRightIcon className="opacity-70 transition group-hover:translate-x-1" />
       </Link>
 
       {/* cv button */}
@@ -35,8 +34,8 @@ const IntroButtons = () => {
         download
         className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105 dark:bg-white/10"
       >
-        Download CV{' '}
-        <HiDownload className="opacity-60 transition group-hover:translate-y-1" />
+        Download CV
+        <ArrowDownToLineIcon className="opacity-60 transition group-hover:translate-y-1" />
       </a>
     </motion.div>
   );
