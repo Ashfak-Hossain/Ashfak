@@ -3,9 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import SectionHeading from '@/components/portfolio/Section-heading';
+import { skillsData } from '@/constants/skills';
 import { useSectionInView } from '@/hooks/useSectionInView';
-import { skillsData } from '@/lib/data';
+
+import { Heading } from '../Heading';
 
 const fadeInAnimationVariants = {
   initial: { opacity: 0, y: 100 },
@@ -25,11 +26,13 @@ const Skills = () => {
     <section
       ref={ref}
       id="skills"
-      className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40"
+      className="mx-auto mb-28 max-w-[53rem]  scroll-mt-28 sm:mb-40"
     >
-      <SectionHeading>Skills</SectionHeading>
+      <Heading as="h2" className="mb-6 text-center lg:text-3xl">
+        Expertise
+      </Heading>
 
-      <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
+      <ul className="flex flex-wrap justify-center gap-2 text-sm text-gray-800 sm:text-base">
         {skillsData.map((skill, index) => (
           <motion.li
             variants={fadeInAnimationVariants}
@@ -38,7 +41,7 @@ const Skills = () => {
             viewport={{ once: true }}
             custom={index}
             key={index}
-            className="borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80"
+            className="rounded-lg border border-black/10 bg-white p-2 dark:bg-white/10 dark:text-white/80 sm:p-3"
           >
             {skill}
           </motion.li>

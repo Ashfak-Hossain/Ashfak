@@ -1,9 +1,9 @@
 import React, { Dispatch } from 'react';
 import { StaticImageData } from 'next/image';
 
-import { links } from '@/lib/data';
+import { navLinks } from '@/constants/navlinks';
 
-export type SectionName = (typeof links)[number]['name'];
+export type SectionName = (typeof navLinks)[number]['name'];
 
 export interface NavLink {
   name: SectionName;
@@ -40,10 +40,20 @@ export interface ActiveSectionContextType {
 }
 
 export interface ContactFormEmailProps {
+  name: string;
   message: string;
   senderEmail: string;
 }
 
 export interface ProvidersProps {
   children: React.ReactNode;
+}
+
+export interface ProjectCardProps {
+  title: string;
+  description: string;
+  imageUrl: StaticImageData;
+  githubLink: string;
+  websiteLink: string;
+  tools: string[];
 }

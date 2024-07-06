@@ -2,8 +2,8 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import Footer from '@/components/portfolio/Footer';
-import Header from '@/components/portfolio/Header';
 import IntroBackGround from '@/components/portfolio/IntroBackGround';
+import NavBar from '@/components/portfolio/NavBar';
 import ModeToggle from '@/components/portfolio/Theme-switch';
 import { ThemeProvider } from '@/components/theme-provider';
 import ActiveSectionContextProvider from '@/context/active-section-context';
@@ -15,10 +15,9 @@ export default function Providers({ children }: ProvidersProps) {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <IntroBackGround />
         <ActiveSectionContextProvider>
-          <Header />
+          <NavBar />
           {children}
           <Footer />
-
           <Toaster position="top-right" />
           <ModeToggle />
         </ActiveSectionContextProvider>

@@ -10,10 +10,10 @@ export const sendEmail = async (values: z.infer<typeof contactFormSchema>) => {
   if (!validatedValues.success) {
     return { error: 'Invalid fields!' };
   }
-  const { email, message } = values;
+  const { name, email, message } = values;
 
   try {
-    await sendMeAnEmail(email, message);
+    await sendMeAnEmail(name, email, message);
     return { success: 'Email sent successfully!' };
   } catch (error: unknown) {
     return { error: 'Failed to send email!' };

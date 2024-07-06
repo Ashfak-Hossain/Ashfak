@@ -1,12 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 
 import Providers from '@/components/Providers';
+import { inter } from '@/lib/fonts';
 
 import '@/app/globals.css';
-
-const font = Inter({ subsets: ['latin'] });
 
 const data = {
   title: 'Ashfak Hossain - Software Engineer',
@@ -51,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

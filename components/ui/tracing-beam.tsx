@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
@@ -50,7 +51,7 @@ export const TracingBeam = ({
         className
       )}
     >
-      <div className="absolute -left-4 top-4 md:-left-0 lg:-left-52">
+      <div className="absolute -left-4 top-2">
         <SocialLinks />
         <motion.div
           transition={{

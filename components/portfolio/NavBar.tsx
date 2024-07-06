@@ -9,7 +9,7 @@ import { navLinks } from '@/constants/navlinks';
 import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 import { NavLink } from '@/types/data';
 
-const Header = () => {
+const NavBar = () => {
   const { activeSection, setActiveSection, setTimeOfLastClick } =
     useActiveSectionContext();
 
@@ -64,4 +64,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavBar;

@@ -81,10 +81,6 @@
   }
 
   body {
-    @apply bg-background text-foreground relative bg-gray-50 pt-28 text-gray-950 dark:bg-gray-900 dark:text-gray-50/90 sm:pt-36;
-  }
-
-  .borderBlack {
-    @apply border border-black/10;
+    @apply bg-background text-foreground bg-gray-50 dark:bg-gray-900 text-gray-950 dark:text-gray-50/90 sm:pt-36 pt-24 antialiased;
   }
 }

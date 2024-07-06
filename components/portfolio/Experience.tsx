@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { useTheme } from 'next-themes';
+import { CircleCheckIcon } from 'lucide-react';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component';
 
+import { Heading } from '@/components/Heading';
+import { timeline } from '@/constants/timeline';
 import { useSectionInView } from '@/hooks/useSectionInView';
-import { experiencesData } from '@/lib/data';
-
-import SectionHeading from './Section-heading';
 
 import 'react-vertical-timeline-component/style.min.css';
 
@@ -24,9 +24,12 @@ export default function Experience() {
       ref={ref}
       className="mb-28 scroll-mt-28 sm:mb-40 sm:w-11/12 md:w-10/12 lg:w-full"
     >
-      <SectionHeading>My experience</SectionHeading>
+      <Heading as="h2" className="mb-6 text-center lg:text-3xl">
+        My experience
+      </Heading>
+
       <VerticalTimeline lineColor="">
-        {experiencesData.map((item, index) => (
+        {timeline.map((item, index) => (
           <React.Fragment key={index}>
             <VerticalTimelineElement
               visible
@@ -45,17 +48,28 @@ export default function Experience() {
                     : '0.4rem solid rgba(255, 255, 255, 0.5)',
               }}
               date={item.date}
-              icon={item.icon}
+              dateClassName="text-sm text-gray-700 dark:text-white/75 md:text-sm lg:text-sm m-1"
+              icon={<item.icon />}
               iconStyle={{
                 background: theme === 'light' ? 'white' : '#404652',
                 fontSize: '1.5rem',
               }}
             >
-              <h3 className="font-semibold capitalize">{item.title}</h3>
-              <p className="!mt-0 font-normal">{item.location}</p>
-              <p className="!mt-1 !font-normal text-gray-700 dark:text-white/75">
+              <Heading
+                as="h5"
+                className="text-lg font-light text-emerald-500 md:text-lg lg:text-lg"
+              >
+                {item.company}
+              </Heading>
+              <p className="text-base font-semibold md:text-base lg:text-base">
+                {item.title}
+              </p>
+              <p className="!mt-1 mb-4 text-sm !font-normal text-gray-700 dark:text-white/75 md:text-sm lg:text-sm">
                 {item.description}
               </p>
+              {item.responsibilities.map((responsibility, index) => (
+                <Step key={index}>{responsibility}</Step>
+              ))}
             </VerticalTimelineElement>
           </React.Fragment>
         ))}
@@ -63,3 +77,12 @@ export default function Experience() {
     </section>
   );
 }
+
+const Step = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="my-2 flex items-start space-x-1">
+      <CircleCheckIcon className="m-1 h-3 w-4 text-gray-700 dark:text-neutral-300" />
+      <p className="!mt-0 text-sm md:text-sm lg:text-sm">{children}</p>
+    </div>
+  );
+};
