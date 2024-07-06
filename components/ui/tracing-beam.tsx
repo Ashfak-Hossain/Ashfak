@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
-import SocialLinks from '@/components/portfolio/SocialLinks';
+import SocialLinks from '@/components/SocialLinks';
 import { cn } from '@/lib/utils';
 
 export const TracingBeam = ({

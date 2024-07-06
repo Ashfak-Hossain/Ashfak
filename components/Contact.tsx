@@ -5,14 +5,16 @@ import { motion } from 'framer-motion';
 
 import { Heading } from '@/components/Heading';
 import { Paragraph } from '@/components/Paragraph';
-import ContactForm from '@/components/portfolio/Contact-form';
+import ContactForm from '@/components/Contact-form';
 import { useSectionInView } from '@/hooks/useSectionInView';
+
+import { BackgroundBeams } from './ui/background-beams';
 
 const Contact = () => {
   const { ref } = useSectionInView('Contact');
 
   return (
-    <section className="flex scroll-mt-28 justify-center text-center">
+    <section className="relative flex scroll-mt-28 justify-center text-center">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}
@@ -40,6 +42,7 @@ const Contact = () => {
 
         <ContactForm />
       </motion.div>
+      <BackgroundBeams className="-z-10" />
     </section>
   );
 };

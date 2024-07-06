@@ -1,11 +1,11 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 
-import Footer from '@/components/portfolio/Footer';
-import IntroBackGround from '@/components/portfolio/IntroBackGround';
-import NavBar from '@/components/portfolio/NavBar';
-import ModeToggle from '@/components/portfolio/Theme-switch';
-import { ThemeProvider } from '@/components/theme-provider';
+import Footer from '@/components/Footer';
+import IntroBackGround from '@/components/IntroBackGround';
+import NavBar from '@/components/NavBar';
+import ModeToggle from '@/components/Theme-switch';
+import { ThemeProvider } from '@/components/Theme-provider';
 import ActiveSectionContextProvider from '@/context/active-section-context';
 import { ProvidersProps } from '@/types/data';
 

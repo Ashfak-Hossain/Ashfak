@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { z } from 'zod';
 
 import { sendEmail } from '@/actions/sendEmail';
-import SubmitButton from '@/components/portfolio/Submit-Button';
+import SubmitButton from '@/components/Submit-Button';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import {
   Form,
