@@ -25,7 +25,7 @@ export default function Experience() {
       className="mb-28 scroll-mt-28 sm:mb-40 sm:w-11/12 md:w-10/12 lg:w-full"
     >
       <Heading as="h2" className="mb-6 text-center lg:text-3xl">
-        My experience
+        My Experience
       </Heading>
 
       <VerticalTimeline lineColor="">
@@ -56,14 +56,17 @@ export default function Experience() {
               }}
             >
               <Heading
-                as="h5"
+                as="h3"
                 className="text-lg font-light text-emerald-500 md:text-lg lg:text-lg"
               >
                 {item.company}
               </Heading>
-              <p className="text-base font-semibold md:text-base lg:text-base">
+              <Heading
+                as="h4"
+                className="mt-3 text-base font-semibold md:text-base lg:text-base"
+              >
                 {item.title}
-              </p>
+              </Heading>
               <p className="!mt-1 mb-4 text-sm !font-normal text-gray-700 dark:text-white/75 md:text-sm lg:text-sm">
                 {item.description}
               </p>

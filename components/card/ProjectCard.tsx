@@ -73,6 +73,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             as={Link}
             href={githubLink}
             target="__blank"
+            aria-label="Github Link"
             className="flex items-center rounded-lg bg-gray-800 px-2 py-1 text-xs font-bold text-white dark:bg-sky-100 dark:text-black"
           >
             <GithubIcon size={25} className="px-1" />
