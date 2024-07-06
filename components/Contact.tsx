@@ -3,9 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import ContactForm from '@/components/Contact-form';
 import { Heading } from '@/components/Heading';
 import { Paragraph } from '@/components/Paragraph';
-import ContactForm from '@/components/Contact-form';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 import { BackgroundBeams } from './ui/background-beams';

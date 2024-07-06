@@ -3,11 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { Heading } from '@/components/Heading';
+import { Meteors } from '@/components/ui/meteors';
 import { skillsData } from '@/constants/skills';
 import { useSectionInView } from '@/hooks/useSectionInView';
-
-import { Heading } from './Heading';
-import { Meteors } from './ui/meteors';
 
 const fadeInAnimationVariants = {
   initial: { opacity: 0, y: 100 },
@@ -29,7 +28,7 @@ const Skills = () => {
       id="skills"
       className="mx-auto mb-28 max-w-[53rem] scroll-mt-28 sm:mb-40"
     >
-      <div className="relative overflow-hidden">
+      <div className="relative">
         <Heading as="h2" className="mb-6 text-center lg:text-3xl">
           Expertise
         </Heading>
@@ -49,7 +48,9 @@ const Skills = () => {
             </motion.li>
           ))}
         </ul>
-        <Meteors number={8} />
+        <div className="absolute inset-0 overflow-hidden">
+          <Meteors number={8} />
+        </div>
       </div>
     </section>
   );
