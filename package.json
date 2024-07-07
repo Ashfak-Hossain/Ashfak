@@ -7,7 +7,7 @@
   "repository": "https://github.com/Ashfak-Hossain/Ashfak",
   "homepage": "https://www.ashfak.me/",
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +21,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@react-email/components": "^0.0.20",
     "@react-email/tailwind": "^0.0.18",
+    "@sentry/nextjs": "^8.15.0",
     "@tsparticles/engine": "^3.5.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.5.0",
