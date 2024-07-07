@@ -1,4 +1,4 @@
-import devflow from '@/public/projectss/devflow.png';
+import devflow from '@/public/projectss/devflow.webp';
 
 export const ProjectsData = [
   {

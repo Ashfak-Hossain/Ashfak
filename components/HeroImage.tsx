@@ -10,7 +10,7 @@ const HeroImage = () => {
     <div onClick={reward} aria-disabled={isAnimating}>
       <Image
         alt="Ashfak Hossain protrait"
-        src={'/_static/hero-image.jpg'}
+        src={'/_static/hero-image.webp'}
         width="192"
         height="192"
         quality="95"
