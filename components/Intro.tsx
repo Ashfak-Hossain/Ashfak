@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useReward } from 'react-rewards';
 
 import HeroImage from '@/components/HeroImage';
 import HeroText from '@/components/HeroText';
@@ -11,7 +10,6 @@ import { useSectionInView } from '@/hooks/useSectionInView';
 
 const Intro = () => {
   const { ref } = useSectionInView('Home', 0.5);
-  const { reward, isAnimating } = useReward('rewardId', 'confetti');
 
   return (
     <section
@@ -19,11 +17,7 @@ const Intro = () => {
       id="home"
       className="mb-16 scroll-mt-[100rem] text-center sm:mb-0"
     >
-      <div
-        className="flex items-center justify-center"
-        onClick={reward}
-        aria-disabled={isAnimating}
-      >
+      <div className="flex justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -34,12 +28,6 @@ const Intro = () => {
         >
           <HeroImage />
         </motion.div>
-
-        <span
-          id="rewardId"
-          // style={{ width: 1, height: 1, background: 'red' }}
-          className="absolute"
-        />
       </div>
 
       <motion.div
