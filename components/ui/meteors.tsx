@@ -1,18 +1,32 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { MeteorProps, MeteorStyle } from '@/types/data';
 
-export const Meteors = ({
-  number,
-  className,
-}: {
-  number?: number;
-  className?: string;
-}) => {
-  const meteors = new Array(number || 20).fill(true);
+export const Meteors: React.FC<MeteorProps> = ({ number = 20, className }) => {
+  const [meteorStyles, setMeteorStyles] = useState<MeteorStyle[]>([]);
+
+  useEffect(() => {
+    const generateRandomStyles = () => {
+      const styles: MeteorStyle[] = [];
+      for (let i = 0; i < number; i++) {
+        styles.push({
+          left: `${Math.floor(Math.random() * (400 - -400) + -400)}px`,
+          animationDelay: `${Math.random() * (0.8 - 0.2) + 0.2}s`,
+          animationDuration: `${Math.floor(Math.random() * (10 - 2) + 2)}s`,
+        });
+      }
+      return styles;
+    };
+
+    setMeteorStyles(generateRandomStyles());
+  }, [number]);
+
   return (
     <>
-      {meteors.map((el, idx) => (
+      {meteorStyles.map((style, idx) => (
         <span
           key={'meteor' + idx}
           className={cn(
@@ -22,9 +36,9 @@ export const Meteors = ({
           )}
           style={{
             top: 0,
-            left: Math.floor(Math.random() * (400 - -400) + -400) + 'px',
-            animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + 's',
-            animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + 's',
+            left: style.left,
+            animationDelay: style.animationDelay,
+            animationDuration: style.animationDuration,
           }}
         ></span>
       ))}

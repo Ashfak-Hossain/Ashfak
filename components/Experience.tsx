@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { CircleCheckIcon } from 'lucide-react';
 import {
@@ -17,6 +17,16 @@ import 'react-vertical-timeline-component/style.min.css';
 export default function Experience() {
   const { ref } = useSectionInView('Experience');
   const { theme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <section

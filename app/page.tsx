@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Container } from '@/components/Container';
 import About from '@/components/About';
 import Contact from '@/components/Contact';
+import { Container } from '@/components/Container';
 import Experience from '@/components/Experience';
 import Intro from '@/components/Intro';
 import Projects from '@/components/Projects';
@@ -10,7 +10,7 @@ import SectionDivider from '@/components/Section-divider';
 import Skills from '@/components/Skills';
 import { TracingBeam } from '@/components/ui/tracing-beam';
 
-const page = () => {
+const Page = () => {
   return (
     <React.Fragment>
       <TracingBeam>
@@ -28,4 +28,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

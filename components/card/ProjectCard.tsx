@@ -58,7 +58,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                     <Image
                       src={`/techStack/${icon}.svg`}
                       alt="icon5"
-                      className="bg-gray-900 p-[0.5]"
+                      className="size-6 bg-gray-900 p-[0.5]"
                       width={23}
                       height={23}
                     />

@@ -1,16 +1,17 @@
 'use client';
 
 import React from 'react';
+import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 
 import { Heading } from '@/components/Heading';
-import { Paragraph } from '@/components/Paragraph';
 import { LinkPreview } from '@/components/ui/link-preview';
+import { SparklesCore } from '@/components/ui/sparkles';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
-import { SparklesCore } from './ui/sparkles';
-
 const About = () => {
+  const { theme } = useTheme();
+
   const { ref } = useSectionInView('About');
 
   return (
@@ -28,7 +29,7 @@ const About = () => {
             About Me
           </Heading>
 
-          <Paragraph className="font-medium">
+          <div className="text-sm font-medium md:text-base lg:text-lg">
             I'm a competitive programmer currently studying{' '}
             <span className="font-bold">Computer Science</span> at the{' '}
             <LinkPreview url="https://www.aiub.edu/" className="font-bold">
@@ -38,7 +39,7 @@ const About = () => {
             solving complex problems, and participating in coding competitions.
             In my free time, I enjoy developing applications as a hobby, always
             eager to learn and apply new technologies.
-          </Paragraph>
+          </div>
         </div>
 
         <div className="relative hidden h-40 w-[40rem] md:block">
@@ -55,11 +56,11 @@ const About = () => {
             maxSize={1}
             particleDensity={1200}
             className="size-full"
-            particleColor="#FFFFFF"
+            particleColor={theme === 'light' ? '#000000' : '#FFFFFF'}
           />
 
           {/* Radial Gradient to prevent sharp edges */}
-          <div className="absolute inset-0 size-full bg-gray-900 [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+          <div className="absolute inset-0 size-full bg-gray-50 [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)] dark:bg-gray-900"></div>
         </div>
       </motion.div>
     </section>

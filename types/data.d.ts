@@ -57,3 +57,14 @@ export interface ProjectCardProps {
   websiteLink: string;
   tools: string[];
 }
+
+export interface MeteorProps {
+  number?: number;
+  className?: string;
+}
+
+export interface MeteorStyle {
+  left: string;
+  animationDelay: string;
+  animationDuration: string;
+}

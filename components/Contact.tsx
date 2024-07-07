@@ -14,14 +14,16 @@ const Contact = () => {
   const { ref } = useSectionInView('Contact');
 
   return (
-    <section className="relative flex scroll-mt-28 justify-center text-center">
+    <section
+      className="relative flex scroll-mt-28 justify-center text-center"
+      id="contact"
+      ref={ref}
+    >
       <motion.div
-        ref={ref}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
-        id="contact"
         className="mb-20 w-[min(100%,45rem)] sm:mb-28"
       >
         <Heading as="h2" className="mb-10 lg:text-3xl">

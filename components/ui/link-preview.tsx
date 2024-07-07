@@ -84,7 +84,8 @@ export const LinkPreview = ({
             width={width}
             height={height}
             quality={quality}
-            layout={layout}
+            // layout={layout}
+            className="fixed"
             priority={true}
             alt="hidden image"
           />
