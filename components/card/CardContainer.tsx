@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import useMediaQuery from '@/hooks/useMediaQuery';
 import { useMouseEnter } from '@/hooks/useMouseEnter';
 import { cn } from '@/lib/utils';
 import { CardContainerProps } from '@/types/card';
@@ -12,6 +13,7 @@ export const CardContainer: React.FC<CardContainerProps> = ({
   className,
   containerClassName,
 }) => {
+  const isLargeScreen = useMediaQuery('(min-width: 640px)');
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [, setIsMouseEntered] = useMouseEnter();
@@ -45,18 +47,18 @@ export const CardContainer: React.FC<CardContainerProps> = ({
   return (
     <motion.div
       style={{
-        perspective: '1000px',
-        scale: scaleProgress,
-        opacity: opacityProgress,
+        perspective: isLargeScreen ? '1000px' : undefined,
+        scale: isLargeScreen ? scaleProgress : undefined,
+        opacity: isLargeScreen ? opacityProgress : undefined,
       }}
       ref={ref}
       className={cn('flex items-center justify-center', containerClassName)}
     >
       <div
         ref={containerRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={isLargeScreen ? handleMouseEnter : undefined}
+        onMouseMove={isLargeScreen ? handleMouseMove : undefined}
+        onMouseLeave={isLargeScreen ? handleMouseLeave : undefined}
         className={cn(
           'flex items-center justify-center relative transition-all duration-200 ease-linear',
           className
