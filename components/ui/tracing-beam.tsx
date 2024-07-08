@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 import SocialLinks from '@/components/SocialLinks';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 
 export const TracingBeam = ({
@@ -14,6 +15,8 @@ export const TracingBeam = ({
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const isLargeScreen = useMediaQuery('(min-width: 640px)');
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -42,6 +45,10 @@ export const TracingBeam = ({
       damping: 90,
     }
   );
+
+  if (!isLargeScreen) {
+    return <div ref={ref}>{children}</div>;
+  }
 
   return (
     <motion.div
