@@ -42,14 +42,13 @@ const About = () => {
           </div>
         </div>
 
-        <div className="relative hidden h-40 w-[40rem] md:block">
-          {/* Gradients */}
+        {/* Particle animation */}
+        <div className="relative hidden h-24 w-[40rem] md:block">
           <div className="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm" />
           <div className="absolute inset-x-20 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
           <div className="absolute inset-x-60 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-sky-500 to-transparent blur-sm" />
           <div className="absolute inset-x-60 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-sky-500 to-transparent" />
 
-          {/* Core component */}
           <SparklesCore
             background="transparent"
             minSize={0.4}
@@ -59,7 +58,6 @@ const About = () => {
             particleColor={theme === 'light' ? '#000000' : '#FFFFFF'}
           />
 
-          {/* Radial Gradient to prevent sharp edges */}
           <div className="absolute inset-0 size-full bg-gray-50 [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)] dark:bg-gray-900"></div>
         </div>
       </motion.div>
