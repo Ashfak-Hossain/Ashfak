@@ -14,7 +14,7 @@ const IntroButtons = () => {
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="flex flex-col items-center justify-center gap-4 px-4 text-xs font-medium sm:flex-row sm:text-base"
+      className="flex items-center justify-center gap-4 px-4 text-xs font-medium sm:text-base"
     >
       {/* contact button */}
       <Link

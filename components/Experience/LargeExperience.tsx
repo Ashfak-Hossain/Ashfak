@@ -14,7 +14,7 @@ import { useSectionInView } from '@/hooks/useSectionInView';
 
 import 'react-vertical-timeline-component/style.min.css';
 
-export default function Experience() {
+const LargeExperience = () => {
   const { ref } = useSectionInView('Experience');
   const { theme } = useTheme();
 
@@ -73,11 +73,11 @@ export default function Experience() {
               </Heading>
               <Heading
                 as="h4"
-                className="mt-3 text-base font-semibold md:text-base lg:text-base"
+                className="mt-2 text-base font-semibold text-gray-900 dark:text-white/75 md:text-base lg:text-base"
               >
                 {item.title}
               </Heading>
-              <p className="!mt-1 mb-4 text-sm !font-normal text-gray-700 dark:text-white/75 md:text-sm lg:text-sm">
+              <p className="!mt-1 mb-4 text-sm !font-normal text-gray-700 dark:text-white/70 md:text-sm lg:text-sm">
                 {item.description}
               </p>
               {item.responsibilities.map((responsibility, index) => (
@@ -89,7 +89,7 @@ export default function Experience() {
       </VerticalTimeline>
     </section>
   );
-}
+};
 
 const Step = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -99,3 +99,5 @@ const Step = ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
+
+export default LargeExperience;
