@@ -4,10 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 import SocialLinks from '@/components/SocialLinks';
-import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
 
-export const TracingBeam = ({
+const TracingBeam = ({
   children,
   className,
 }: {
@@ -15,15 +14,13 @@ export const TracingBeam = ({
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isLargeScreen = useMediaQuery('(min-width: 640px)');
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [svgHeight, setSvgHeight] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   });
-
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [svgHeight, setSvgHeight] = useState(0);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -45,10 +42,6 @@ export const TracingBeam = ({
       damping: 90,
     }
   );
-
-  if (!isLargeScreen) {
-    return <div ref={ref}>{children}</div>;
-  }
 
   return (
     <motion.div
@@ -134,3 +127,5 @@ export const TracingBeam = ({
     </motion.div>
   );
 };
+
+export default TracingBeam;
