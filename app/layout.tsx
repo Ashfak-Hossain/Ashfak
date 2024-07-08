@@ -11,7 +11,7 @@ import '@/app/globals.css';
 const data = {
   title: 'Ashfak Hossain - Software Engineer',
   description:
-    'Personal website of Ashfak Hossain, a software engineer. I write about software engineering, programming, and technology and share my thoughts on various topics.',
+    'The personal website of Ashfak Hossain, a software engineer with an insatiable thirst for knowledge and a boundless eagerness to learn!',
   url: '/',
 };
 
