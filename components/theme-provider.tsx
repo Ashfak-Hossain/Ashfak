@@ -11,4 +11,4 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 };
 
-export { ThemeProvider };
+export default ThemeProvider;
