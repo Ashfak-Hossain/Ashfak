@@ -8,6 +8,6 @@ export const ProjectsData = [
     imageUrl: devflow,
     githubLink: 'https://github.com/Ashfak-Hossain/stack_overflow',
     websiteLink: 'https://stack-overflow-black.vercel.app/',
-    tools: ['next', 'TypeScript', 'clerk', 'Tailwind', 'mongodb'],
+    tools: ['next', 'typescript', 'clerk', 'tailwind', 'mongodb'],
   },
 ];
