@@ -10,6 +10,7 @@ export const timeline = [
       'Learned about data structures and algorithms',
       'Studied computer networks and security',
       'Understood the basics of software engineering',
+      'Perticipated in various programming contests',
     ],
     icon: GraduationCapIcon,
   },
