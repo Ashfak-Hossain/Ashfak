@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import About from '@/components/About';
@@ -8,9 +10,13 @@ import Intro from '@/components/Intro';
 import Projects from '@/components/Projects';
 import SectionDivider from '@/components/Section-divider';
 import Skills from '@/components/Skills';
+import TracingBeam from '@/components/ui/TracingBeam';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 export const Portfolio = () => {
-  return (
+  const isLargeScreen = useMediaQuery('(min-width: 640px)');
+
+  const content = (
     <Container>
       <Intro />
       <SectionDivider />
@@ -21,4 +27,10 @@ export const Portfolio = () => {
       <Contact />
     </Container>
   );
+
+  if (isLargeScreen) {
+    return <TracingBeam>{content}</TracingBeam>;
+  }
+
+  return content;
 };
