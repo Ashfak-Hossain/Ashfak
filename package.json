@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "My portfolio website built with Next.js",
+  "description": "My portfolio website and blog built",
   "repository": "https://github.com/Ashfak-Hossain/Ashfak",
   "homepage": "https://www.ashfak.me/",
   "scripts": {
@@ -55,7 +55,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.2.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
