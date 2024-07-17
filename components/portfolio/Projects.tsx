@@ -3,7 +3,7 @@
 import React from 'react';
 
 import ProjectCard from '@/components/card/ProjectCard';
-import { Heading } from '@/components/Heading';
+import { Heading } from '@/components/portfolio/Heading';
 import { ProjectsData } from '@/constants/projects';
 import { MouseEnterProvider } from '@/context/MouseEnterContext';
 import { useSectionInView } from '@/hooks/useSectionInView';

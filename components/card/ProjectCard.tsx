@@ -8,7 +8,7 @@ import { ExternalLinkIcon, GithubIcon } from 'lucide-react';
 import { CardBody } from '@/components/card/CardBody';
 import { CardContainer } from '@/components/card/CardContainer';
 import { CardItem } from '@/components/card/CardItem';
-import { ProjectCardProps } from '@/types/data';
+import { ProjectCardProps } from '@/types/portfolio/data';
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   title,

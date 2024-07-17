@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { montserrat } from '@/lib/fonts';
+import { montserrat } from '@/fonts';
 import { cn } from '@/lib/utils';
 
 export const Paragraph = ({

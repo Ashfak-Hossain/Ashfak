@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 
 import Providers from '@/components/Providers';
-import { inter } from '@/lib/fonts';
+import { inter } from '@/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 

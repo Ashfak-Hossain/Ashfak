@@ -4,7 +4,7 @@ import React from 'react';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/lib/utils';
-import { CardBodyProps } from '@/types/card';
+import { CardBodyProps } from '@/types/portfolio/card';
 
 export const CardBody: React.FC<CardBodyProps> = ({ children, className }) => {
   const isLargeScreen = useMediaQuery('(min-width: 640px)');

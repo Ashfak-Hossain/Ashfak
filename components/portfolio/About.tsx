@@ -4,7 +4,7 @@ import React from 'react';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 
-import { Heading } from '@/components/Heading';
+import { Heading } from '@/components/portfolio/Heading';
 import { LinkPreview } from '@/components/ui/link-preview';
 import { SparklesCore } from '@/components/ui/sparkles';
 import { useSectionInView } from '@/hooks/useSectionInView';

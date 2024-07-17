@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ContactFormEmailProps } from '@/types/data';
+import { ContactFormEmailProps } from '@/types/portfolio/data';
 import {
   Body,
   Container,

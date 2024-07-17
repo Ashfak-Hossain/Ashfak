@@ -3,9 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import HeroImage from '@/components/HeroImage';
-import HeroText from '@/components/HeroText';
-import IntroButtons from '@/components/Intro-Buttons';
+import HeroImage from '@/components/portfolio/HeroImage';
+import HeroText from '@/components/portfolio/HeroText';
+import IntroButtons from '@/components/portfolio/Intro-Buttons';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 const Intro = () => {

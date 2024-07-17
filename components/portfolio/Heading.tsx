@@ -1,12 +1,7 @@
 import React from 'react';
-import localFont from 'next/font/local';
 
+import { CalSans } from '@/fonts';
 import { cn } from '@/lib/utils';
-
-const CalSans = localFont({
-  src: [{ path: '../fonts/CalSans-SemiBold.woff2' }],
-  display: 'swap',
-});
 
 export const Heading = ({
   className,

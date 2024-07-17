@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { useMouseEnter } from '@/hooks/useMouseEnter';
 import { cn } from '@/lib/utils';
-import { CardContainerProps } from '@/types/card';
+import { CardContainerProps } from '@/types/portfolio/card';
 
 export const CardContainer: React.FC<CardContainerProps> = ({
   children,

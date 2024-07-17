@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { useMouseEnter } from '@/hooks/useMouseEnter';
 import { cn } from '@/lib/utils';
-import { CardItemProps } from '@/types/card';
+import { CardItemProps } from '@/types/portfolio/card';
 
 export const CardItem: React.FC<CardItemProps> = ({
   as: Tag = 'div',

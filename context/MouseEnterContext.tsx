@@ -2,7 +2,7 @@
 
 import React, { createContext, useState } from 'react';
 
-import { MouseEnterProviderProps } from '@/types/card';
+import { MouseEnterProviderProps } from '@/types/portfolio/card';
 
 type MouseEnterContextType = [
   boolean,

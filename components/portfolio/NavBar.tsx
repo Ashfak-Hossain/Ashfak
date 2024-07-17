@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 import { navLinks } from '@/constants/navlinks';
 import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
-import { NavLink } from '@/types/data';
+import { NavLink } from '@/types/portfolio/data';
 
 const NavBar = () => {
   const { activeSection, setActiveSection, setTimeOfLastClick } =

@@ -6,7 +6,7 @@ import {
   ActiveSectionContextProviderProps,
   ActiveSectionContextType,
   SectionName,
-} from '@/types/data';
+} from '@/types/portfolio/data';
 
 export const ActiveSectionContext =
   createContext<ActiveSectionContextType | null>(null);

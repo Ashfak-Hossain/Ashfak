@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
-import { MeteorProps, MeteorStyle } from '@/types/data';
+import { MeteorProps, MeteorStyle } from '@/types/portfolio/data';
 
 export const Meteors: React.FC<MeteorProps> = ({ number = 20, className }) => {
   const [meteorStyles, setMeteorStyles] = useState<MeteorStyle[]>([]);
