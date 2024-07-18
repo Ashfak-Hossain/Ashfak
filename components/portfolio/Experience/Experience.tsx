@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import LargeExperience from '@/components/Experience/LargeExperience';
-import MobileExperience from '@/components/Experience/MobileExperience';
+import LargeExperience from '@/components/portfolio/Experience/LargeExperience';
+import MobileExperience from '@/components/portfolio/Experience/MobileExperience';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
 const Experience = () => {

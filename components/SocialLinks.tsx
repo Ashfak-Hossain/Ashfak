@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GithubIcon, LinkedinIcon } from 'lucide-react';
 
-import { socialInfo } from '@/lib/socialInfo';
+import { socialInfo } from '@/constants';
 
 const SocialLinks = () => {
   return (

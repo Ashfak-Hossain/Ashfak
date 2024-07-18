@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
-import { navLinks } from '@/constants/navlinks';
+import { navLinks } from '@/constants';
 import { useActiveSectionContext } from '@/hooks/useActiveSectionContext';
 import { NavLink } from '@/types/portfolio/data';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Heading } from '@/components/portfolio/Heading';
-import { Paragraph } from '@/components/portfolio/Paragraph';
+import { Heading } from '@/components/portfolio/Shared/Heading';
+import { Paragraph } from '@/components/portfolio/Shared/Paragraph';
 
 const HeroText = () => {
   return (

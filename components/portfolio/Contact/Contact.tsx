@@ -4,11 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import ContactForm from '@/components/Contact-form';
-import { Heading } from '@/components/portfolio/Heading';
-import { Paragraph } from '@/components/portfolio/Paragraph';
+import { Heading } from '@/components/portfolio/Shared/Heading';
+import { Paragraph } from '@/components/portfolio/Shared/Paragraph';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
-import { BackgroundBeams } from '../ui/background-beams';
+import { BackgroundBeams } from '../../ui/background-beams';
 
 const Contact = () => {
   const { ref } = useSectionInView('Contact');

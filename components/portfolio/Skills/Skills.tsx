@@ -3,9 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import { Heading } from '@/components/portfolio/Heading';
+import { Heading } from '@/components/portfolio/Shared/Heading';
 import { Meteors } from '@/components/ui/meteors';
-import { skillsData } from '@/constants/skills';
+import { skillsData } from '@/constants';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 const fadeInAnimationVariants = {

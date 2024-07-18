@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLinkIcon, GithubIcon } from 'lucide-react';
 
-import { CardBody } from '@/components/card/CardBody';
-import { CardContainer } from '@/components/card/CardContainer';
-import { CardItem } from '@/components/card/CardItem';
+import { CardBody } from '@/components/portfolio/Projects/CardBody';
+import { CardContainer } from '@/components/portfolio/Projects/CardContainer';
+import { CardItem } from '@/components/portfolio/Projects/CardItem';
 import { ProjectCardProps } from '@/types/portfolio/data';
 
 const ProjectCard: React.FC<ProjectCardProps> = ({

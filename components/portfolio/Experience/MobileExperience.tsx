@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { CircleCheckIcon } from 'lucide-react';
 
-import { Heading } from '@/components/portfolio/Heading';
-import { timeline } from '@/constants/timeline';
+import { Heading } from '@/components/portfolio/Shared/Heading';
+import { timeline } from '@/constants/';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 import 'react-vertical-timeline-component/style.min.css';

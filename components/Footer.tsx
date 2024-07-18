@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { socialInfo } from '@/lib/socialInfo';
+import { socialInfo } from '@/constants';
 
 const Footer = () => {
   const linkedinUrl = socialInfo.linkedin.url;

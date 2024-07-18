@@ -64,12 +64,11 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   html {
     --line-color: #e5e7eb;
 
@@ -81,6 +80,12 @@
   }
 
   body {
-    @apply bg-background text-foreground bg-gray-50 dark:bg-gray-900 text-gray-950 dark:text-gray-50/90 sm:pt-36 pt-24 antialiased;
+    @apply bg-background text-foreground bg-gray-50 dark:bg-gray-900 text-gray-950 dark:text-gray-50/90 antialiased;
   }
 }
+
+/* @layer base {
+  body {
+    @apply bg-background text-foreground bg-gray-50 dark:bg-gray-900 text-gray-950 dark:text-gray-50/90 sm:pt-36 pt-24 antialiased;
+  } 
+} */

@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 import { StaticImageData } from 'next/image';
 
-import { navLinks } from '@/constants/navlinks';
+import { navLinks } from '@/constants';
 
 export type SectionName = (typeof navLinks)[number]['name'];
 
