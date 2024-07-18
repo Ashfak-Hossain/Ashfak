@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import { Heading } from '@/components/portfolio/Shared/Heading';
+import { Heading } from '@/app/components/ui/Heading';
 import { Meteors } from '@/components/ui/meteors';
 import { skillsData } from '@/constants';
 import { useSectionInView } from '@/hooks/useSectionInView';

@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import ProjectCard from '@/components/portfolio/Projects/ProjectCard';
-import { Heading } from '@/components/portfolio/Shared/Heading';
+import ProjectCard from '@/app/components/projects/ProjectCard';
+import { Heading } from '@/app/components/ui/Heading';
 import { ProjectsData } from '@/constants';
 import { MouseEnterProvider } from '@/context/MouseEnterContext';
 import { useSectionInView } from '@/hooks/useSectionInView';

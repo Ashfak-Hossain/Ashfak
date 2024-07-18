@@ -8,7 +8,7 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component';
 
-import { Heading } from '@/components/portfolio/Shared/Heading';
+import { Heading } from '@/app/components/ui/Heading';
 import { timeline } from '@/constants';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
