@@ -3,10 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import ContactForm from '@/app/components/contact/Contact-form';
-import { BackgroundBeams } from '@/app/components/ui/background-beams';
-import { Heading } from '@/app/components/ui/Heading';
-import { Paragraph } from '@/app/components/ui/Paragraph';
+import ContactForm from '@/components/portfolio/contact/Contact-form';
+import { BackgroundBeams } from '@/components/portfolio/ui/background-beams';
+import { Heading } from '@/components/portfolio/ui/Heading';
+import { Paragraph } from '@/components/portfolio/ui/Paragraph';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
 const Contact = () => {

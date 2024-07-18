@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { CircleCheckIcon } from 'lucide-react';
 
-import { Heading } from '@/app/components/ui/Heading';
+import { Heading } from '@/components/portfolio/ui/Heading';
 import { timeline } from '@/constants/';
 import { useSectionInView } from '@/hooks/useSectionInView';
 
