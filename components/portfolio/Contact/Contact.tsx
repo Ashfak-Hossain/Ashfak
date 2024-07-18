@@ -3,12 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import ContactForm from '@/components/Contact-form';
+import ContactForm from '@/components/portfolio/Contact/Contact-form';
 import { Heading } from '@/components/portfolio/Shared/Heading';
 import { Paragraph } from '@/components/portfolio/Shared/Paragraph';
+import { BackgroundBeams } from '@/components/ui/background-beams';
 import { useSectionInView } from '@/hooks/useSectionInView';
-
-import { BackgroundBeams } from '../../ui/background-beams';
 
 const Contact = () => {
   const { ref } = useSectionInView('Contact');

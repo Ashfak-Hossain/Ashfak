@@ -2,15 +2,15 @@
 
 import React from 'react';
 
-import Footer from '@/components/Footer';
 import About from '@/components/portfolio/About/About';
 import Contact from '@/components/portfolio/Contact/Contact';
 import Experience from '@/components/portfolio/Experience/Experience';
 import Intro from '@/components/portfolio/Intro/Intro';
+import IntroBackGround from '@/components/portfolio/Intro/IntroBackGround';
 import SectionDivider from '@/components/portfolio/Intro/Section-divider';
 import NavBar from '@/components/portfolio/Navbar/NavBar';
 import Projects from '@/components/portfolio/Projects/Projects';
-import IntroBackGround from '@/components/portfolio/Shared/IntroBackGround';
+import Footer from '@/components/portfolio/Shared/Footer';
 import Skills from '@/components/portfolio/Skills/Skills';
 import TracingBeam from '@/components/ui/TracingBeam';
 import useMediaQuery from '@/hooks/useMediaQuery';
