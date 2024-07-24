@@ -48,12 +48,12 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen bg-gray-100 dark:bg-black">
+    <main className="bg-gray-100 dark:bg-black">
       <Navbar />
-      <div>
+      <div className="m-auto flex max-w-[1380px]">
         <LeftSideBar />
-        <section>
-          <div>{children}</div>
+        <section className="flex min-h-screen flex-1 flex-col px-3 pb-6 pt-5">
+          <div className="mx-auto w-full max-w-2xl">{children}</div>
         </section>
         <RightSideBar />
       </div>
