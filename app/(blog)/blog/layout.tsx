@@ -3,6 +3,8 @@ import { Metadata } from 'next';
 
 import Footer from '@/components/blog/footer/Footer';
 import Navbar from '@/components/blog/navbar/Navbar';
+import LeftSideBar from '@/components/blog/sidebar/LeftSideBar';
+import RightSideBar from '@/components/blog/sidebar/RightSideBar';
 
 const data = {
   title: 'Ashfak Hossain | Blog',
@@ -46,9 +48,15 @@ export default function BlogLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main>
+    <main className="min-h-screen bg-gray-100 dark:bg-black">
       <Navbar />
-      {children}
+      <div>
+        <LeftSideBar />
+        <section>
+          <div>{children}</div>
+        </section>
+        <RightSideBar />
+      </div>
       <Footer />
     </main>
   );

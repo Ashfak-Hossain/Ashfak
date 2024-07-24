@@ -8,12 +8,7 @@ export const metadata: Metadata = {
 };
 
 const BlogPage = () => {
-  return (
-    <section>
-      <aside>Aside</aside>
-      page
-    </section>
-  );
+  return <section>page</section>;
 };
 
 export default BlogPage;
