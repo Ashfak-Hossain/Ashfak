@@ -5,7 +5,7 @@ import TopPosts from '@/components/blog/sidebar/TopPosts';
 
 const RightSideBar = () => {
   return (
-    <section className="min-w-80">
+    <section className="hidden max-w-72 lg:block">
       <TopPosts />
       <PopularTopics />
     </section>

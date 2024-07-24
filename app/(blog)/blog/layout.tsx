@@ -52,8 +52,8 @@ export default function BlogLayout({
       <Navbar />
       <div className="m-auto flex max-w-[1380px]">
         <LeftSideBar />
-        <section className="flex min-h-screen flex-1 flex-col px-3 pb-6 pt-5">
-          <div className="mx-auto w-full max-w-2xl">{children}</div>
+        <section className="flex min-h-screen flex-1 flex-col border-l p-3 lg:border-none">
+          <div>{children}</div>
         </section>
         <RightSideBar />
       </div>

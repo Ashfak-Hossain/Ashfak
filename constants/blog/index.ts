@@ -15,7 +15,7 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Competitive Programming',
   },
   {
-    label: 'Tags',
+    label: 'Topics',
   },
   {
     label: 'Reading List',
