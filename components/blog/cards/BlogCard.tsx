@@ -1,36 +1,62 @@
 import React from 'react';
 import Image from 'next/image';
-import { Bookmark, Ellipsis, Heart, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
+import { Bookmark, Ellipsis, Eye, Heart, MessageSquare } from 'lucide-react';
 
-const BlogCard = () => {
+interface BlogCardProps {
+  _id: string;
+  title: string;
+  content: string;
+  tags: {
+    _id: number;
+    name: string;
+  }[];
+  reactions: number;
+  views: number;
+  comments: Array<object>;
+  readTime: number;
+  coverImage: string;
+  createdAt: Date;
+}
+
+const BlogCard: React.FC<BlogCardProps> = ({
+  _id,
+  title,
+  content,
+  tags,
+  reactions,
+  views,
+  readTime,
+  comments,
+  coverImage,
+  createdAt,
+}) => {
   return (
     <div className="flex flex-col rounded-md bg-neutral-100 p-4 dark:bg-[#171717] dark:shadow-sm">
       <div className="flex flex-col sm:flex-row">
         <div className="mb-2 flex-1 sm:mb-0 sm:mr-4">
           <span>
             <p className="text-xs text-neutral-600 dark:text-neutral-400">
-              12th June 2021
+              {createdAt.toLocaleString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
             </p>
           </span>
-          <h1 className="mb-1 py-2 text-xl font-extrabold">
-            Flipping the Matrix HackerRank Optimised Solution in C++, Java,
-            Python with Explanation
-          </h1>
-          <p className="line-clamp-2 text-sm tracking-wide">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos
-            tenetur reiciendis totam quidem minus ea vero eligendi? Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Deserunt eligendi
-            incidunt exercitationem veritatis nemo eveniet et ratione, quos ut
-            fugiat nesciunt qui expedita inventore voluptatem eos error facere
-            soluta nobis vel a impedit hic fugit officia. Vitae velit quae
-            dolore.
-          </p>
+          <Link href={`/blog/${_id}`}>
+            <h2 className="my-2 line-clamp-2 py-1 text-2xl font-extrabold">
+              {title}
+            </h2>
+          </Link>
+          <p className="line-clamp-2 text-sm tracking-wide">{content}</p>
         </div>
 
         <div className="w-full flex-none sm:w-1/4">
           <Image
-            src="/_static/meta-image.png"
-            alt="Flipping the Matrix HackerRank Optimised Solution in C++, Java, Python with Explanation"
+            src={coverImage}
+            alt="Cover Image"
+            aria-label="Cover Image"
             width={800}
             height={600}
             className="h-auto w-full rounded-md"
@@ -38,21 +64,38 @@ const BlogCard = () => {
         </div>
       </div>
 
-      <div className="mt-5 flex flex-row justify-between">
+      <div>
+        {tags.map((tag) => (
+          <span
+            key={tag._id}
+            className="mr-2 mt-3 inline-block rounded-md bg-neutral-200 px-2 py-1 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
+          >
+            #{tag.name}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-3 flex flex-row justify-between py-2">
         <div className="flex flex-row text-xs text-neutral-600 dark:text-neutral-400 sm:space-x-4">
           <div className="flex items-center space-x-8">
             <span className="flex items-center gap-1">
               <Heart size={22} fill="#EF5A6F" strokeWidth={0} />
-              <span>12</span>
+              <span>{reactions}</span>
             </span>
+            {comments.length > 0 && (
+              <span className="flex items-center gap-1">
+                <MessageSquare size={22} fill="grey" strokeWidth={0} />
+                <span>{comments.length}</span>
+              </span>
+            )}
+            <span>{readTime} min read</span>
             <span className="flex items-center gap-1">
-              <MessageSquare size={22} fill="grey" strokeWidth={0} />
-              <span>12</span>
+              <Eye size={18} />
+              {views}
             </span>
-            <span className="ml-1">5 min read</span>
           </div>
         </div>
-        <div className="mt-2 flex flex-row space-x-4 text-xs text-neutral-600 dark:text-neutral-400">
+        <div className="flex flex-row items-center space-x-4 text-xs text-neutral-600 dark:text-neutral-400">
           <Ellipsis />
           <Bookmark size={22} />
         </div>

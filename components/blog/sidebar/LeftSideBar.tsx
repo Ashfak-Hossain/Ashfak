@@ -11,8 +11,9 @@ const LeftSideBar = () => {
           <Link
             href={link.href || '/blog'}
             key={link.label}
-            className="rounded-md px-3 py-2 font-medium underline-offset-4 hover:bg-[#BBE1FA] hover:underline dark:hover:bg-[#242360]"
+            className="flex items-center rounded-md px-3 py-2 font-medium underline-offset-4 hover:bg-[#BBE1FA] hover:underline dark:hover:bg-[#242360]"
           >
+            {link.icon && <link.icon size={20} className="mr-2" />}
             {link.label}
           </Link>
         ))}
