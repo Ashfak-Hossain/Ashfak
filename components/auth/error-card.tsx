@@ -11,7 +11,7 @@ const ErrorCard = () => {
       backButtonLabel="Back to login"
     >
       <div className="flex w-full items-center justify-center">
-        <FaExclamationTriangle className="text-destructive" />
+        <FaExclamationTriangle className="text-[#ff204deb]" />
       </div>
     </CardWrapper>
   );

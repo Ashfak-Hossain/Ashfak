@@ -2,10 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { BellIcon, CommandIcon, SearchIcon } from 'lucide-react';
 
+import { auth } from '@/auth';
+import { LoginButton } from '@/components/auth/login_button';
+import UserButton from '@/components/blog/navbar/user-button';
 import Search from '@/components/blog/search/Search';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+
   return (
     <nav className="z-50 mb-4 flex h-14 w-full items-center justify-between bg-gray-100 px-3 shadow-md dark:bg-[#171717] sm:px-8 md:px-12 lg:px-32">
       <div className="flex gap-4">
@@ -23,15 +28,18 @@ const Navbar = () => {
           className="cursor-pointer text-slate-300 md:hidden"
         />
         <BellIcon
-          height={30}
-          width={30}
+          height={33}
+          width={33}
           aria-label="Icon"
           className="cursor-pointer"
         />
-        <Avatar className="size-8">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        {session?.user ? (
+          <UserButton />
+        ) : (
+          <LoginButton asChild>
+            <Button>Sign in</Button>
+          </LoginButton>
+        )}
       </div>
     </nav>
   );

@@ -6,10 +6,9 @@ import { signIn } from 'next-auth/react';
 import { Github } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 
+import BottomGradient from '@/components/ui/bottom-gradient';
 import { Button } from '@/components/ui/button';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-
-import BottomGradient from '../ui/bottom-gradient';
 
 export const Social = () => {
   const searchParams = useSearchParams();
@@ -20,6 +19,7 @@ export const Social = () => {
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   };
+
   return (
     <div className="flex w-full items-center gap-x-2">
       <Button
