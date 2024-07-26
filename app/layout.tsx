@@ -1,6 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 
+import { auth } from '@/auth';
 import Providers from '@/components/Providers';
 import { inter } from '@/fonts';
 import { Analytics } from '@vercel/analytics/react';
@@ -44,16 +46,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await auth();
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-        <Analytics />
-        <SpeedInsights />
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en">
+        <body className={inter.className}>
+          <Providers>{children}</Providers>
+          <Analytics />
+          <SpeedInsights />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
