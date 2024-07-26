@@ -21,7 +21,8 @@ const Search = () => {
           placeholder="Search..."
           value=""
           onChange={() => {}}
-          className="no-focus border-none bg-gray-100 tracking-wider shadow-none outline-none dark:bg-black"
+          disableAnimation={true}
+          className="no-focus bg-gray-100 tracking-wider shadow-none outline-none dark:bg-black"
         />
       </div>
     </div>
