@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { CircleAlert } from 'lucide-react';
 import {
   Controller,
   ControllerProps,
@@ -156,9 +157,14 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-sm font-medium text-destructive', className)}
+      className={cn(
+        'text-sm flex items-center gap-1 font-medium text-[#e80f3aeb]',
+        className
+      )}
       {...props}
     >
+      {' '}
+      <CircleAlert size={16} />
       {body}
     </p>
   );
