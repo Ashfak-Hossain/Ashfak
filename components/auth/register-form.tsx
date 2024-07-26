@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { register } from '@/actions/auth/register.action';
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { FormError } from '@/components/auth/form-error';
 import { FormSuccess } from '@/components/auth/form-success';
@@ -26,7 +27,6 @@ import BottomGradient from '../ui/bottom-gradient';
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
-  // eslint-disable-next-line no-unused-vars
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -42,14 +42,12 @@ export const RegisterForm = () => {
     setError('');
     setSuccess('');
 
-    console.log(values);
-
-    // startTransition(() => {
-    //   register(values).then((data) => {
-    //     setError(data.error);
-    //     setSuccess(data.success);
-    //   });
-    // });
+    startTransition(() => {
+      register(values).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
+    });
   };
 
   return (
@@ -119,9 +117,11 @@ export const RegisterForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-            {isPending ? 'Signing up ...' : 'Sign up'}
-            {!isPending && <span className="ml-2">&rarr;</span>}
+            <div className="flex items-center justify-center">
+              {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+              {isPending ? 'Signing up ...' : 'Sign up'}
+              {!isPending && <span className="ml-2">&rarr;</span>}
+            </div>
             <BottomGradient />
           </Button>
 

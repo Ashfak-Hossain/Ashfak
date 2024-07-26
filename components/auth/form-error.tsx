@@ -1,5 +1,5 @@
 import React from 'react';
-import { RedoIcon } from 'lucide-react';
+import { Ban } from 'lucide-react';
 
 interface FormErrorProps {
   message?: string;
@@ -10,7 +10,7 @@ export const FormError = ({ message }: FormErrorProps) => {
 
   return (
     <div className="flex items-center gap-x-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
-      <RedoIcon className="size-4" />
+      <Ban className="size-4" />
       <p>{message}</p>
     </div>
   );

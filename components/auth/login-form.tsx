@@ -1,10 +1,13 @@
 'use client';
 
 import React, { useState, useTransition } from 'react';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { login } from '@/actions/auth/login.action';
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { FormError } from '@/components/auth/form-error';
 import { FormSuccess } from '@/components/auth/form-success';
@@ -23,9 +26,17 @@ import { LoginSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export const LoginForm = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'Email already in use with different provider'
+      : '';
+
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
-  // eslint-disable-next-line no-unused-vars
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -40,14 +51,19 @@ export const LoginForm = () => {
     setError('');
     setSuccess('');
 
-    console.log(values);
+    searchParams.get('error') === 'OAuthAccountNotLinked' &&
+      router.push('/auth/login');
 
-    // startTransition(() => {
-    //   register(values).then((data) => {
-    //     setError(data.error);
-    //     setSuccess(data.success);
-    //   });
-    // });
+    startTransition(() => {
+      login(values, callbackUrl)
+        .then((data) => {
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          }
+        })
+        .catch(() => setError('Something went wrong in login process'));
+    });
   };
 
   return (
@@ -92,21 +108,31 @@ export const LoginForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  <Button
+                    variant="link"
+                    size="sm"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">Forgot password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-semibold text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
             disabled={isPending}
           >
-            {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-            {isPending ? 'Signing in ...' : 'Sign in'}
-            {!isPending && <span className="ml-2">&rarr;</span>}
+            <div className="flex items-center justify-center">
+              {isPending && <Loader2 className="mr-3 size-4 animate-spin" />}
+              {isPending ? 'Signing in ...' : 'Sign in'}
+              {!isPending && <span className="ml-2">&rarr;</span>}
+            </div>
             <BottomGradient />
           </Button>
 
