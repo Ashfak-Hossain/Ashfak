@@ -12,7 +12,7 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <nav className="z-50 mb-4 flex h-14 w-full items-center justify-between bg-gray-100 px-3 shadow-md dark:bg-[#171717] sm:px-8 md:px-12 lg:px-32">
+    <nav className="z-50 mb-4 flex h-14 w-full items-center justify-between bg-white px-3 shadow-md dark:bg-[#171717] sm:px-8 md:px-12 lg:px-32">
       <div className="flex gap-4">
         <Link href="/blog" className="flex items-center gap-2 text-nowrap">
           <CommandIcon height={32} width={32} aria-label="Icon" />
