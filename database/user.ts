@@ -21,3 +21,17 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export const getAccountProviderById = async (id: string) => {
+  try {
+    const accountProvider = await db.account.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    return accountProvider;
+  } catch (error) {
+    console.log(error);
+  }
+};

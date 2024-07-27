@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { auth } from '@/auth';
 import UserButton from '@/components/blog/navbar/user-button';
+import { CurrentUser } from '@/lib/auth';
 
 const page = async () => {
-  const session = await auth();
+  const user = await CurrentUser();
+
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>{JSON.stringify(session)}</p>
+      {JSON.stringify(user)}
+      <br />
       <UserButton />
     </div>
   );

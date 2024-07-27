@@ -68,3 +68,8 @@ export interface MeteorStyle {
   animationDelay: string;
   animationDuration: string;
 }
+
+export interface ResetPasswordEmailProps {
+  resetLink: string;
+  name: string | null;
+}

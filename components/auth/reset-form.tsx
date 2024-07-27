@@ -1,13 +1,11 @@
 'use client';
 
 import React, { useState, useTransition } from 'react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { login } from '@/actions/auth/login.action';
+import { reset } from '@/actions/auth/reset.action';
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { FormError } from '@/components/auth/form-error';
 import { FormSuccess } from '@/components/auth/form-success';
@@ -22,56 +20,38 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoginSchema } from '@/schema/auth';
+import { ResetPasswordSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-export const LoginForm = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
-
-  const urlError =
-    searchParams.get('error') === 'OAuthAccountNotLinked'
-      ? 'Email already in use with different provider'
-      : '';
-
+export const ResetForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: '',
-      password: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     setError('');
     setSuccess('');
 
-    searchParams.get('error') === 'OAuthAccountNotLinked' &&
-      router.push('/auth/login');
-
     startTransition(() => {
-      login(values, callbackUrl)
-        .then((data) => {
-          if (data?.error) {
-            form.reset();
-            setError(data.error);
-          }
-        })
-        .catch(() => setError('Something went wrong in login process'));
+      reset(values).then((data) => {
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
     });
   };
 
   return (
     <CardWrapper
-      headerLabel="Welcome Back"
-      backButtonLabel="Don't have an Account?"
-      backButtonHref="/auth/register"
-      showSocial
+      headerLabel="Forgot your password"
+      backButtonLabel="Back to login"
+      backButtonHref="/auth/login"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -94,35 +74,10 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isPending}
-                      placeholder=""
-                      {...field}
-                      type="password"
-                    />
-                  </FormControl>
-                  <Button
-                    variant="link"
-                    size="sm"
-                    asChild
-                    className="px-0 font-normal"
-                  >
-                    <Link href="/auth/reset">Forgot password?</Link>
-                  </Button>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
+
           <Button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-semibold text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
             type="submit"
@@ -130,13 +85,10 @@ export const LoginForm = () => {
           >
             <div className="flex items-center justify-center">
               {isPending && <Loader2 className="mr-3 size-4 animate-spin" />}
-              {isPending ? 'Signing in ...' : 'Sign in'}
-              {!isPending && <span className="ml-2">&rarr;</span>}
+              Send reset email
             </div>
             <BottomGradient />
           </Button>
-
-          <div className="my-8 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
         </form>
       </Form>
     </CardWrapper>
