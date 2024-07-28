@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { TriangleAlert } from 'lucide-react';
 
 import { CardWrapper } from '@/components/auth/card-wrapper';
 
@@ -11,7 +11,7 @@ const ErrorCard = () => {
       backButtonLabel="Back to login"
     >
       <div className="flex w-full items-center justify-center">
-        <FaExclamationTriangle className="text-[#ff204deb]" />
+        <TriangleAlert className="text-rose-600" />
       </div>
     </CardWrapper>
   );
