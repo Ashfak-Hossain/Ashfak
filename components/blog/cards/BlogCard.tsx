@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { Bookmark, Ellipsis, Eye, Heart, MessageSquare } from 'lucide-react';
 
 interface BlogCardProps {
-  _id: string;
+  id: string;
   title: string;
   content: string;
   tags: {
-    _id: number;
+    id: number;
     name: string;
   }[];
   reactions: number;
@@ -20,7 +20,7 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({
-  _id,
+  id,
   title,
   content,
   tags,
@@ -44,7 +44,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
               })}
             </p>
           </span>
-          <Link href={`/blog/${_id}`}>
+          <Link href={`/blog/${id}`}>
             <h2 className="my-2 line-clamp-2 py-1 text-2xl font-extrabold">
               {title}
             </h2>
@@ -67,7 +67,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       <div>
         {tags.map((tag) => (
           <span
-            key={tag._id}
+            key={tag.id}
             className="mr-2 mt-3 inline-block rounded-md bg-neutral-200 px-2 py-1 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
           >
             #{tag.name}
@@ -77,7 +77,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
       <div className="mt-3 flex flex-row justify-between py-2">
         <div className="flex flex-row text-xs text-neutral-600 dark:text-neutral-400 sm:space-x-4">
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-4 md:space-x-8">
             <span className="flex items-center gap-1">
               <Heart size={22} fill="#EF5A6F" strokeWidth={0} />
               <span>{reactions}</span>
