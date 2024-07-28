@@ -10,14 +10,14 @@ import { Button } from '@/components/ui/button';
 import { CurrentUser } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 
-const Navbar = async () => {
+const Navbar = async ({ fixed }: { fixed?: boolean }) => {
   const user = await CurrentUser();
 
   return (
     <nav
       className={cn(
         'z-50 mb-4 flex w-full inset-x-0 top-0 items-center border-b py-2 firefox:bg-opacity-90 border-gray-200 dark:border-gray-900 justify-between bg-white shadow-md dark:bg-[#171717] bg-opacity-30 backdrop-filter backdrop-blur-lg',
-        !user ? 'fixed' : ''
+        !user || fixed ? 'fixed' : ''
       )}
     >
       <div className="m-auto flex w-full max-w-[1380px] px-3">

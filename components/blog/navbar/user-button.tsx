@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { LayoutDashboard, LogOut, User } from 'lucide-react';
 
 import { LogoutButton } from '@/components/auth/logout-button';
@@ -36,10 +37,12 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {user?.role === 'ADMIN' && (
-            <DropdownMenuItem>
-              <LayoutDashboard className="mr-2 size-4" />
-              <span>Dashboard</span>
-            </DropdownMenuItem>
+            <Link href="/dashboard">
+              <DropdownMenuItem>
+                <LayoutDashboard className="mr-2 size-4" />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+            </Link>
           )}
           {/* something later like personal notes in dashboard */}
         </DropdownMenuGroup>

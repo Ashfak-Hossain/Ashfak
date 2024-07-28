@@ -41,15 +41,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <main className="bg-[#F5F5F5] dark:bg-zinc-900">
-      <Navbar />
-      <div className="m-auto flex max-w-screen-2xl">
+    <main className="bg-[#F5F5F5] dark:bg-black/80">
+      <Navbar fixed />
+      <div className="m-auto flex max-w-screen-2xl pt-20">
         <LeftSideBar />
         <section className="flex min-h-screen flex-1 flex-col border-l lg:border-none">
           <div>{children}</div>
