@@ -32,7 +32,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
   createdAt,
 }) => {
   return (
-    <div className="flex flex-col rounded-md bg-neutral-100 p-4 dark:bg-[#171717] dark:shadow-sm">
+    <div className="flex flex-col rounded-md border border-gray-300/80 bg-white p-4 shadow-md dark:border-[#151515] dark:bg-[#171717] dark:shadow-sm">
       <div className="flex flex-col sm:flex-row">
         <div className="mb-2 flex-1 sm:mb-0 sm:mr-4">
           <span>

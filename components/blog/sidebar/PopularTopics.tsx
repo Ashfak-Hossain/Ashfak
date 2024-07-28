@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 
 const PopularTopics = () => {
   return (
-    <div className="rounded-md bg-gray-100 p-4 shadow-md dark:bg-[#171717]">
+    <div className="rounded-md border border-gray-300/80 bg-white p-4 shadow-md dark:border-[#151515] dark:bg-[#171717]">
       <h2 className="text-xl font-bold">Popular Topics</h2>
       <Separator className="my-4" />
       <div className="flex flex-col gap-2">
