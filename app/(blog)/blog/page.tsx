@@ -2,6 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 
 import BlogCard from '@/components/blog/cards/BlogCard';
+import Filters from '@/components/blog/shared/Filters';
 import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
@@ -14,22 +15,22 @@ const BlogPage = () => {
   const blogs = [
     {
       key: 1,
-      _id: '234324',
+      id: '234324',
       title:
         'Flipping the Matrix HackerRank Optimised Solution in C++, Java,Python with Explanation',
       content:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quostenetur reiciendis totam quidem minus ea vero eligendi? Lorem ipsumdolor sit amet consectetur adipisicing elit. Deserunt eligendiincidunt exercitationem veritatis nemo eveniet et ratione, quos utfugiat nesciunt qui expedita inventore voluptatem eos error faceresoluta nobis vel a impedit hic fugit officia. Vitae velit quaedolore.',
       tags: [
         {
-          _id: 1,
+          id: 1,
           name: 'C++',
         },
         {
-          _id: 2,
+          id: 2,
           name: 'Java',
         },
         {
-          _id: 3,
+          id: 3,
           name: 'Python',
         },
       ],
@@ -63,22 +64,22 @@ const BlogPage = () => {
     },
     {
       key: 1,
-      _id: '234324',
+      id: '234324',
       title:
         'Flipping the Matrix HackerRank Optimised Solution in C++, Java,Python with Explanation',
       content:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quostenetur reiciendis totam quidem minus ea vero eligendi? Lorem ipsumdolor sit amet consectetur adipisicing elit. Deserunt eligendiincidunt exercitationem veritatis nemo eveniet et ratione, quos utfugiat nesciunt qui expedita inventore voluptatem eos error faceresoluta nobis vel a impedit hic fugit officia. Vitae velit quaedolore.',
       tags: [
         {
-          _id: 1,
+          id: 1,
           name: 'C++',
         },
         {
-          _id: 2,
+          id: 2,
           name: 'Java',
         },
         {
-          _id: 3,
+          id: 3,
           name: 'Python',
         },
       ],
@@ -112,22 +113,22 @@ const BlogPage = () => {
     },
     {
       key: 1,
-      _id: '234324',
+      id: '234324',
       title:
         'Flipping the Matrix HackerRank Optimised Solution in C++, Java,Python with Explanation',
       content:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quostenetur reiciendis totam quidem minus ea vero eligendi? Lorem ipsumdolor sit amet consectetur adipisicing elit. Deserunt eligendiincidunt exercitationem veritatis nemo eveniet et ratione, quos utfugiat nesciunt qui expedita inventore voluptatem eos error faceresoluta nobis vel a impedit hic fugit officia. Vitae velit quaedolore.',
       tags: [
         {
-          _id: 1,
+          id: 1,
           name: 'C++',
         },
         {
-          _id: 2,
+          id: 2,
           name: 'Java',
         },
         {
-          _id: 3,
+          id: 3,
           name: 'Python',
         },
       ],
@@ -161,22 +162,22 @@ const BlogPage = () => {
     },
     {
       key: 1,
-      _id: '234324',
+      id: '234324',
       title:
         'Flipping the Matrix HackerRank Optimised Solution in C++, Java,Python with Explanation',
       content:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quostenetur reiciendis totam quidem minus ea vero eligendi? Lorem ipsumdolor sit amet consectetur adipisicing elit. Deserunt eligendiincidunt exercitationem veritatis nemo eveniet et ratione, quos utfugiat nesciunt qui expedita inventore voluptatem eos error faceresoluta nobis vel a impedit hic fugit officia. Vitae velit quaedolore.',
       tags: [
         {
-          _id: 1,
+          id: 1,
           name: 'C++',
         },
         {
-          _id: 2,
+          id: 2,
           name: 'Java',
         },
         {
-          _id: 3,
+          id: 3,
           name: 'Python',
         },
       ],
@@ -212,13 +213,14 @@ const BlogPage = () => {
 
   return (
     <>
+      <Filters />
       <div className="flex w-full flex-col gap-3">
         {blogs.length > 0 ? (
           blogs.map((blog) => (
             <>
               <BlogCard
-                key={blog._id}
-                _id={blog._id}
+                key={blog.id}
+                id={blog.id}
                 title={blog.title}
                 content={blog.content}
                 tags={blog.tags}

@@ -7,7 +7,7 @@ import {
   NotebookPen,
 } from 'lucide-react';
 
-import { SidebarLink } from '@/types/blog';
+import { FilterProps, SidebarLink } from '@/types/blog';
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -34,5 +34,20 @@ export const sidebarLinks: SidebarLink[] = [
   {
     label: 'Reading List',
     icon: Album,
+  },
+];
+
+export const HomePagegFilters: FilterProps[] = [
+  {
+    name: 'Favored',
+    value: 'favored',
+  },
+  {
+    name: 'Latest',
+    value: 'latest',
+  },
+  {
+    name: 'Top',
+    value: 'top',
   },
 ];

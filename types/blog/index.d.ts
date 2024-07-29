@@ -5,3 +5,8 @@ export interface SidebarLink {
   label: string;
   icon: LucideIcon;
 }
+
+export interface FilterProps {
+  name: string;
+  value: string;
+}
