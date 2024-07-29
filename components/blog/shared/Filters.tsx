@@ -17,10 +17,10 @@ const HomePageFilters = () => {
             key={filter.value}
             className={cn(
               'rounded-lg px-6 py-3 capitalize',
-              active === filter.value && 'bg-secondary text-base font-semibold'
+              active === filter.value && 'text-base font-semibold'
             )}
             onClick={() => {}}
-            variant="outline"
+            variant={active === filter.value ? 'noShadow' : 'default'}
           >
             {filter.name}
           </Button>

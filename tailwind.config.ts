@@ -23,7 +23,6 @@ const config = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
@@ -56,11 +55,33 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        main: '#88aaee',
+        mainAccent: '#4d80e6',
+        overlay: 'rgba(0,0,0,0.8)',
+
+        bg: '#dfe5f2',
+        text: '#000',
+        border: '#000',
+
+        darkBg: '#272933',
+        darkText: '#eeefe9',
+        darkBorder: '#000',
+      },
+      translate: {
+        boxShadowX: '4px',
+        boxShadowY: '4px',
+        reverseBoxShadowX: '-4px',
+        reverseBoxShadowY: '-4px',
+      },
+      fontWeight: {
+        base: '500',
+        heading: '700',
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        base: '6px',
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -87,6 +108,8 @@ const config = {
       },
       boxShadow: {
         input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
+        light: '4px 4px 0px 0px #000',
+        dark: '4px 4px 0px 0px #000',
       },
     },
   },

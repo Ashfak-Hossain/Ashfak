@@ -47,7 +47,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="bg-[#F5F5F5] dark:bg-black/80">
+    <main>
       <Navbar fixed />
       <div className="m-auto flex max-w-[1380px] pt-20">
         <LeftSideBar />

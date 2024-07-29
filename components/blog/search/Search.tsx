@@ -10,11 +10,11 @@ const Search = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'rounded-md border-[1.5px] border-gray-600 bg-gray-100 dark:bg-black',
+        'rounded-md border-border border-dashed border-2 dark:border-darkBorder bg-bg dark:bg-darkBg',
         className
       )}
     >
-      <div className="flex w-full flex-1 items-center gap-1 rounded-xl px-4">
+      <div className="flex w-full flex-1 items-center gap-1 rounded-xl px-4 py-1">
         <Image
           src="/_static/icons/search.svg"
           alt="Search"
@@ -28,8 +28,7 @@ const Search = ({ className }: { className?: string }) => {
             placeholder="Search..."
             value=""
             onChange={() => {}}
-            disableAnimation={true}
-            className="no-focus w-full bg-gray-100 tracking-wider shadow-none outline-none dark:bg-black"
+            className="no-focus w-full bg-bg text-base tracking-wider text-text shadow-none outline-none dark:bg-darkBg"
           />
         </div>
       </div>

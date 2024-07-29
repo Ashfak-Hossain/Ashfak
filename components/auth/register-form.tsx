@@ -22,8 +22,6 @@ import { Input } from '@/components/ui/input';
 import { RegisterSchema } from '@/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import BottomGradient from '../ui/bottom-gradient';
-
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
@@ -65,9 +63,11 @@ export const RegisterForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="font-bold text-text dark:text-text">
+                    Username
+                  </FormLabel>
                   <FormControl>
-                    <Input disabled={isPending} placeholder="john" {...field} />
+                    <Input disabled={isPending} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,14 +78,11 @@ export const RegisterForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="font-bold text-text dark:text-text">
+                    Email
+                  </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      placeholder="example@mail.com"
-                      {...field}
-                      type="email"
-                    />
+                    <Input disabled={isPending} {...field} type="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -96,14 +93,11 @@ export const RegisterForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="font-bold text-text dark:text-text">
+                    Password
+                  </FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending}
-                      placeholder="••••••••"
-                      {...field}
-                      type="password"
-                    />
+                    <Input disabled={isPending} {...field} type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -113,7 +107,7 @@ export const RegisterForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button
-            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-semibold text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            className="w-full font-semibold"
             type="submit"
             disabled={isPending}
           >
@@ -122,7 +116,6 @@ export const RegisterForm = () => {
               {isPending ? 'Signing up ...' : 'Sign up'}
               {!isPending && <span className="ml-2">&rarr;</span>}
             </div>
-            <BottomGradient />
           </Button>
 
           <div className="my-8 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />

@@ -53,7 +53,7 @@ export default async function BlogLayout({
   const user = await CurrentUser();
 
   return (
-    <main className="bg-[#F5F5F5] dark:bg-black/80">
+    <main>
       <Navbar />
       <div
         className={cn('m-auto flex max-w-[1380px] px-3', !user ? 'pt-20' : '')}

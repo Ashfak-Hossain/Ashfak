@@ -9,7 +9,6 @@ import { reset } from '@/actions/auth/reset.action';
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { FormError } from '@/components/auth/form-error';
 import { FormSuccess } from '@/components/auth/form-success';
-import BottomGradient from '@/components/ui/bottom-gradient';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -61,7 +60,9 @@ export const ResetForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="font-bold text-text dark:text-text">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -79,7 +80,7 @@ export const ResetForm = () => {
           <FormSuccess message={success} />
 
           <Button
-            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-semibold text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            className="w-full font-semibold"
             type="submit"
             disabled={isPending}
           >
@@ -87,7 +88,6 @@ export const ResetForm = () => {
               {isPending && <Loader2 className="mr-3 size-4 animate-spin" />}
               Send reset email
             </div>
-            <BottomGradient />
           </Button>
         </form>
       </Form>

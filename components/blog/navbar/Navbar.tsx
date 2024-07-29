@@ -16,7 +16,7 @@ const Navbar = async ({ fixed }: { fixed?: boolean }) => {
   return (
     <nav
       className={cn(
-        'z-50 mb-4 flex w-full inset-x-0 top-0 items-center border-b py-2 firefox:bg-opacity-90 border-gray-200 dark:border-gray-900 justify-between bg-white shadow-md dark:bg-[#171717] bg-opacity-30 backdrop-filter backdrop-blur-lg',
+        'z-50 mb-4 flex w-full inset-x-0 top-0 items-center border-b-4 py-2 firefox:bg-opacity-90 border-border justify-between bg-white shadow-md dark:bg-darkBg dark:bg-opacity-60 bg-opacity-70 backdrop-filter backdrop-blur-lg',
         !user || fixed ? 'fixed' : ''
       )}
     >
@@ -24,7 +24,7 @@ const Navbar = async ({ fixed }: { fixed?: boolean }) => {
         <div className="flex flex-1 items-center gap-3">
           <Link href="/blog" className="flex items-center text-nowrap px-3">
             <CommandIcon height={32} width={32} aria-label="Icon" />
-            <h2 className="ml-4 text-lg font-semibold">Ashfak's Note Book</h2>
+            <h2 className="ml-4 text-2xl font-heading">Ashfak's Note Book</h2>
           </Link>
           <Search className="ml-3 hidden w-2/5 md:block" />
         </div>
@@ -47,10 +47,7 @@ const Navbar = async ({ fixed }: { fixed?: boolean }) => {
                 <Button className="text-base font-medium">Log in</Button>
               </LoginButton>
               <SignUpButton asChild>
-                <Button
-                  variant="outline"
-                  className="border border-gray-800 text-base font-medium"
-                >
+                <Button className="text-base font-medium">
                   Create account
                 </Button>
               </SignUpButton>

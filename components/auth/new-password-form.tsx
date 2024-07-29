@@ -10,7 +10,6 @@ import { newPassword } from '@/actions/auth/new-password.action';
 import { CardWrapper } from '@/components/auth/card-wrapper';
 import { FormError } from '@/components/auth/form-error';
 import { FormSuccess } from '@/components/auth/form-success';
-import BottomGradient from '@/components/ui/bottom-gradient';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -65,7 +64,9 @@ export const NewPasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="font-bold text-text dark:text-text">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -82,7 +83,7 @@ export const NewPasswordForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button
-            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-semibold text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            className="w-full font-semibold"
             type="submit"
             disabled={isPending}
           >
@@ -90,7 +91,6 @@ export const NewPasswordForm = () => {
               {isPending && <Loader2 className="mr-3 size-4 animate-spin" />}
               Reset password
             </div>
-            <BottomGradient />
           </Button>
         </form>
       </Form>
