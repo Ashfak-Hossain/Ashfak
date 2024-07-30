@@ -68,10 +68,10 @@ const config = {
         darkBorder: '#000',
       },
       translate: {
-        boxShadowX: '4px',
-        boxShadowY: '4px',
-        reverseBoxShadowX: '-4px',
-        reverseBoxShadowY: '-4px',
+        boxShadowX: '5px',
+        boxShadowY: '5px',
+        reverseBoxShadowX: '-5px',
+        reverseBoxShadowY: '-5px',
       },
       fontWeight: {
         base: '500',
@@ -108,8 +108,8 @@ const config = {
       },
       boxShadow: {
         input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
-        light: '4px 4px 0px 0px #000',
-        dark: '4px 4px 0px 0px #000',
+        light: '5px 5px 0px 0px #000',
+        dark: '5px 5px 0px 0px #000',
       },
     },
   },

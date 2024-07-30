@@ -29,15 +29,15 @@ const TopPosts = () => {
   ];
 
   return (
-    <div className="mb-4 rounded-md border border-gray-300/80 bg-white p-4 shadow-md dark:border-[#151515] dark:bg-[#171717]">
+    <div className="mb-4 rounded-base border-2 border-border bg-white p-4 text-text shadow-light dark:border-darkBorder dark:bg-gray-600 dark:text-darkText dark:shadow-dark">
       <h2 className="text-xl font-bold">Top Posts</h2>
-      <Separator className="my-4" />
+      <Separator className="my-3" />
       <div className="flex flex-col gap-2">
         {topPosts.map((post, index) => (
           <Link
             key={index}
             href={post.link}
-            className="my-1 line-clamp-2 rounded-md px-3 py-1 underline-offset-4 hover:underline dark:hover:text-[#A5B4FB]"
+            className="my-1 line-clamp-2 px-2 py-1 font-medium transition-transform duration-300 hover:scale-105 hover:text-main dark:hover:text-mainAccent"
           >
             {post.title}
           </Link>

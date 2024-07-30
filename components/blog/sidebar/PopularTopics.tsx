@@ -1,31 +1,32 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { Separator } from '@/components/ui/separator';
 
 const PopularTopics = () => {
   return (
-    <div className="rounded-md border border-gray-300/80 bg-white p-4 shadow-md dark:border-[#151515] dark:bg-[#171717]">
+    <div className="mb-4 rounded-base border-2 border-border bg-white p-4 text-text shadow-light dark:border-darkBorder dark:bg-gray-600 dark:text-darkText dark:shadow-dark">
       <h2 className="text-xl font-bold">Popular Topics</h2>
       <Separator className="my-4" />
       <div className="flex flex-col gap-2">
-        <a
+        <Link
           href="/blog/nextjs-tailwindcss"
-          className="rounded-md px-3 py-2 font-semibold underline-offset-4 hover:bg-[#BBE1FA] hover:underline dark:hover:bg-[#242360]"
+          className="rounded-md px-3 py-2 font-semibold underline-offset-4 transition-transform duration-300 hover:scale-105 hover:bg-main hover:underline dark:hover:bg-main dark:hover:text-text"
         >
           #graph
-        </a>
-        <a
+        </Link>
+        <Link
           href="/blog/react-typescript"
-          className="rounded-md px-3 py-2 underline-offset-4 hover:bg-[#BBE1FA] hover:underline dark:hover:bg-[#242360]"
+          className="rounded-md px-3 py-2 font-semibold underline-offset-4 transition-transform duration-300 hover:scale-105 hover:bg-main hover:underline dark:hover:bg-main dark:hover:text-text"
         >
           #dfs
-        </a>
-        <a
+        </Link>
+        <Link
           href="/blog/nextjs-typescript"
-          className="rounded-md px-3 py-2 underline-offset-4 hover:bg-[#BBE1FA] hover:underline dark:hover:bg-[#242360]"
+          className="rounded-md px-3 py-2 font-semibold underline-offset-4 transition-transform duration-300 hover:scale-105 hover:bg-main hover:underline dark:hover:bg-main dark:hover:text-text"
         >
           #daynamicProgramming
-        </a>
+        </Link>
       </div>
     </div>
   );

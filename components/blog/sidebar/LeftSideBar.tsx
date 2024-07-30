@@ -2,16 +2,19 @@ import React from 'react';
 import Link from 'next/link';
 
 import { sidebarLinks } from '@/constants/blog';
+// import { CurrentRole } from '@/lib/auth';
 
 const LeftSideBar = () => {
+  // const role = CurrentRole();
+
   return (
     <section className="hidden min-h-screen sm:block">
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         {sidebarLinks.map((link) => (
           <Link
-            href={link.href || '/blog'}
             key={link.label}
-            className="flex items-center rounded-md px-3 py-2 font-medium underline-offset-4 hover:bg-blue-200 hover:underline dark:hover:bg-blue-500"
+            href={link.href || '/blog'}
+            className="flex w-full items-center rounded-md p-3 text-base font-semibold text-text transition-transform duration-300 hover:scale-105 hover:bg-main dark:text-darkText dark:hover:text-text"
           >
             {link.icon && <link.icon size={20} className="mr-2" />}
             {link.label}

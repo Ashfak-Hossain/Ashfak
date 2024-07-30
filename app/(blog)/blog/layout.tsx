@@ -59,7 +59,7 @@ export default async function BlogLayout({
         className={cn('m-auto flex max-w-[1380px] px-3', !user ? 'pt-20' : '')}
       >
         <LeftSideBar />
-        <section className="flex min-h-screen flex-1 flex-col px-3 sm:border-l lg:border-none">
+        <section className="flex min-h-screen flex-1 flex-col px-4 sm:border-l lg:border-none">
           <Search className="mb-6 w-full md:hidden" />
           <div>{children}</div>
         </section>

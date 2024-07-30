@@ -25,10 +25,10 @@ const Search = ({ className }: { className?: string }) => {
         <div className="grow">
           <Input
             type="text"
-            placeholder="Search..."
+            placeholder="What are you looking for..."
             value=""
             onChange={() => {}}
-            className="no-focus w-full bg-bg text-base tracking-wider text-text shadow-none outline-none dark:bg-darkBg"
+            className="no-focus w-full border-none bg-bg text-base tracking-wider text-text shadow-none outline-none dark:bg-darkBg"
           />
         </div>
       </div>
