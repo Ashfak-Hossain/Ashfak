@@ -49,12 +49,10 @@ export default function DashboardLayout({
   return (
     <main>
       <Navbar />
-      <div className="m-auto flex max-w-[1380px] px-3">
+      <section className="m-auto flex max-w-[1380px] px-3">
         <LeftSideBar />
-        <section className="flex min-h-screen flex-1 flex-col border border-red-500 px-4">
-          <div>{children}</div>
-        </section>
-      </div>
+        <div className="flex min-h-screen flex-1 flex-col px-4">{children}</div>
+      </section>
       <Footer />
     </main>
   );
