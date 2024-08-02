@@ -93,3 +93,8 @@
     @apply font-bold text-text dark:text-text;
   }
 }
+
+/* Blocknote styles */
+.bn-shadcn .bn-editor {
+  @apply dark:bg-gray-600 min-h-96;
+}

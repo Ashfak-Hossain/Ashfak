@@ -111,6 +111,9 @@ const config = {
         light: '5px 5px 0px 0px #000',
         dark: '5px 5px 0px 0px #000',
       },
+      aspectRatio: {
+        '1000/420': '1000/420',
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), addVariablesForColors],
