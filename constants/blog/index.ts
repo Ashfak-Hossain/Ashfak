@@ -8,6 +8,7 @@ import {
   NotebookPen,
   PencilLine,
   Signature,
+  Users,
 } from 'lucide-react';
 
 import { FilterProps, SidebarLink } from '@/types/blog';
@@ -18,15 +19,15 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Dashboard',
     icon: LayoutDashboard,
   },
-  // {
-  //   href: '/dashboard/new-content',
-  //   label: 'Contents',
-  //   icon: PencilLine,
-  // },
   {
     href: '/dashboard/blogs',
     label: 'Blogs',
     icon: PencilLine,
+  },
+  {
+    href: '/dashboard/users',
+    label: 'Users',
+    icon: Users,
   },
   {
     href: '/blog',

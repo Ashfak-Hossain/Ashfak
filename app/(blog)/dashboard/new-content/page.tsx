@@ -3,6 +3,13 @@
 import React from 'react';
 
 import NewContentForm from '@/components/blog/form/new-content-form';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Ashfak Hossain | New Blog Post',
+  description:
+    'Create a new blog post in the blog system. Write a new blog post. Add tags to the blog post. Add categories to the blog post. Add content to the blog post.',
+};
 
 const NewContentPage = () => {
   return (

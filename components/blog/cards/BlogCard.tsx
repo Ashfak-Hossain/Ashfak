@@ -71,7 +71,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
         <div>
           {tags.map((tag) => (
-            <Badge key={tag.id} className="mr-2 mt-3 bg-main/40 dark:bg-bg/30">
+            <Badge key={tag.id} variant="neutral" className="mr-2 mt-3">
               #{tag.name}
             </Badge>
           ))}
