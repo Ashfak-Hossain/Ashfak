@@ -18,9 +18,14 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Dashboard',
     icon: LayoutDashboard,
   },
+  // {
+  //   href: '/dashboard/new-content',
+  //   label: 'Contents',
+  //   icon: PencilLine,
+  // },
   {
-    href: '/dashboard/new-content',
-    label: 'New Content',
+    href: '/dashboard/blogs',
+    label: 'Blogs',
     icon: PencilLine,
   },
   {

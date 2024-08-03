@@ -21,12 +21,15 @@ const Editor: React.FC<EditorProps> = ({
 
   const editor = useCreateBlockNote({
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
-    // uploadFile: handleUpload,
+    uploadFile: async (file) => {
+      // handleUpload(file);
+      return 'https://example.com/image.jpg';
+    },
   });
 
   useEffect(() => {
     const handleChange = () => {
-      onChange(JSON.stringify(editor.document));
+      onChange(JSON.stringify(editor.document, null, 2));
     };
 
     editor.onChange(handleChange);
@@ -37,9 +40,6 @@ const Editor: React.FC<EditorProps> = ({
       editor={editor}
       theme={resolvedTheme === 'light' ? 'light' : 'dark'}
       editable={editable}
-      onChange={() => {
-        JSON.stringify(editor.document, null, 2);
-      }}
     />
   );
 };

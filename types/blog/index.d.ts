@@ -1,7 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
 export interface SidebarLink {
-  href?: string;
+  href: string;
   label: string;
   icon: LucideIcon;
 }

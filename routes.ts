@@ -19,6 +19,15 @@
 export const publicRoutes: string[] = ['/', '/blog'];
 
 /**
+ * An array of admin routes
+ *
+ * These routes are only accessible if the user is an admin.
+ *
+ * @type {string[]}
+ */
+export const adminRoutes: string[] = ['/dashboard', '/dashboard/new-content'];
+
+/**
  * An array of routes that require authentication
  *
  * These routes are only accessible if the user is authenticated.

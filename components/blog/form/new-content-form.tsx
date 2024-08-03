@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ImagePlus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { createBlog } from '@/actions/blog/createBlog.action';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { newContentSchema } from '@/schema/validation/new-content-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
@@ -27,6 +30,8 @@ const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
 const NewContentForm: React.FC = () => {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
   const [editorContent, setEditorContent] = useState('');
+  const user = useCurrentUser();
+  const pathname = usePathname();
 
   const form = useForm<z.infer<typeof newContentSchema>>({
     resolver: zodResolver(newContentSchema),
@@ -62,8 +67,19 @@ const NewContentForm: React.FC = () => {
     accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
   });
 
-  const onSubmit = (values: z.infer<typeof newContentSchema>) => {
-    console.log('values: ', { ...values, content: editorContent });
+  const onSubmit = async (values: z.infer<typeof newContentSchema>) => {
+    try {
+      const newBlog = await createBlog({
+        coverImage: values.coverImage.name,
+        title: values.title,
+        content: editorContent,
+        userId: user?.id,
+        pathname,
+      });
+      console.log('Blog post created successfully:', newBlog);
+    } catch (error) {
+      console.error('An error occurred while creating the blog post:', error);
+    }
   };
 
   return (

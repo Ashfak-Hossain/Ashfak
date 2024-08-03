@@ -1,9 +1,11 @@
 import React from 'react';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import Footer from '@/components/blog/footer/Footer';
 import Navbar from '@/components/blog/navbar/Navbar';
 import LeftSideBar from '@/components/blog/sidebar/LeftSideBar';
+import { CurrentRole } from '@/lib/auth';
 
 const data = {
   title: 'Ashfak Hossain | Dashboard',
@@ -41,11 +43,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const role = await CurrentRole();
+
+  if (role !== 'ADMIN') {
+    redirect('/blog');
+  }
+
   return (
     <main>
       <Navbar />
