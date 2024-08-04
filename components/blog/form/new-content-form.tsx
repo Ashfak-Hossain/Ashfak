@@ -1,15 +1,13 @@
 'use-client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { ImagePlus } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
-import { createBlog } from '@/actions/blog/createBlog.action';
+import { createBlog } from '@/actions/blog/blog.action';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,9 +18,14 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { newContentSchema } from '@/schema/validation/new-content-schema';
+import { ToastAction } from '@/components/ui/toast';
+import { toast } from '@/components/ui/use-toast';
+import {
+  NewContent,
+  newContentSchema,
+} from '@/schema/validation/new-content-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { title } from 'process';
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
 });
@@ -30,17 +33,16 @@ const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
 const NewContentForm: React.FC = () => {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
   const [editorContent, setEditorContent] = useState('');
-  const user = useCurrentUser();
-  const pathname = usePathname();
+  const [error, setError] = useState<string | undefined>('');
+  const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof newContentSchema>>({
+  const form = useForm<NewContent>({
     resolver: zodResolver(newContentSchema),
     mode: 'onBlur',
     defaultValues: {
       coverImage: new File([''], 'filename'),
       title: '',
       content: '',
-      draft: true,
     },
   });
 
@@ -67,19 +69,29 @@ const NewContentForm: React.FC = () => {
     accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
   });
 
-  const onSubmit = async (values: z.infer<typeof newContentSchema>) => {
-    try {
-      const newBlog = await createBlog({
+  const onSubmit = (values: NewContent) => {
+    setError('');
+    startTransition(() => {
+      createBlog({
         coverImage: values.coverImage.name,
         title: values.title,
         content: editorContent,
-        userId: user?.id,
-        pathname,
-      });
-      console.log('Blog post created successfully:', newBlog);
-    } catch (error) {
-      console.error('An error occurred while creating the blog post:', error);
-    }
+      })
+        .then((data) => {
+          if (data?.error) {
+            setError(data?.error);
+          }
+        })
+        .catch(() => {
+          setError('Something went wrong!');
+        });
+    });
+    toast({
+      variant: error ? 'destructive' : 'default',
+      title: error ? 'Error' : 'Success',
+      description: error ? error : 'Blog created successfully',
+      action: <ToastAction altText="Close">Close</ToastAction>,
+    });
   };
 
   return (
@@ -88,6 +100,7 @@ const NewContentForm: React.FC = () => {
         <FormField
           control={form.control}
           name="coverImage"
+          disabled={isPending}
           render={() => (
             <FormItem>
               <FormControl>
@@ -108,7 +121,10 @@ const NewContentForm: React.FC = () => {
                       className={`size-40 ${preview ? 'hidden' : 'block'}`}
                     />
                     {preview && (
-                      <Button className="absolute right-4 top-4">
+                      <Button
+                        className="absolute right-4 top-4"
+                        disabled={isPending}
+                      >
                         Change Image
                       </Button>
                     )}
@@ -128,6 +144,7 @@ const NewContentForm: React.FC = () => {
         />
         <FormField
           control={form.control}
+          disabled={isPending}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -144,6 +161,7 @@ const NewContentForm: React.FC = () => {
         />
         <FormField
           control={form.control}
+          disabled={isPending}
           name="content"
           render={({ field }) => (
             <FormItem>
@@ -162,9 +180,12 @@ const NewContentForm: React.FC = () => {
 
         <Button
           type="submit"
-          disabled={form.formState.isSubmitting}
-          className="h-auto rounded-lg px-8 py-3 text-xl"
+          disabled={isPending}
+          className="flex h-auto items-center justify-center gap-x-2 rounded-lg px-8 py-3 text-xl"
         >
+          {isPending && (
+            <div className="size-5 animate-spin rounded-full border-b-2 border-white"></div>
+          )}
           Submit
         </Button>
       </form>

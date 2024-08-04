@@ -3,5 +3,4 @@ export interface CreateQuestionParams {
   title: string;
   content: string;
   userId?: string;
-  pathname: string;
 }
