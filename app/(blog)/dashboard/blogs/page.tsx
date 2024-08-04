@@ -1,13 +1,14 @@
 import React from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { z } from 'zod';
 
 import { columns } from '@/components/blog/dataTable/columns';
 import { DataTable } from '@/components/blog/dataTable/data-table';
 import { Button } from '@/components/ui/button';
-import { taskSchema } from '@/components/blog/dataTable/data/schema';
-import path from 'path';
-import { z } from 'zod';
-import { promises as fs } from 'fs';
-import { Metadata } from 'next';
+import { taskSchema } from '@/schema/validation/user-table-schema';
 
 export const metadata: Metadata = {
   title: 'Ashfak Hossain | All Blogs',
@@ -33,7 +34,9 @@ const BlogsPage = async () => {
       <div className="p-10">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Blogs</h1>
-          <Button>New Blog</Button>
+          <Link href="/dashboard/new-content">
+            <Button>New Blog</Button>
+          </Link>
         </div>
         <div className="py-10">
           <DataTable columns={columns} data={tasks} />

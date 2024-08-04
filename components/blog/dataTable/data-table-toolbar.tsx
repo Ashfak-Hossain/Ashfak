@@ -1,14 +1,13 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { Table } from '@tanstack/react-table';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { DataTableViewOptions } from '@/components/blog/dataTable/data-table-view-options';
 
 import { priorities, statuses } from '@/components/blog/dataTable/data/data';
 import { DataTableFacetedFilter } from '@/components/blog/dataTable/data-table-faceted-filter';
+import { DataTableViewOptions } from '@/components/blog/dataTable/data-table-view-options';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Table } from '@tanstack/react-table';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -51,7 +50,7 @@ export function DataTableToolbar<TData>({
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <X className="ml-2 h-4 w-4" />
+            <X className="ml-2 size-4" />
           </Button>
         )}
       </div>

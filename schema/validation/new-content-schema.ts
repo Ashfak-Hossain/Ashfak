@@ -9,3 +9,5 @@ export const newContentSchema = z.object({
   draft: z.boolean().default(true),
   content: z.string(),
 });
+
+export type NewContent = z.infer<typeof newContentSchema>;

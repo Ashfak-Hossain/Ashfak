@@ -1,18 +1,16 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-
 import {
   labels,
   priorities,
   statuses,
 } from '@/components/blog/dataTable/data/data';
-import { Task } from '@/components/blog/dataTable/data/schema';
-import { DataTableColumnHeader } from './data-table-column-header';
-import { DataTableRowActions } from './data-table-row-actions';
+import { DataTableColumnHeader } from '@/components/blog/dataTable/data-table-column-header';
+import { DataTableRowActions } from '@/components/blog/dataTable/data-table-row-actions';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Task } from '@/schema/validation/user-table-schema';
+import { ColumnDef } from '@tanstack/react-table';
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -83,7 +81,7 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex w-[100px] items-center">
           {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            <status.icon className="mr-2 size-4 text-muted-foreground" />
           )}
           <span>{status.label}</span>
         </div>
@@ -110,7 +108,7 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex items-center">
           {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            <priority.icon className="mr-2 size-4 text-muted-foreground" />
           )}
           <span>{priority.label}</span>
         </div>

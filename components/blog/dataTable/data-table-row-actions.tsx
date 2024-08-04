@@ -1,6 +1,6 @@
 'use client';
 
-import { Row } from '@tanstack/react-table';
+import { Ellipsis } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,9 +16,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { taskSchema } from '@/schema/validation/user-table-schema';
+import { Row } from '@tanstack/react-table';
+
 import { labels } from './data/data';
-import { taskSchema } from './data/schema';
-import { Ellipsis } from 'lucide-react';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -34,9 +35,9 @@ export function DataTableRowActions<TData>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          className="flex size-8 p-0 data-[state=open]:bg-muted"
         >
-          <Ellipsis className="h-4 w-4" />
+          <Ellipsis className="size-4" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>

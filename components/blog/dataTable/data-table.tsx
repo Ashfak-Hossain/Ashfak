@@ -2,14 +2,8 @@
 
 import React, { useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
+import { DataTablePagination } from '@/components/blog/dataTable/data-table-pagination';
+import { DataTableToolbar } from '@/components/blog/dataTable/data-table-toolbar';
 import {
   Table,
   TableBody,
@@ -30,9 +24,6 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { DataTablePagination } from '@/components/blog/dataTable/data-table-pagination';
-import { DataTableViewOptions } from '@/components/blog/dataTable/data-table-view-options';
-import { DataTableToolbar } from './data-table-toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
