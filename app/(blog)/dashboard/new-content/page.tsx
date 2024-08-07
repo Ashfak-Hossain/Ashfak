@@ -1,13 +1,9 @@
 import React from 'react';
 
-import Form from '@/components/blog/form/new-blog';
+import NewBlog from '@/components/blog/form/new-blog';
 
 const page = () => {
-  return (
-    <div>
-      <Form />
-    </div>
-  );
+  return <NewBlog />;
 };
 
 export default page;

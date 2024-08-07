@@ -1,6 +1,6 @@
 'use-client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useCallback, useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { ImagePlus } from 'lucide-react';
@@ -40,7 +40,6 @@ const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
 const NewContentForm: React.FC = () => {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
   const [editorContent, setEditorContent] = useState('');
-  const [error, setError] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<NewContent>({
@@ -54,18 +53,13 @@ const NewContentForm: React.FC = () => {
     },
   });
 
-  const onDrop = React.useCallback(
+  const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const reader = new FileReader();
-      try {
-        reader.onload = () => setPreview(reader.result);
-        reader.readAsDataURL(acceptedFiles[0]);
-        form.setValue('coverImage', acceptedFiles[0]);
-        form.clearErrors('coverImage');
-      } catch (error) {
-        setPreview(null);
-        form.resetField('coverImage');
-      }
+      reader.onload = () => setPreview(reader.result);
+      reader.readAsDataURL(acceptedFiles[0]);
+      form.setValue('coverImage', acceptedFiles[0]);
+      form.clearErrors('coverImage');
     },
     [form]
   );
@@ -91,26 +85,21 @@ const NewContentForm: React.FC = () => {
   };
 
   const onSubmit = (values: NewContent) => {
-    setError('');
     startTransition(async () => {
       try {
         const data = await createBlog({
           coverImage: values.coverImage.name,
           title: values.title,
           content: editorContent,
-          tags: [...values.tags],
+          tags: values.tags,
         });
 
         if (data.success) {
           showToast('default', 'Success', 'Blog created successfully!');
-        }
-
-        if (data?.error) {
-          setError(data.error);
-          showToast('destructive', 'Error', error!);
+        } else if (data?.error) {
+          showToast('destructive', 'Error', data.error);
         }
       } catch {
-        setError('Something went wrong!');
         showToast('destructive', 'Error', 'Something went wrong!');
       }
     });
@@ -140,17 +129,16 @@ const NewContentForm: React.FC = () => {
                   className="cursor-pointer overflow-hidden rounded-base object-cover"
                 >
                   <div className="relative flex max-h-[450px] items-center justify-center">
-                    {preview && (
+                    {preview ? (
                       <Image
                         src={preview as string}
                         alt="Uploaded image"
                         width={1070}
                         height={420}
                       />
+                    ) : (
+                      <ImagePlus className="size-40" />
                     )}
-                    <ImagePlus
-                      className={`size-40 ${preview ? 'hidden' : 'block'}`}
-                    />
                     {preview && (
                       <Button
                         className="absolute right-4 top-4"
@@ -164,7 +152,7 @@ const NewContentForm: React.FC = () => {
                 </div>
               </FormControl>
               <FormMessage>
-                {fileRejections.length !== 0 && (
+                {fileRejections.length > 0 && (
                   <p>
                     Image must be less than 1MB and of type png, jpg, or jpeg
                   </p>
@@ -175,8 +163,8 @@ const NewContentForm: React.FC = () => {
         />
         <FormField
           control={form.control}
-          disabled={isPending}
           name="title"
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -191,12 +179,9 @@ const NewContentForm: React.FC = () => {
           )}
         />
         {isLoading ? (
-          <div>
-            <Skeleton className="size-full" />
-          </div>
+          <Skeleton className="size-full" />
         ) : (
-          tags &&
-          tags.length > 0 && (
+          tags && (
             <FormField
               control={form.control}
               name="tags"
@@ -217,8 +202,7 @@ const NewContentForm: React.FC = () => {
                       placeholder="Select Tags (Max 3)"
                       emptyIndicator={
                         <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                          {isError && 'Something went wrong'}
-                          {isLoading ? 'Loading tags...' : 'No tags found'}
+                          {isError ? 'Something went wrong' : 'No tags found'}
                         </p>
                       }
                     />
@@ -231,8 +215,8 @@ const NewContentForm: React.FC = () => {
         )}
         <FormField
           control={form.control}
-          disabled={isPending}
           name="content"
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormControl>
