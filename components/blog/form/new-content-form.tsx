@@ -1,10 +1,7 @@
 'use-client';
 
-import React, { useCallback, useState, useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import { ImagePlus } from 'lucide-react';
-import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 
 import { createBlog } from '@/actions/blog/blog.action';
@@ -19,8 +16,8 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import MultipleSelector, { Option } from '@/components/ui/multi-select';
+import type { Option } from '@/components/ui/multi-select';
+import MultipleSelector from '@/components/ui/multi-select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { ToastAction } from '@/components/ui/toast';
@@ -31,6 +28,8 @@ import {
 } from '@/schema/validation/new-content-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
+
+import ImageUpload from './ImageUpload';
 
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
@@ -51,24 +50,6 @@ const NewContentForm: React.FC = () => {
       content: '',
       tags: [],
     },
-  });
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const reader = new FileReader();
-      reader.onload = () => setPreview(reader.result);
-      reader.readAsDataURL(acceptedFiles[0]);
-      form.setValue('coverImage', acceptedFiles[0]);
-      form.clearErrors('coverImage');
-    },
-    [form]
-  );
-
-  const { getRootProps, getInputProps, fileRejections } = useDropzone({
-    onDrop,
-    maxFiles: 1,
-    maxSize: 1000000,
-    accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
   });
 
   const showToast = (
@@ -122,43 +103,11 @@ const NewContentForm: React.FC = () => {
           name="coverImage"
           disabled={isPending}
           render={() => (
-            <FormItem>
-              <FormControl>
-                <div
-                  {...getRootProps()}
-                  className="cursor-pointer overflow-hidden rounded-base object-cover"
-                >
-                  <div className="relative flex max-h-[450px] items-center justify-center">
-                    {preview ? (
-                      <Image
-                        src={preview as string}
-                        alt="Uploaded image"
-                        width={1070}
-                        height={420}
-                      />
-                    ) : (
-                      <ImagePlus className="size-40" />
-                    )}
-                    {preview && (
-                      <Button
-                        className="absolute right-4 top-4"
-                        disabled={isPending}
-                      >
-                        Change Image
-                      </Button>
-                    )}
-                  </div>
-                  <Input {...getInputProps()} type="file" />
-                </div>
-              </FormControl>
-              <FormMessage>
-                {fileRejections.length > 0 && (
-                  <p>
-                    Image must be less than 1MB and of type png, jpg, or jpeg
-                  </p>
-                )}
-              </FormMessage>
-            </FormItem>
+            <ImageUpload
+              preview={preview}
+              setPreview={setPreview}
+              isPending={isPending}
+            />
           )}
         />
         <FormField
@@ -181,7 +130,8 @@ const NewContentForm: React.FC = () => {
         {isLoading ? (
           <Skeleton className="size-full" />
         ) : (
-          tags && (
+          tags &&
+          tags.length > 0 && (
             <FormField
               control={form.control}
               name="tags"
@@ -231,7 +181,6 @@ const NewContentForm: React.FC = () => {
             </FormItem>
           )}
         />
-
         <Button
           type="submit"
           disabled={isPending}
