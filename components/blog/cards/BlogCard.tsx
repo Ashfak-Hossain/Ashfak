@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bookmark, Ellipsis, Eye, Heart, MessageSquare } from 'lucide-react';
+import { Bookmark, Eye, Heart, MessageSquare } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 
@@ -90,7 +90,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   <span>{comments.length}</span>
                 </span>
               )}
-              <span>{readTime} min read</span>
               <span className="flex items-center gap-1">
                 <Eye size={18} />
                 {views}
@@ -98,7 +97,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </div>
           </div>
           <div className="flex flex-row items-center space-x-4 text-xs">
-            <Ellipsis />
             <Bookmark size={22} />
           </div>
         </div>

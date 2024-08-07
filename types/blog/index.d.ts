@@ -16,3 +16,10 @@ export interface EditorProps {
   initialContent?: string;
   editable?: boolean;
 }
+
+export interface Tags {
+  tags: {
+    value: string;
+    label: string;
+  }[];
+}

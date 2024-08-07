@@ -8,6 +8,8 @@ import { useDropzone } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 
 import { createBlog } from '@/actions/blog/blog.action';
+import { getAllTags } from '@/actions/blog/tags.action';
+import EditorSkeleton from '@/components/blog/editor/editor-skeleton';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +20,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import MultipleSelector, { Option } from '@/components/ui/multi-select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { ToastAction } from '@/components/ui/toast';
 import { toast } from '@/components/ui/use-toast';
 import {
@@ -25,9 +30,11 @@ import {
   newContentSchema,
 } from '@/schema/validation/new-content-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { title } from 'process';
+import { useQuery } from '@tanstack/react-query';
+
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
+  loading: () => <EditorSkeleton />,
 });
 
 const NewContentForm: React.FC = () => {
@@ -43,6 +50,7 @@ const NewContentForm: React.FC = () => {
       coverImage: new File([''], 'filename'),
       title: '',
       content: '',
+      tags: [],
     },
   });
 
@@ -69,30 +77,53 @@ const NewContentForm: React.FC = () => {
     accept: { 'image/png': [], 'image/jpg': [], 'image/jpeg': [] },
   });
 
-  const onSubmit = (values: NewContent) => {
-    setError('');
-    startTransition(() => {
-      createBlog({
-        coverImage: values.coverImage.name,
-        title: values.title,
-        content: editorContent,
-      })
-        .then((data) => {
-          if (data?.error) {
-            setError(data?.error);
-          }
-        })
-        .catch(() => {
-          setError('Something went wrong!');
-        });
-    });
+  const showToast = (
+    variant: 'destructive' | 'default',
+    title: string,
+    description: string
+  ) => {
     toast({
-      variant: error ? 'destructive' : 'default',
-      title: error ? 'Error' : 'Success',
-      description: error ? error : 'Blog created successfully',
+      variant,
+      title,
+      description,
       action: <ToastAction altText="Close">Close</ToastAction>,
     });
   };
+
+  const onSubmit = (values: NewContent) => {
+    setError('');
+    startTransition(async () => {
+      try {
+        const data = await createBlog({
+          coverImage: values.coverImage.name,
+          title: values.title,
+          content: editorContent,
+          tags: [...values.tags],
+        });
+
+        if (data.success) {
+          showToast('default', 'Success', 'Blog created successfully!');
+        }
+
+        if (data?.error) {
+          setError(data.error);
+          showToast('destructive', 'Error', error!);
+        }
+      } catch {
+        setError('Something went wrong!');
+        showToast('destructive', 'Error', 'Something went wrong!');
+      }
+    });
+  };
+
+  const {
+    data: tags,
+    isLoading,
+    isError,
+  } = useQuery<Option[]>({
+    queryKey: ['tags'],
+    queryFn: () => getAllTags(),
+  });
 
   return (
     <Form {...form}>
@@ -159,6 +190,45 @@ const NewContentForm: React.FC = () => {
             </FormItem>
           )}
         />
+        {isLoading ? (
+          <div>
+            <Skeleton className="size-full" />
+          </div>
+        ) : (
+          tags &&
+          tags.length > 0 && (
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <MultipleSelector
+                      className="text-black dark:text-white"
+                      {...field}
+                      maxSelected={3}
+                      onMaxSelected={(maxLimit) => {
+                        toast({
+                          title: `You have reached max selected: ${maxLimit}`,
+                        });
+                      }}
+                      creatable
+                      defaultOptions={tags}
+                      placeholder="Select Tags (Max 3)"
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          {isError && 'Something went wrong'}
+                          {isLoading ? 'Loading tags...' : 'No tags found'}
+                        </p>
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )
+        )}
         <FormField
           control={form.control}
           disabled={isPending}
@@ -183,9 +253,7 @@ const NewContentForm: React.FC = () => {
           disabled={isPending}
           className="flex h-auto items-center justify-center gap-x-2 rounded-lg px-8 py-3 text-xl"
         >
-          {isPending && (
-            <div className="size-5 animate-spin rounded-full border-b-2 border-white"></div>
-          )}
+          {isPending && <Spinner size="small" className="text-black" />}
           Submit
         </Button>
       </form>
