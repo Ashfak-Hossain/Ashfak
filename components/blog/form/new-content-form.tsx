@@ -139,7 +139,6 @@ const NewContentForm: React.FC = () => {
                 <FormItem>
                   <FormControl>
                     <MultipleSelector
-                      className="text-black dark:text-white"
                       {...field}
                       maxSelected={3}
                       onMaxSelected={(maxLimit) => {

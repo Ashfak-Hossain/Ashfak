@@ -332,7 +332,7 @@ const MultipleSelector = React.forwardRef<
       const Item = (
         <CommandItem
           value={inputValue}
-          className="cursor-pointer"
+          className="cursor-pointer outline-none dark:outline-none"
           onMouseDown={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -400,8 +400,6 @@ const MultipleSelector = React.forwardRef<
       return undefined;
     }, [creatable, commandProps?.filter]);
 
-
-
     return (
       <Command
         ref={dropdownRef}
@@ -411,7 +409,7 @@ const MultipleSelector = React.forwardRef<
           commandProps?.onKeyDown?.(e);
         }}
         className={cn(
-          'h-auto overflow-visible bg-transparent',
+          'h-auto overflow-visible bg-transparent bg-white dark:bg-gray-600 text-black dark:text-white border-none',
           commandProps?.className
         )}
         shouldFilter={
@@ -423,7 +421,7 @@ const MultipleSelector = React.forwardRef<
       >
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            'min-h-10 rounded-md text-sm',
             {
               'px-3 py-2': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
@@ -465,7 +463,7 @@ const MultipleSelector = React.forwardRef<
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="size-3 text-muted-foreground hover:text-foreground" />
+                    <X className="size-3 font-semibold text-black" />
                   </button>
                 </Badge>
               );
@@ -528,7 +526,7 @@ const MultipleSelector = React.forwardRef<
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
+              className="absolute top-1 z-10 w-full rounded-md bg-popover text-popover-foreground shadow-md outline-none animate-in"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}
