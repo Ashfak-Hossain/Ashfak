@@ -1,14 +1,11 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { z } from 'zod';
 
+import { getAllBlogs } from '@/actions/blog/blog.action';
 import { columns } from '@/components/blog/dataTable/columns';
 import { DataTable } from '@/components/blog/dataTable/data-table';
 import { Button } from '@/components/ui/button';
-import { taskSchema } from '@/schema/validation/user-table-schema';
 
 export const metadata: Metadata = {
   title: 'Ashfak Hossain | All Blogs',
@@ -16,18 +13,19 @@ export const metadata: Metadata = {
     'All blogs in the blog system. Create, edit, delete blogs. Manage blog posts. Manage blog comments. Manage blog tags. Manage blog categories',
 };
 
-async function getTasks() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), 'components/blog/dataTable/data/tasks.json')
-  );
-
-  const tasks = JSON.parse(data.toString());
-
-  return z.array(taskSchema).parse(tasks);
-}
-
 const BlogsPage = async () => {
-  const tasks = await getTasks();
+  const data = await getAllBlogs();
+
+  if ('error' in data) {
+    return <div>{data.error}</div>;
+  }
+
+  const blogs = data.map((blog) => ({
+    id: blog.id,
+    title: blog.title,
+    status: blog.status,
+    priority: blog.views > 1000 ? 'high' : 'low',
+  }));
 
   return (
     <div className="min-h-screen rounded-base border-2 border-border bg-white text-text dark:border-darkBorder dark:bg-gray-600 dark:text-darkText">
@@ -39,7 +37,7 @@ const BlogsPage = async () => {
           </Link>
         </div>
         <div className="py-10">
-          <DataTable columns={columns} data={tasks} />
+          <DataTable columns={columns} data={blogs} />
         </div>
       </div>
     </div>

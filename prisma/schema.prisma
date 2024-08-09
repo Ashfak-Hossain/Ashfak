@@ -69,28 +69,35 @@ model PasswordResetToken {
 }
 
 enum BlogStatus {
-  Backlog
-  Todo
-  Writing
-  Published
-  Draft
-  Cancelled
+  backlog
+  todo
+  writing
+  published
+  draft
+  cancelled
+}
+
+enum Priority {
+  low
+  medium
+  high
 }
 
 model Blog {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  coverImage String
-  title      String
-  content    Json
-  slug       String     @unique
-  status     BlogStatus @default(Draft)
-  likes      Int        @default(0)
-  views      Int        @default(0)
-  Comments   Comments[]
-  tagIds     String[]   @db.ObjectId
-  tags       Tags[]     @relation(fields: [tagIds], references: [id])
-  user       User?      @relation(fields: [userId], references: [id])
-  userId     String?    @db.ObjectId
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  coverImageName String
+  title          String
+  content        Json
+  slug           String     @unique
+  status         BlogStatus @default(draft)
+  priority       Priority   @default(low)
+  likes          Int        @default(0)
+  views          Int        @default(0)
+  Comments       Comments[]
+  tagIds         String[]   @db.ObjectId
+  tags           Tags[]     @relation(fields: [tagIds], references: [id])
+  user           User?      @relation(fields: [userId], references: [id])
+  userId         String?    @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { createBlog } from '@/actions/blog/blog.action';
 import { getAllTags } from '@/actions/blog/tags.action';
 import EditorSkeleton from '@/components/blog/editor/editor-skeleton';
+import ImageUpload from '@/components/blog/form/ImageUpload';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,14 +23,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { ToastAction } from '@/components/ui/toast';
 import { toast } from '@/components/ui/use-toast';
+import { readFileAsBase64 } from '@/lib/utils';
 import {
   NewContent,
   newContentSchema,
 } from '@/schema/validation/new-content-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-
-import ImageUpload from './ImageUpload';
 
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
@@ -66,13 +66,18 @@ const NewContentForm: React.FC = () => {
   };
 
   const onSubmit = (values: NewContent) => {
+    const { title, tags } = values;
     startTransition(async () => {
       try {
+        const base64Image = await readFileAsBase64(values.coverImage);
+
         const data = await createBlog({
-          coverImage: values.coverImage.name,
-          title: values.title,
+          title,
+          tags,
+          base64CoverImage: base64Image,
+          coverImageName: values.coverImage.name,
+          coverImageType: values.coverImage.type,
           content: editorContent,
-          tags: values.tags,
         });
 
         if (data.success) {
@@ -80,7 +85,7 @@ const NewContentForm: React.FC = () => {
         } else if (data?.error) {
           showToast('destructive', 'Error', data.error);
         }
-      } catch {
+      } catch (e) {
         showToast('destructive', 'Error', 'Something went wrong!');
       }
     });

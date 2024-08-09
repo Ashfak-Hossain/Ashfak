@@ -2,7 +2,12 @@
 
 import slugify from 'slugify';
 
+import {
+  getSignedCloudfrontUrl,
+  uploadFileToS3,
+} from '@/actions/awsS3/uploadToS3';
 import { CreateBlogParams } from '@/actions/blog/shared.types';
+import { CurrentUser } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 const ERROR_MESSAGES = {
@@ -11,11 +16,18 @@ const ERROR_MESSAGES = {
 };
 
 export const createBlog = async ({
-  coverImage,
+  base64CoverImage,
+  coverImageName,
+  coverImageType,
   title,
   content,
   tags,
 }: CreateBlogParams) => {
+  const user = await CurrentUser();
+  if (!user || user.role !== 'ADMIN') {
+    return { error: 'Unauthorized' };
+  }
+
   const slug = slugify(title, { lower: true });
 
   const existingSlug = await db.blog.findUnique({ where: { slug } });
@@ -23,6 +35,13 @@ export const createBlog = async ({
   if (existingSlug) {
     return { error: ERROR_MESSAGES.TITLE_AVAILABLE };
   }
+
+  const coverImageNameUrl = await uploadFileToS3(
+    base64CoverImage,
+    coverImageName,
+    coverImageType,
+    'blog_cover_image'
+  );
 
   const tagIds = await Promise.all(
     tags.map(async (tag) => {
@@ -46,7 +65,7 @@ export const createBlog = async ({
   try {
     await db.blog.create({
       data: {
-        coverImage,
+        coverImageName: coverImageNameUrl,
         title,
         content,
         slug,
@@ -61,13 +80,35 @@ export const createBlog = async ({
   }
 };
 
-export const getBlogs = async () => {
-  return await db.blog.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
+export const getAllBlogs = async () => {
+  const blogs = await db.blog.findMany({
     include: {
       tags: true,
     },
   });
+
+  return blogs.length > 0 ? blogs : { error: 'No blogs found' };
+};
+
+export const getBlogBySlug = async (slug: string) => {
+  const blog = await db.blog.findUnique({
+    where: { slug },
+    include: {
+      tags: true,
+    },
+  });
+
+  if (!blog) {
+    return { error: 'Blog not found' };
+  }
+
+  const signedCoverImageUrl = await getSignedCloudfrontUrl(
+    blog.coverImageName,
+    'blog_cover_image'
+  );
+
+  return {
+    ...blog,
+    coverImage: signedCoverImageUrl,
+  };
 };

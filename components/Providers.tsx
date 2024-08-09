@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ThemeProvider } from '@/components/shared/theme-provider';
 import ModeToggle from '@/components/shared/Theme-switch';
@@ -12,9 +12,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-const queryClient = new QueryClient();
-
 export default function Providers({ children }: ProvidersProps) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <React.Fragment>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

@@ -2,11 +2,12 @@ import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-  CircleCheck,
-  CircleHelp,
-  CircleIcon,
+  CheckCheckIcon,
   CircleX,
-  Timer,
+  FileQuestionIcon,
+  ListChecksIcon,
+  NotebookPenIcon,
+  RotateCcwIcon,
 } from 'lucide-react';
 
 export const labels = [
@@ -28,22 +29,27 @@ export const statuses = [
   {
     value: 'backlog',
     label: 'Backlog',
-    icon: CircleHelp,
+    icon: RotateCcwIcon,
   },
   {
     value: 'todo',
     label: 'Todo',
-    icon: CircleIcon,
+    icon: ListChecksIcon,
   },
   {
-    value: 'in progress',
-    label: 'In Progress',
-    icon: Timer,
+    value: 'writing',
+    label: 'Writing',
+    icon: NotebookPenIcon,
   },
   {
-    value: 'done',
-    label: 'Done',
-    icon: CircleCheck,
+    value: 'published',
+    label: 'Published',
+    icon: CheckCheckIcon,
+  },
+  {
+    value: 'draft',
+    label: 'Draft',
+    icon: FileQuestionIcon,
   },
   {
     value: 'canceled',

@@ -2,7 +2,10 @@
 
 import { X } from 'lucide-react';
 
-import { priorities, statuses } from '@/components/blog/dataTable/data/data';
+import {
+  priorities,
+  statuses,
+} from '@/components/blog/dataTable/constants/data';
 import { DataTableFacetedFilter } from '@/components/blog/dataTable/data-table-faceted-filter';
 import { DataTableViewOptions } from '@/components/blog/dataTable/data-table-view-options';
 import { Button } from '@/components/ui/button';
