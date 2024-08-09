@@ -36,7 +36,7 @@ const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   loading: () => <EditorSkeleton />,
 });
 
-const NewContentForm: React.FC = () => {
+const ContentForm: React.FC = () => {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>('');
   const [editorContent, setEditorContent] = useState('');
   const [isPending, startTransition] = useTransition();
@@ -198,4 +198,4 @@ const NewContentForm: React.FC = () => {
   );
 };
 
-export default NewContentForm;
+export default ContentForm;
