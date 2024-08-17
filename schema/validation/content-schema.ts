@@ -6,6 +6,9 @@ const optionSchema = z.object({
   disable: z.boolean().optional(),
 });
 
+/**
+ * New content schema
+ */
 export const newContentSchema = z.object({
   coverImage: z
     .instanceof(File)
@@ -14,5 +17,8 @@ export const newContentSchema = z.object({
   tags: z.array(optionSchema).min(1, 'At least one tag is required'),
   content: z.string().min(1, 'Content is required'),
 });
-
 export type NewContent = z.infer<typeof newContentSchema>;
+
+/**
+ * Edit content schema
+ */

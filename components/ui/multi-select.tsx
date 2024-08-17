@@ -332,7 +332,7 @@ const MultipleSelector = React.forwardRef<
       const Item = (
         <CommandItem
           value={inputValue}
-          className="cursor-pointer outline-none dark:outline-none"
+          className="cursor-pointer"
           onMouseDown={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -409,7 +409,7 @@ const MultipleSelector = React.forwardRef<
           commandProps?.onKeyDown?.(e);
         }}
         className={cn(
-          'h-auto overflow-visible bg-transparent bg-white dark:bg-gray-600 text-black dark:text-white border-none',
+          'h-auto overflow-visible bg-transparent text-black',
           commandProps?.className
         )}
         shouldFilter={
@@ -526,7 +526,7 @@ const MultipleSelector = React.forwardRef<
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md bg-popover text-popover-foreground shadow-md outline-none animate-in"
+              className="absolute top-1 z-10 w-full rounded-md bg-bg text-popover-foreground shadow-md outline-none animate-in dark:bg-darkBg"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}

@@ -7,10 +7,11 @@ import {
 import { DataTableColumnHeader } from '@/components/blog/dataTable/data-table-column-header';
 import { DataTableRowActions } from '@/components/blog/dataTable/data-table-row-actions';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Task } from '@/schema/validation/user-table-schema';
+import { Blog } from '@/schema/validation/user-table-schema';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Blog>[] = [
+  // Add select column
   {
     id: 'select',
     header: ({ table }) => (
@@ -35,6 +36,8 @@ export const columns: ColumnDef<Task>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
+  // Add title column
   {
     accessorKey: 'title',
     header: ({ column }) => (
@@ -53,6 +56,8 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
   },
+
+  // Add status column
   {
     accessorKey: 'status',
     header: ({ column }) => (
@@ -78,6 +83,8 @@ export const columns: ColumnDef<Task>[] = [
       return value.includes(row.getValue(id));
     },
   },
+
+  // Add priority column
   {
     accessorKey: 'priority',
     header: ({ column }) => (
@@ -85,7 +92,7 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: ({ row }) => {
       const priority = priorities.find(
-        async (priority) => priority.value === (await row.getValue('priority'))
+        (priority) => priority.value === row.getValue('priority')
       );
 
       if (!priority) {
@@ -105,6 +112,8 @@ export const columns: ColumnDef<Task>[] = [
       return value.includes(row.getValue(id));
     },
   },
+
+  // Add actions column
   {
     id: 'actions',
     cell: ({ row }) => <DataTableRowActions row={row} />,

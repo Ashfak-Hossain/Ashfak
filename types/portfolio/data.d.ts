@@ -45,10 +45,6 @@ export interface ContactFormEmailProps {
   senderEmail: string;
 }
 
-export interface ProvidersProps {
-  children: React.ReactNode;
-}
-
 export interface ProjectCardProps {
   title: string;
   description: string;

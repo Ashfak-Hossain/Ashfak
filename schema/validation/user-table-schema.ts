@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-export const taskSchema = z.object({
+export const blogSchema = z.object({
   id: z.string(),
   title: z.string(),
   status: z.string(),
   priority: z.string(),
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export type Blog = z.infer<typeof blogSchema>;

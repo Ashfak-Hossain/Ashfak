@@ -11,12 +11,6 @@ export interface FilterProps {
   value: string;
 }
 
-export interface EditorProps {
-  onChange: (value: string) => void;
-  initialContent?: string;
-  editable?: boolean;
-}
-
 export interface Tags {
   tags: {
     value: string;

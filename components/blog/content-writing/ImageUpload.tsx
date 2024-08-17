@@ -9,7 +9,7 @@ import { useFormContext } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { FormControl, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import type { NewContent } from '@/schema/validation/new-content-schema';
+import type { NewContent } from '@/schema/validation/content-schema';
 
 interface ImageUploadProps {
   preview: string | ArrayBuffer | null;

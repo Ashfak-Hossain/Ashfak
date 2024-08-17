@@ -1,5 +1,14 @@
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Ellipsis } from 'lucide-react';
+import slugify from 'slugify';
+import { toast } from 'sonner';
 
+import { deleteBlogbySlug } from '@/actions/blog/blog.action';
+import {
+  updateBlogPriority,
+  updateBlogStatus,
+} from '@/actions/blog/table.action';
 import {
   priorities,
   statuses,
@@ -17,7 +26,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { taskSchema } from '@/schema/validation/user-table-schema';
+import { blogSchema } from '@/schema/validation/user-table-schema';
 import { Row } from '@tanstack/react-table';
 
 interface DataTableRowActionsProps<TData> {
@@ -27,26 +36,49 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
+  const blog = blogSchema.parse(row.original);
+  const router = useRouter();
+  const slug = slugify(blog.title, { lower: true });
 
-  const handleEditClick = () => {
-    console.log('Edit clicked:', task);
-    // Handle edit action here
+  const handlePriorityChange = async (newPriority: string) => {
+    try {
+      const status = await updateBlogPriority(slug, newPriority);
+      if (status.success) {
+        toast.success('Good job! Priority updated successfully.');
+      } else if (status.error) {
+        toast.error(status.message);
+      }
+    } catch (error) {
+      toast.error("Oops! Couldn't update priority.");
+    }
   };
 
-  const handlePriorityChange = (value: string) => {
-    console.log('Priority changed:', value, task);
-    // Handle priority change action here
+  const handleStatusChange = async (newStatus: string) => {
+    try {
+      const status = await updateBlogStatus(slug, newStatus);
+
+      if (status.success) {
+        toast.success('Good job! Status updated successfully.');
+      } else if (status.error) {
+        toast.error(status.message);
+      }
+    } catch (error) {
+      toast.error("Oops! Couldn't update status.");
+    }
   };
 
-  const handleStatusChange = (value: string) => {
-    console.log('Status changed:', value, task);
-    // Handle status change action here
-  };
+  const handleDeleteClick = async () => {
+    try {
+      const response = await deleteBlogbySlug(slug);
 
-  const handleDeleteClick = () => {
-    console.log('Delete clicked:', task);
-    // Handle delete action here
+      if (response.success) {
+        toast.success(response.message);
+      } else if (response.error) {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error("Why are you deleting this! Couldn't delete blog.");
+    }
   };
 
   return (
@@ -61,12 +93,18 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onClick={handleEditClick}>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            router.push(`/dashboard/edit/${slug}`);
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuRadioGroup
-              value={task.priority}
+              value={blog.priority}
               onValueChange={handlePriorityChange}
             >
               {priorities.map((priority) => (
@@ -85,7 +123,7 @@ export function DataTableRowActions<TData>({
           <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuRadioGroup
-              value={task.status}
+              value={blog.status}
               onValueChange={handleStatusChange}
             >
               {statuses.map((status) => (
@@ -100,6 +138,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
+
         <DropdownMenuItem onClick={handleDeleteClick}>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

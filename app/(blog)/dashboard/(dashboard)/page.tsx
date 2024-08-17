@@ -1,26 +1,19 @@
 import React from 'react';
 
-import { getBlogs } from '@/actions/blog/blog.action';
+import { getAllBlogs } from '@/actions/blog/blog.action';
 
 const page = async () => {
-  const blogs = await getBlogs();
-  console.log(blogs);
+  const blogs = await getAllBlogs();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       {blogs.map((blog) => (
-        <div key={blog.id} className="flex flex-col gap-2">
-          <h2 className="text-2xl font-bold">{blog.title}</h2>
-          <div className="flex gap-2">
-            {blog.tags.map((tag) => (
-              <span
-                key={tag.id}
-                className="rounded-md bg-gray-200 px-2 py-1 dark:bg-gray-600"
-              >
-                {tag.label}
-              </span>
-            ))}
-          </div>
+        <div key={blog.id}>
+          <h1>{blog.title}</h1>
+          Tags:
+          {blog.tags.map((tag) => (
+            <span key={tag.id}>{tag.label}</span>
+          ))}
         </div>
       ))}
     </div>

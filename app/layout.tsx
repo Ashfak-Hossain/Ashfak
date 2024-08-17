@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 
 import { auth } from '@/auth';
-import Providers from '@/components/Providers';
+import Providers from '@/components/providers/Providers';
 import { inter } from '@/fonts';
 
 import '@/app/globals.css';

@@ -17,14 +17,14 @@ const BlogsPage = async () => {
   const data = await getAllBlogs();
 
   if ('error' in data) {
-    return <div>{data.error}</div>;
+    return <div>Error</div>;
   }
 
-  const blogs = data.map((blog) => ({
-    id: blog.id,
-    title: blog.title,
-    status: blog.status,
-    priority: blog.views > 1000 ? 'high' : 'low',
+  const blogs = data.map(({ id, title, status, priority }) => ({
+    id,
+    title,
+    status,
+    priority,
   }));
 
   return (
@@ -32,7 +32,7 @@ const BlogsPage = async () => {
       <div className="p-10">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Blogs</h1>
-          <Link href="/dashboard/new-content">
+          <Link href="/dashboard/new">
             <Button>New Blog</Button>
           </Link>
         </div>

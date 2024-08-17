@@ -101,6 +101,7 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
 
     return () => {
       if (containerRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         resizeObserver.unobserve(containerRef.current);
       }
     };
