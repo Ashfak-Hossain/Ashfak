@@ -1,35 +1,36 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Bookmark, Eye, Heart, MessageSquare } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
+import { JsonValue } from '@prisma/client/runtime/library';
+import { formatDate } from '@/lib/utils';
 
 interface BlogCardProps {
-  id: string;
+  slug: string;
   title: string;
-  content: string;
+  content: JsonValue;
   tags: {
-    id: number;
-    name: string;
+    id: string;
+    label: string;
   }[];
   reactions: number;
   views: number;
-  comments: Array<object>;
-  readTime: number;
+  // comments: Array<object>;
   coverImage: string;
   createdAt: Date;
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({
-  id,
+  slug,
   title,
   content,
   tags,
   reactions,
   views,
-  readTime,
-  comments,
+  // comments,
   coverImage,
   createdAt,
 }) => {
@@ -39,21 +40,15 @@ const BlogCard: React.FC<BlogCardProps> = ({
         <div className="flex flex-col sm:flex-row">
           <div className="mb-2 flex-1 sm:mb-0 sm:mr-4">
             <span>
-              <p className="text-xs font-base">
-                {createdAt.toLocaleString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </p>
+              <p className="text-xs font-base">{formatDate(createdAt)} </p>
             </span>
-            <Link href={`/blog/${id}`}>
+            <Link href={`/blog/${slug}`}>
               <h2 className="my-2 line-clamp-2 py-1 text-2xl font-extrabold">
                 {title}
               </h2>
             </Link>
             <p className="line-clamp-2 text-sm font-base tracking-wide">
-              {content}
+              {JSON.stringify(content)}
             </p>
           </div>
 
@@ -72,7 +67,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         <div>
           {tags.map((tag) => (
             <Badge key={tag.id} variant="neutral" className="mr-2 mt-3">
-              #{tag.name}
+              #{tag.label}
             </Badge>
           ))}
         </div>
@@ -84,12 +79,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 <Heart size={22} fill="#EF5A6F" strokeWidth={0} />
                 <span>{reactions}</span>
               </span>
-              {comments.length > 0 && (
+              {/* {comments.length > 0 && (
                 <span className="flex items-center gap-1">
                   <MessageSquare size={22} fill="grey" strokeWidth={0} />
                   <span>{comments.length}</span>
                 </span>
-              )}
+              )} */}
               <span className="flex items-center gap-1">
                 <Eye size={18} />
                 {views}

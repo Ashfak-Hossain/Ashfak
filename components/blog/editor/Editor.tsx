@@ -13,7 +13,7 @@ import '@blocknote/core/fonts/inter.css';
 import '@blocknote/shadcn/style.css';
 
 interface EditorProps {
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   initialContent?: string;
   editable?: boolean;
 }
@@ -54,7 +54,9 @@ const Editor: React.FC<EditorProps> = ({
       editor={editor}
       theme={resolvedTheme === 'light' ? 'light' : 'dark'}
       onChange={() => {
-        onChange(JSON.stringify(editor.document, null, 2));
+        if (onChange) {
+          onChange(JSON.stringify(editor.document, null, 2));
+        }
       }}
       editable={editable}
     />

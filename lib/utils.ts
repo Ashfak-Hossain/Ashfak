@@ -18,3 +18,11 @@ export const readFileAsBase64 = (file: File): Promise<string> => {
     reader.readAsDataURL(file);
   });
 };
+
+export const formatDate = (date: string | Date): string => {
+  return new Date(date).toLocaleString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};

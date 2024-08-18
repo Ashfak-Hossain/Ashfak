@@ -22,7 +22,7 @@ const Navbar = async ({ fixed }: { fixed?: boolean }) => {
     >
       <div className="m-auto flex w-full max-w-[1380px] px-3">
         <div className="flex flex-1 items-center gap-3">
-          <Link href="/blog" className="flex items-center text-nowrap px-3">
+          <Link href="/blogs" className="flex items-center text-nowrap px-3">
             <CommandIcon height={32} width={32} aria-label="Icon" />
             <h2 className="ml-4 text-2xl font-heading">Ashfak's Note Book</h2>
           </Link>

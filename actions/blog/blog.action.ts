@@ -92,11 +92,30 @@ export const createBlog = async ({
 export const getAllBlogs = async () => {
   const blogs = await db.blog.findMany({
     include: {
-      tags: true,
+      tags: {
+        select: {
+          id: true,
+          label: true,
+        },
+      },
     },
   });
 
-  return blogs;
+  const blogsWithImages = await Promise.all(
+    blogs.map(async (blog) => {
+      const signedCoverImageUrl = await getSignedCloudfrontUrl(
+        blog.coverImageName,
+        'blog_cover_image'
+      );
+
+      return {
+        ...blog,
+        coverImage: signedCoverImageUrl,
+      };
+    })
+  );
+
+  return blogsWithImages;
 };
 
 export const deleteBlogbySlug = async (slug: string) => {
@@ -154,7 +173,7 @@ export const getBlogBySlug = async (slug: string) => {
   });
 
   if (!blog) {
-    return { error: 'Invalid url' };
+    return;
   }
 
   const signedCoverImageUrl = await getSignedCloudfrontUrl(
@@ -162,7 +181,10 @@ export const getBlogBySlug = async (slug: string) => {
     'blog_cover_image'
   );
 
+  console.log(signedCoverImageUrl);
+
   return {
+    success: 200,
     ...blog,
     coverImage: signedCoverImageUrl,
   };

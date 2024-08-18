@@ -30,7 +30,7 @@ export const sidebarLinks: SidebarLink[] = [
     icon: Users,
   },
   {
-    href: '/blog',
+    href: '/blogs',
     label: 'Home',
     icon: House,
   },
