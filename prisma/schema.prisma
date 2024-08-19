@@ -21,8 +21,13 @@ model User {
   image         String?
   role          UserRole   @default(USER)
   accounts      Account[]
-  savedBlogs    Blog[]
   Comments      Comments[]
+
+  savedBlogIds String[] @db.ObjectId
+  savedBlogs   Blog[]   @relation("UserSavesBlog", fields: [savedBlogIds], references: [id])
+
+  likedBlogIds String[] @db.ObjectId
+  likedBlogs   Blog[]   @relation("UserLikesBlog", fields: [likedBlogIds], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -96,8 +101,12 @@ model Blog {
   Comments       Comments[]
   tagIds         String[]   @db.ObjectId
   tags           Tags[]     @relation(fields: [tagIds], references: [id])
-  user           User?      @relation(fields: [userId], references: [id])
-  userId         String?    @db.ObjectId
+
+  savedByIds String[] @db.ObjectId
+  savedBy    User[]   @relation("UserSavesBlog", fields: [savedByIds], references: [id])
+
+  likedByIds String[] @db.ObjectId
+  likedBy    User[]   @relation("UserLikesBlog", fields: [likedByIds], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -16,6 +16,7 @@ import {
 } from '@/actions/blog/shared.types';
 import { checkAdmin } from '@/actions/utils.action';
 import { db } from '@/lib/db';
+import { CurrentUser } from '@/lib/auth';
 
 const ERROR_MESSAGES = {
   TITLE_AVAILABLE: 'Title already available. Please change the title.',
@@ -89,8 +90,24 @@ export const createBlog = async ({
   }
 };
 
-export const getAllBlogs = async () => {
+export const getAllPublishedBlogs = async ({
+  skip = 0,
+  take = 5,
+  sort = 'latest',
+}: {
+  skip?: number;
+  take?: number;
+  sort?: string;
+}) => {
+  const orderBy =
+    sort === 'popular'
+      ? { views: 'desc' as const }
+      : { createdAt: 'desc' as const };
+
   const blogs = await db.blog.findMany({
+    skip,
+    take,
+    where: { status: 'published' },
     include: {
       tags: {
         select: {
@@ -98,7 +115,17 @@ export const getAllBlogs = async () => {
           label: true,
         },
       },
+      likedBy: {
+        select: {
+          id: true,
+        },
+      },
     },
+    orderBy,
+  });
+
+  const total_blogs = await db.blog.count({
+    where: { status: 'published' },
   });
 
   const blogsWithImages = await Promise.all(
@@ -115,7 +142,13 @@ export const getAllBlogs = async () => {
     })
   );
 
-  return blogsWithImages;
+  return {
+    data: blogsWithImages,
+    metadata: {
+      hasNextPage: skip + take < total_blogs,
+      totalPages: Math.ceil(total_blogs / take),
+    },
+  };
 };
 
 export const deleteBlogbySlug = async (slug: string) => {
@@ -153,6 +186,7 @@ export const deleteBlogbySlug = async (slug: string) => {
         });
       }
     }
+    // delete likes relation from user and blog
 
     revalidatePath('/dashboard/blogs');
     return {
@@ -165,23 +199,35 @@ export const deleteBlogbySlug = async (slug: string) => {
 };
 
 export const getBlogBySlug = async (slug: string) => {
+  await db.blog.update({
+    where: { slug },
+    data: {
+      views: {
+        increment: 1,
+      },
+    },
+  });
+
   const blog = await db.blog.findUnique({
     where: { slug },
     include: {
       tags: true,
+      likedBy: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
   if (!blog) {
-    return;
+    return false;
   }
 
   const signedCoverImageUrl = await getSignedCloudfrontUrl(
     blog.coverImageName,
     'blog_cover_image'
   );
-
-  console.log(signedCoverImageUrl);
 
   return {
     success: 200,
@@ -240,5 +286,24 @@ export const updateBlogCover = async ({
     return { success: true };
   } catch (error) {
     return { error: ERROR_MESSAGES.UPDATE_FAILED };
+  }
+};
+
+export const getBlogsForDashboardTable = async () => {
+  // Check if the user is an admin
+  checkAdmin();
+
+  try {
+    const blogs = await db.blog.findMany({
+      select: {
+        id: true,
+        title: true,
+        status: true,
+        priority: true,
+      },
+    });
+    return blogs;
+  } catch (error) {
+    return;
   }
 };

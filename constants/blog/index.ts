@@ -11,7 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 
-import { FilterProps, SidebarLink } from '@/types/blog';
+import { SortProps, SidebarLink } from '@/types/blog';
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -66,17 +66,13 @@ export const sidebarLinks: SidebarLink[] = [
   },
 ];
 
-export const HomePagegFilters: FilterProps[] = [
-  {
-    name: 'Favored',
-    value: 'favored',
-  },
+export const HomePageSorting: SortProps[] = [
   {
     name: 'Latest',
     value: 'latest',
   },
   {
-    name: 'Top',
-    value: 'top',
+    name: 'Popular',
+    value: 'popular',
   },
 ];

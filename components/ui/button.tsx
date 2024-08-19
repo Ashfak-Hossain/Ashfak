@@ -14,7 +14,7 @@ const buttonVariants = cva(
         noShadow: 'border-2 border-border bg-main dark:border-darkBorder',
         link: 'text-text underline-offset-4 hover:underline dark:text-darkText',
         neutral:
-          'border-2 border-border bg-white shadow-light hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:border-darkBorder dark:bg-darkBg dark:text-darkText dark:shadow-dark dark:hover:shadow-none',
+          'border-2 border-border bg-white shadow-light hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:border-darkBorder dark:bg-[#4B5563] dark:text-darkText dark:shadow-dark dark:hover:shadow-none',
         reverse:
           'border-2 border-border bg-main hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-light dark:border-darkBorder dark:hover:shadow-dark',
         ghost:

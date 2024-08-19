@@ -6,7 +6,7 @@ export interface SidebarLink {
   icon: LucideIcon;
 }
 
-export interface FilterProps {
+export interface SortProps {
   name: string;
   value: string;
 }
@@ -16,4 +16,9 @@ export interface Tags {
     value: string;
     label: string;
   }[];
+}
+
+export interface BlogPageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+  params: { [key: string]: string | string[] | undefined };
 }

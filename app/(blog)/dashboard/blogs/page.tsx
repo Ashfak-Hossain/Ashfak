@@ -2,10 +2,11 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import { getAllBlogs } from '@/actions/blog/blog.action';
+import { getBlogsForDashboardTable } from '@/actions/blog/blog.action';
 import { columns } from '@/components/blog/dataTable/columns';
 import { DataTable } from '@/components/blog/dataTable/data-table';
 import { Button } from '@/components/ui/button';
+import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Ashfak Hossain | All Blogs',
@@ -14,18 +15,8 @@ export const metadata: Metadata = {
 };
 
 const BlogsPage = async () => {
-  const data = await getAllBlogs();
-
-  if ('error' in data) {
-    return <div>Error</div>;
-  }
-
-  const blogs = data.map(({ id, title, status, priority }) => ({
-    id,
-    title,
-    status,
-    priority,
-  }));
+  const data = await getBlogsForDashboardTable();
+  if (!data) return notFound();
 
   return (
     <div className="min-h-screen rounded-base border-2 border-border bg-white text-text dark:border-darkBorder dark:bg-gray-600 dark:text-darkText">
@@ -37,7 +28,7 @@ const BlogsPage = async () => {
           </Link>
         </div>
         <div className="py-10">
-          <DataTable columns={columns} data={blogs} />
+          <DataTable columns={columns} data={data} />
         </div>
       </div>
     </div>

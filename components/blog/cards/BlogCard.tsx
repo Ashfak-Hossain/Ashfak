@@ -1,23 +1,21 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bookmark, Eye, Heart, MessageSquare } from 'lucide-react';
+import { Bookmark, Eye, MessageSquare, Telescope, Zap } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { JsonValue } from '@prisma/client/runtime/library';
 import { formatDate } from '@/lib/utils';
 
 interface BlogCardProps {
   slug: string;
   title: string;
-  content: JsonValue;
   tags: {
     id: string;
     label: string;
   }[];
   reactions: number;
   views: number;
+  likedBy: boolean;
   // comments: Array<object>;
   coverImage: string;
   createdAt: Date;
@@ -26,10 +24,10 @@ interface BlogCardProps {
 const BlogCard: React.FC<BlogCardProps> = ({
   slug,
   title,
-  content,
   tags,
   reactions,
   views,
+  likedBy,
   // comments,
   coverImage,
   createdAt,
@@ -43,13 +41,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
               <p className="text-xs font-base">{formatDate(createdAt)} </p>
             </span>
             <Link href={`/blog/${slug}`}>
-              <h2 className="my-2 line-clamp-2 py-1 text-2xl font-extrabold">
+              <h2 className="mt-2 line-clamp-2 py-1 text-2xl font-extrabold">
                 {title}
               </h2>
             </Link>
-            <p className="line-clamp-2 text-sm font-base tracking-wide">
-              {JSON.stringify(content)}
-            </p>
+
+            <div>
+              {tags.map((tag) => (
+                <Badge key={tag.id} variant="neutral" className="mr-2 mt-3">
+                  #{tag.label}
+                </Badge>
+              ))}
+            </div>
           </div>
 
           <div className="w-full flex-none sm:w-1/4">
@@ -64,19 +67,15 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </div>
         </div>
 
-        <div>
-          {tags.map((tag) => (
-            <Badge key={tag.id} variant="neutral" className="mr-2 mt-3">
-              #{tag.label}
-            </Badge>
-          ))}
-        </div>
-
         <div className="mt-3 flex flex-row justify-between py-2 font-medium">
           <div className="flex flex-row text-xs sm:space-x-4">
             <div className="flex items-center space-x-4 md:space-x-8">
               <span className="flex items-center gap-1">
-                <Heart size={22} fill="#EF5A6F" strokeWidth={0} />
+                <Zap
+                  size={22}
+                  fill={likedBy ? '#EF5A6F' : 'none'}
+                  strokeWidth={likedBy ? 0 : 2}
+                />
                 <span>{reactions}</span>
               </span>
               {/* {comments.length > 0 && (
@@ -86,8 +85,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 </span>
               )} */}
               <span className="flex items-center gap-1">
-                <Eye size={18} />
-                {views}
+                <Telescope size={18} />
+                {views} views
               </span>
             </div>
           </div>

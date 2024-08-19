@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
 import Footer from '@/components/blog/footer/Footer';
@@ -46,14 +46,14 @@ export const metadata: Metadata = {
 export default async function BlogLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const user = await CurrentUser();
 
   return (
     <main>
       <Navbar />
-      <div className={cn('m-auto flex max-w-5xl', !user ? 'pt-20' : '')}>
+      <div className={cn('m-auto flex max-w-6xl px-3', !user ? 'pt-20' : '')}>
         <section className="flex flex-col flex-1">
           <Search className="mb-6 w-full md:hidden" />
           <div>{children}</div>
