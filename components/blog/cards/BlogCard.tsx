@@ -16,6 +16,7 @@ interface BlogCardProps {
   reactions: number;
   views: number;
   likedBy: boolean;
+  bookmarkedBy: boolean;
   // comments: Array<object>;
   coverImage: string;
   createdAt: Date;
@@ -28,6 +29,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
   reactions,
   views,
   likedBy,
+  bookmarkedBy,
   // comments,
   coverImage,
   createdAt,
@@ -40,7 +42,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <span>
               <p className="text-xs font-base">{formatDate(createdAt)} </p>
             </span>
-            <Link href={`/blog/${slug}`}>
+            <Link href={`/post/${slug}`}>
               <h2 className="mt-2 line-clamp-2 py-1 text-2xl font-extrabold">
                 {title}
               </h2>
@@ -90,8 +92,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </span>
             </div>
           </div>
-          <div className="flex flex-row items-center space-x-4 text-xs">
-            <Bookmark size={22} />
+          <div className="flex flex-row  items-center space-x-4 text-xs">
+            <Bookmark
+              size={25}
+              fill={bookmarkedBy ? '#4d80e6' : 'none'}
+              strokeWidth={bookmarkedBy ? 0 : 2}
+            />
           </div>
         </div>
       </div>

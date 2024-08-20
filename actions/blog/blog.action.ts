@@ -17,6 +17,7 @@ import {
 import { checkAdmin } from '@/actions/utils.action';
 import { db } from '@/lib/db';
 import { CurrentUser } from '@/lib/auth';
+import { BlogStatus } from '@prisma/client';
 
 const ERROR_MESSAGES = {
   TITLE_AVAILABLE: 'Title already available. Please change the title.',
@@ -94,20 +95,37 @@ export const getAllPublishedBlogs = async ({
   skip = 0,
   take = 5,
   sort = 'latest',
+  savedBlogs = false,
 }: {
   skip?: number;
   take?: number;
   sort?: string;
+  savedBlogs?: boolean;
 }) => {
+  const user = await CurrentUser();
+
   const orderBy =
     sort === 'popular'
       ? { views: 'desc' as const }
       : { createdAt: 'desc' as const };
 
+  const where = savedBlogs
+    ? {
+        status: BlogStatus.published,
+        bookmarkedBy: {
+          some: {
+            id: user?.id,
+          },
+        },
+      }
+    : {
+        status: BlogStatus.published,
+      };
+
   const blogs = await db.blog.findMany({
     skip,
     take,
-    where: { status: 'published' },
+    where,
     include: {
       tags: {
         select: {

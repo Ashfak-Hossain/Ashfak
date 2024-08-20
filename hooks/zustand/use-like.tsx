@@ -4,14 +4,14 @@ import { create } from 'zustand';
 type LikeStore = {
   hasLiked: boolean;
   likeCount: number;
-  initialize: (isLiked: boolean, likeCount: number) => void;
+  initializeLike: (isLiked: boolean, likeCount: number) => void;
   toggleLike: (slug: string) => Promise<void>;
 };
 
 export const useLike = create<LikeStore>((set, get) => ({
   hasLiked: false,
   likeCount: 0,
-  initialize: (isLiked, likeCount) => {
+  initializeLike: (isLiked, likeCount) => {
     set({
       hasLiked: isLiked ? true : false,
       likeCount,

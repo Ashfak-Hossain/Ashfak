@@ -1,11 +1,9 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
 import Footer from '@/components/blog/footer/Footer';
 import Navbar from '@/components/blog/navbar/Navbar';
 import Search from '@/components/blog/search/Search';
-import LeftSideBar from '@/components/blog/sidebar/LeftSideBar';
-import RightSideBar from '@/components/blog/sidebar/RightSideBar';
 import { CurrentUser } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 
@@ -48,22 +46,18 @@ export const metadata: Metadata = {
 export default async function BlogLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const user = await CurrentUser();
 
   return (
     <main>
       <Navbar />
-      <div
-        className={cn('m-auto flex max-w-[1380px] px-3', !user ? 'pt-20' : '')}
-      >
-        <LeftSideBar />
-        <section className="flex min-h-screen flex-1 flex-col px-4 sm:border-l lg:border-none">
+      <div className={cn('m-auto flex max-w-6xl px-3', !user ? 'pt-20' : '')}>
+        <section className="flex flex-col flex-1">
           <Search className="mb-6 w-full md:hidden" />
           <div>{children}</div>
         </section>
-        <RightSideBar />
       </div>
       <Footer />
     </main>

@@ -24,13 +24,28 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
     loading: () => <EditorSkeleton />,
   });
 
-  const isUserLiked = blog.likedByIds.find((id) => id === user?.id);
+  const isUserLiked = blog.likedByIds?.find((id) => id === user?.id);
+  const isUserBookmarked = blog.bookmarkedByIds?.find((id) => id === user?.id);
 
-  const { title, coverImage, createdAt, tags, content, views, likes } = blog;
+  const {
+    title,
+    coverImage,
+    createdAt,
+    tags,
+    content,
+    views,
+    likes,
+    bookmarks,
+  } = blog;
 
   return (
     <div className="flex">
-      <InteractionPanel isLiked={!!isUserLiked} likeCount={likes} />
+      <InteractionPanel
+        isLiked={!!isUserLiked}
+        likeCount={likes}
+        isBookmarked={!!isUserBookmarked}
+        totalBookmarks={bookmarks}
+      />
       <section className="rounded-base border-2 flex-1 border-border bg-white text-text dark:border-darkBorder dark:bg-gray-600 dark:text-darkText">
         <div className="flex flex-col px-12 py-5">
           <div className="mb-8 overflow-hidden rounded-lg">

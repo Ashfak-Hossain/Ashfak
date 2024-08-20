@@ -1,28 +1,18 @@
-import { FC, Fragment } from 'react';
-import { Metadata } from 'next';
-
 import { getAllPublishedBlogs } from '@/actions/blog/blog.action';
 import BlogCard from '@/components/blog/cards/BlogCard';
-import Sort from '@/components/blog/shared/Sort';
-import { Separator } from '@/components/ui/separator';
 import PaginationControl from '@/components/blog/shared/pagination';
-import { BlogPageProps } from '@/types/blog';
-import { CurrentUser } from '@/lib/auth';
+import { Separator } from '@/components/ui/separator';
 import { getUserById } from '@/database/user';
+import { CurrentUser } from '@/lib/auth';
+import { BlogPageProps } from '@/types/blog';
+import { FC, Fragment } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Ashfak Hossain | Blog',
-  description:
-    'I write about competitive programming, software engineering, and other computer science related topics.',
-};
-
-const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
+const ReadingListPage: FC<BlogPageProps> = async ({ searchParams }) => {
   const user = await CurrentUser();
   const currentUser = await getUserById(user?.id ?? '');
 
-  const sort = searchParams['sort'] ?? '';
   const page = searchParams['page'] ?? 1;
-  const per_page = 5;
+  const per_page = 10;
 
   const {
     data: blogs,
@@ -30,15 +20,16 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
   } = await getAllPublishedBlogs({
     skip: (Number(page) - 1) * per_page,
     take: per_page,
-    sort: sort.toString(),
+    savedBlogs: true,
   });
+
   const pageNumber = Number(searchParams?.page || 1);
 
   const liked = currentUser?.likedBlogIds.map((id) => id);
+  const bookmarked = currentUser?.bookmarkedBlogIds.map((id) => id);
 
   return (
     <>
-      <Sort activeSort={sort.toString()} />
       <div className="flex w-full flex-col gap-3">
         {blogs.length > 0 ? (
           blogs.map((blog) => (
@@ -51,6 +42,7 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
                 views={blog.views}
                 // comments={blog.comments}
                 likedBy={!!liked?.includes(blog.id)}
+                bookmarkedBy={!!bookmarked?.includes(blog.id)}
                 coverImage={blog.coverImage}
                 createdAt={blog.createdAt}
               />
@@ -61,15 +53,16 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
           <p className="text-center text-lg font-bold">No blogs found</p>
         )}
 
-        <PaginationControl
-          totalPages={totalPages}
-          hasNextPage={hasNextPage}
-          page={pageNumber.toString()}
-          currentSort={sort.toString()}
-        />
+        {blogs.length > per_page && (
+          <PaginationControl
+            totalPages={totalPages}
+            hasNextPage={hasNextPage}
+            page={pageNumber.toString()}
+          />
+        )}
       </div>
     </>
   );
 };
 
-export default BlogPage;
+export default ReadingListPage;

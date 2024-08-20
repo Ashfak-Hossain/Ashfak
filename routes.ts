@@ -16,7 +16,7 @@
  * @type {string[]}
  */
 // export const publicRoutes = ['/', '/auth/new-verification'];
-export const publicRoutes: string[] = ['/', '/blog'];
+export const publicRoutes: string[] = ['/', '/blog', '/post/:slug'];
 
 /**
  * An array of admin routes

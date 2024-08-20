@@ -23,8 +23,8 @@ model User {
   accounts      Account[]
   Comments      Comments[]
 
-  savedBlogIds String[] @db.ObjectId
-  savedBlogs   Blog[]   @relation("UserSavesBlog", fields: [savedBlogIds], references: [id])
+  bookmarkedBlogIds String[] @db.ObjectId
+  bookmarkedBlogs   Blog[]   @relation("UserBookmarksBlog", fields: [bookmarkedBlogIds], references: [id])
 
   likedBlogIds String[] @db.ObjectId
   likedBlogs   Blog[]   @relation("UserLikesBlog", fields: [likedBlogIds], references: [id])
@@ -97,13 +97,14 @@ model Blog {
   status         BlogStatus @default(draft)
   priority       Priority   @default(low)
   likes          Int        @default(0)
+  bookmarks      Int        @default(0)
   views          Int        @default(0)
   Comments       Comments[]
   tagIds         String[]   @db.ObjectId
   tags           Tags[]     @relation(fields: [tagIds], references: [id])
 
-  savedByIds String[] @db.ObjectId
-  savedBy    User[]   @relation("UserSavesBlog", fields: [savedByIds], references: [id])
+  bookmarkedByIds String[] @db.ObjectId
+  bookmarkedBy    User[]   @relation("UserBookmarksBlog", fields: [bookmarkedByIds], references: [id])
 
   likedByIds String[] @db.ObjectId
   likedBy    User[]   @relation("UserLikesBlog", fields: [likedByIds], references: [id])
