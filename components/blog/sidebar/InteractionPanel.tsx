@@ -64,7 +64,7 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 pt-20 px-6 text-sm">
+    <div className="flex flex-col gap-8 py-20 px-2 mx-4 text-sm sticky top-0 h-full rounded-xl">
       <div className="flex items-center gap-2 flex-col">
         <Zap
           size={30}
