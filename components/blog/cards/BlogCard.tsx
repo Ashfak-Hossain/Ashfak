@@ -5,6 +5,7 @@ import { Bookmark, Eye, MessageSquare, Telescope, Zap } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { formatDate } from '@/lib/utils';
+import { CommentModel } from '@/types/blog';
 
 interface BlogCardProps {
   slug: string;
@@ -17,7 +18,7 @@ interface BlogCardProps {
   views: number;
   likedBy: boolean;
   bookmarkedBy: boolean;
-  // comments: Array<object>;
+  comments: number;
   coverImage: string;
   createdAt: Date;
 }
@@ -30,7 +31,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
   views,
   likedBy,
   bookmarkedBy,
-  // comments,
+  comments,
   coverImage,
   createdAt,
 }) => {
@@ -74,18 +75,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <div className="flex items-center space-x-4 md:space-x-8">
               <span className="flex items-center gap-1">
                 <Zap
-                  size={22}
+                  size={likedBy ? 23 : 22}
                   fill={likedBy ? '#EF5A6F' : 'none'}
                   strokeWidth={likedBy ? 0 : 2}
                 />
                 <span>{reactions}</span>
               </span>
-              {/* {comments.length > 0 && (
+              {comments > 0 && (
                 <span className="flex items-center gap-1">
-                  <MessageSquare size={22} fill="grey" strokeWidth={0} />
-                  <span>{comments.length}</span>
+                  <MessageSquare size={22} strokeWidth={2} />
+                  <span>{comments}</span>
                 </span>
-              )} */}
+              )}
               <span className="flex items-center gap-1">
                 <Telescope size={18} />
                 {views} views

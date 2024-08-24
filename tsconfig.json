@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "hooks/useMouseEnter.ts"
+    "hooks/useMouseEnter.ts",
+    "prisma/seed.ts"
   ],
   "exclude": ["node_modules"]
 }

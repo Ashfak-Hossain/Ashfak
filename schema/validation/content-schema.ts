@@ -18,7 +18,3 @@ export const newContentSchema = z.object({
   content: z.string().min(1, 'Content is required'),
 });
 export type NewContent = z.infer<typeof newContentSchema>;
-
-/**
- * Edit content schema
- */

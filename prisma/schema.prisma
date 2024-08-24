@@ -13,15 +13,17 @@ enum UserRole {
 }
 
 model User {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   password      String?
   emailVerified DateTime?
   image         String?
-  role          UserRole   @default(USER)
+  role          UserRole  @default(USER)
   accounts      Account[]
-  Comments      Comments[]
+
+  comments     Comment[]
+  commentLikes CommentLike[]
 
   bookmarkedBlogIds String[] @db.ObjectId
   bookmarkedBlogs   Blog[]   @relation("UserBookmarksBlog", fields: [bookmarkedBlogIds], references: [id])
@@ -99,15 +101,17 @@ model Blog {
   likes          Int        @default(0)
   bookmarks      Int        @default(0)
   views          Int        @default(0)
-  Comments       Comments[]
-  tagIds         String[]   @db.ObjectId
-  tags           Tags[]     @relation(fields: [tagIds], references: [id])
+
+  tagIds String[] @db.ObjectId
+  tags   Tags[]   @relation(fields: [tagIds], references: [id])
 
   bookmarkedByIds String[] @db.ObjectId
   bookmarkedBy    User[]   @relation("UserBookmarksBlog", fields: [bookmarkedByIds], references: [id])
 
   likedByIds String[] @db.ObjectId
   likedBy    User[]   @relation("UserLikesBlog", fields: [likedByIds], references: [id])
+
+  comments Comment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -124,14 +128,32 @@ model Tags {
   updatedAt DateTime @updatedAt
 }
 
-model Comments {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  likes     Int      @default(0)
+model Comment {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  message      String
+  commentLikes CommentLike[]
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  blogId String @db.ObjectId
+  Blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  parentId String?  @db.ObjectId
+  parent   Comment? @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  children Comment[] @relation("ParentChild")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author    User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
-  blog      Blog?    @relation(fields: [blogId], references: [id])
-  blogId    String?  @db.ObjectId
+}
+
+model CommentLike {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  commentId String  @db.ObjectId
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }

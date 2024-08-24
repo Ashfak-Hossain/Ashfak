@@ -50,7 +50,7 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
                 tags={blog.tags}
                 reactions={blog.likes}
                 views={blog.views}
-                // comments={blog.comments}
+                comments={blog.totalComments}
                 likedBy={!!liked?.includes(blog.id)}
                 bookmarkedBy={!!bookmarked?.includes(blog.id)}
                 coverImage={blog.coverImage}

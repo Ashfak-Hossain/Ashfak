@@ -22,3 +22,15 @@ export interface BlogPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
   params: { [key: string]: string | string[] | undefined };
 }
+
+export interface CommentModel {
+  id: string;
+  message: string;
+  userId: string;
+  blogId: string;
+  parentId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  user: { name: string | null; image: string | null };
+  children: CommentModel[];
+}

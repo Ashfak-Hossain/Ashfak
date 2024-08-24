@@ -133,6 +133,7 @@ export const getAllPublishedBlogs = async ({
           label: true,
         },
       },
+      comments: true,
       likedBy: {
         select: {
           id: true,
@@ -155,6 +156,7 @@ export const getAllPublishedBlogs = async ({
 
       return {
         ...blog,
+        totalComments: blog.comments.length,
         coverImage: signedCoverImageUrl,
       };
     })

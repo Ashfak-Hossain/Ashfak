@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import NextAuth, { type DefaultSession } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 
