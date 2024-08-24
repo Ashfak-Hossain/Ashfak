@@ -20,6 +20,7 @@ import { Zap, Reply } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import CommentOption from './comment-option';
 
 interface CommentProps {
   comment: CommentModel;
@@ -40,6 +41,10 @@ const Comment = ({ comment, addReply }: CommentProps) => {
     form.reset();
   };
 
+  const toggleLike = () => {
+    console.log('like');
+  };
+
   return (
     <div className="grid gap-8 py-6" key={comment.id}>
       <div className="text-sm flex items-start gap-4">
@@ -53,15 +58,20 @@ const Comment = ({ comment, addReply }: CommentProps) => {
 
         <div className="flex flex-col w-full">
           <div className="grid gap-2 py-2 mb-1">
-            <div className="flex items-center gap-3">
-              <div className="font-semibold">{comment.user?.name}</div>
-              <div className="text-gray-500 text-xs dark:text-gray-400">
-                {formatDateFromNow(comment.createdAt)}
+            <div className="flex justify-between">
+              <div className="flex items-center gap-3">
+                <div className="font-semibold">{comment.user?.name}</div>
+                <div className="text-gray-500 text-xs dark:text-gray-400">
+                  {formatDateFromNow(comment.createdAt)}
+                </div>
+              </div>
+              <div>
+                <CommentOption />
               </div>
             </div>
             <div>{comment.message}</div>
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="xs">
+              <Button variant="ghost" size="xs" onClick={toggleLike}>
                 <Zap className="mr-1" size={18} />
                 Zap
               </Button>
@@ -96,7 +106,7 @@ const Comment = ({ comment, addReply }: CommentProps) => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(handleReplySubmit)}
-                  className="space-y-8 mb-6"
+                  className="space-y-5 mb-6 p-2"
                 >
                   <FormField
                     control={form.control}
@@ -108,7 +118,6 @@ const Comment = ({ comment, addReply }: CommentProps) => {
                             {...field}
                             className="border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-300"
                             placeholder="Write a comment..."
-                            minHeight={100}
                           />
                         </FormControl>
                         <FormMessage />
