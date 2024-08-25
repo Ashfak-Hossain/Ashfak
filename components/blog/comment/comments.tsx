@@ -40,7 +40,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
 
   useEffect(() => {
     setInitialComments(comments);
-  }, [comments]);
+  }, [comments, setInitialComments]);
 
   const newCommentSubmit = (value: z.infer<typeof commentSchema>) => {
     startTransition(async () => {
@@ -50,6 +50,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
           ...status.data,
           user: { name: user?.name ?? '', image: user?.image ?? '' },
           children: [],
+          commentLikes: [],
         });
         form.reset();
       }
@@ -62,6 +63,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
       addReply({
         ...status.data,
         children: [],
+        commentLikes: [],
       });
     } else {
       toast.error(status?.error);
@@ -118,6 +120,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
             key={comment.id}
             comment={comment}
             addReply={handleAddReply}
+            slug={slug}
           />
         ))}
       </div>

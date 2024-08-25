@@ -6,6 +6,7 @@ type CommentStore = {
   setInitialComments: (comments: CommentModel[]) => void;
   addComment: (comment: CommentModel) => void;
   addReply: (reply: CommentModel) => void;
+  toggleLike: (commentId: string, userId: string) => void;
 };
 
 export const useComment = create<CommentStore>((set) => ({
@@ -36,6 +37,37 @@ export const useComment = create<CommentStore>((set) => ({
 
       return {
         initialComments: addReplyToComments(state.initialComments),
+      };
+    }),
+
+  toggleLike: (commentId, userId) =>
+    set((state) => {
+      const toggleLikeInComments = (
+        comments: CommentModel[]
+      ): CommentModel[] => {
+        return comments.map((comment) => {
+          if (comment.id === commentId) {
+            const hasLiked = comment.commentLikes.some(
+              (like: any) => like.userId === userId
+            );
+            return {
+              ...comment,
+              commentLikes: hasLiked
+                ? comment.commentLikes.filter(
+                    (like: any) => like.userId !== userId
+                  )
+                : [...comment.commentLikes, { userId, commentId }],
+            };
+          }
+          return {
+            ...comment,
+            children: toggleLikeInComments(comment.children),
+          };
+        });
+      };
+
+      return {
+        initialComments: toggleLikeInComments(state.initialComments),
       };
     }),
 }));

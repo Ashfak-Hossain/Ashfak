@@ -17,17 +17,24 @@ import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Zap, Reply } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import CommentOption from './comment-option';
+import CommentOption from '@/components/blog/comment/comment-option';
+import { useComment } from '@/hooks/zustand/use-Comment';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { toast } from 'sonner';
+import { togglecommentLike } from '@/actions/blog/comment.action';
 
 interface CommentProps {
   comment: CommentModel;
   addReply: (commentId: string, replyText: string) => void;
+  slug: string;
 }
 
-const Comment = ({ comment, addReply }: CommentProps) => {
+const Comment = ({ comment, addReply, slug }: CommentProps) => {
+  const user = useCurrentUser();
+  const { toggleLike } = useComment();
   const [showReplyBox, setShowReplyBox] = useState(false);
 
   const form = useForm<z.infer<typeof commentSchema>>({
@@ -35,14 +42,27 @@ const Comment = ({ comment, addReply }: CommentProps) => {
     defaultValues: { message: '' },
   });
 
+  const isLikedByUser = comment.commentLikes.some(
+    (like) => like.userId === user?.id
+  );
+
   const handleReplySubmit = (value: z.infer<typeof commentSchema>) => {
     addReply(comment.id, value.message);
     setShowReplyBox(false);
     form.reset();
   };
 
-  const toggleLike = () => {
-    console.log('like');
+  const toggleCommentLike = async () => {
+    if (!user) {
+      toast.error('You need to be logged in to like a comment');
+      return;
+    }
+    const status = await togglecommentLike({ commentId: comment.id });
+    if (status?.error) {
+      toast.error(status.error);
+      return;
+    }
+    toggleLike(comment.id, user?.id!);
   };
 
   return (
@@ -71,10 +91,21 @@ const Comment = ({ comment, addReply }: CommentProps) => {
             </div>
             <div>{comment.message}</div>
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="xs" onClick={toggleLike}>
-                <Zap className="mr-1" size={18} />
-                Zap
+              <Button variant="ghost" size="xs" onClick={toggleCommentLike}>
+                <Zap
+                  strokeWidth={isLikedByUser ? 0 : 1.5}
+                  fill={isLikedByUser ? '#f43f5e' : 'none'}
+                  className="mr-1"
+                  size={18}
+                />
+                {isLikedByUser ? 'Zaped' : 'Zap'}
               </Button>
+              {comment.commentLikes.length > 0 && (
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {comment.commentLikes.length} zap
+                  {comment.commentLikes.length > 1 ? 's' : ''}
+                </div>
+              )}
               {!showReplyBox && (
                 <Button
                   variant="ghost"
@@ -96,6 +127,7 @@ const Comment = ({ comment, addReply }: CommentProps) => {
                   key={childComment.id}
                   comment={childComment}
                   addReply={addReply}
+                  slug={slug}
                 />
               ))}
             </div>

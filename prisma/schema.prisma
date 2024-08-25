@@ -156,4 +156,6 @@ model CommentLike {
 
   commentId String  @db.ObjectId
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
 }

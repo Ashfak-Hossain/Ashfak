@@ -1,7 +1,6 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -22,7 +21,7 @@ const CommentOption = () => {
         <DropdownMenuItem>
           <div>Delete</div>
         </DropdownMenuItem>
-        {/* //! add report option */}
+        {/*//! add report option */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

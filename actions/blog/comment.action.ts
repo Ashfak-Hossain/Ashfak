@@ -52,17 +52,24 @@ export const getCommentsByBlogId = async (
 ): Promise<CommentModel[]> => {
   const comments = await db.comment.findMany({
     where: { blogId },
-    include: { user: true },
+    include: {
+      user: true,
+      commentLikes: true,
+    },
     orderBy: { createdAt: 'desc' },
   });
 
   const commentMap: Record<string, CommentModel> = {};
 
-  // Initialize the comments with empty children arrays
+  // Initialize the comments with empty children arrays and actual commentLikes
   const structuredComments = comments.map((comment) => {
     const commentModel: CommentModel = {
       ...comment,
       children: [],
+      commentLikes: comment.commentLikes.map((like) => ({
+        userId: like.userId,
+        commentId: like.commentId,
+      })),
     };
     commentMap[comment.id] = commentModel;
     return commentModel;
@@ -74,11 +81,9 @@ export const getCommentsByBlogId = async (
       const parentComment = commentMap[comment.parentId];
       if (parentComment) {
         parentComment.children.push(comment);
+      } else {
+        console.warn(`Parent comment with id ${comment.parentId} not found.`);
       }
-      // else {
-      //   // Handle the case where the parent comment is missing
-      //   console.warn(`Parent comment with id ${comment.parentId} not found.`);
-      // }
     }
   });
 
@@ -122,5 +127,77 @@ export const createReply = async ({
     return { success: true, data: reply };
   } catch (error) {
     return { error: 'Failed to create reply' };
+  }
+};
+
+export const deleteComment = async ({ commentId }: { commentId: string }) => {
+  const user = await CurrentUser();
+  if (!user) return { error: 'User not found' };
+
+  try {
+    const comment = await db.comment.findUnique({
+      where: { id: commentId },
+      select: { userId: true },
+    });
+
+    if (!comment) return { error: 'Comment not found' };
+
+    if (comment.userId !== user.id) {
+      return { error: 'Unauthorized' };
+    }
+
+    console.log('Deleting comment:', commentId);
+
+    // await deleteCommentAndChildren(id);
+
+    return { success: true };
+  } catch (error) {
+    return { error: 'Failed to delete comment' };
+  }
+};
+
+export const togglecommentLike = async ({
+  commentId,
+}: {
+  commentId: string;
+}) => {
+  const user = await CurrentUser();
+  if (!user) return { error: 'User not found' };
+
+  try {
+    // Check if the like already exists
+    const existingLike = await db.commentLike.findUnique({
+      where: {
+        userId_commentId: {
+          userId: user.id!,
+          commentId: commentId,
+        },
+      },
+    });
+
+    if (existingLike) {
+      // If the like exists, delete it (unlike)
+      await db.commentLike.delete({
+        where: {
+          userId_commentId: {
+            userId: user.id!,
+            commentId: commentId,
+          },
+        },
+      });
+    } else {
+      // If the like doesn't exist, create it (like)
+      await db.commentLike.create({
+        data: {
+          userId: user.id!,
+          commentId: commentId,
+        },
+      });
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error toggling like:', error);
+    return { error: 'Failed to toggle like' };
   }
 };

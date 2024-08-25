@@ -24,6 +24,7 @@ export interface BlogPageProps {
 }
 
 export interface CommentModel {
+  commentLikes: any[];
   id: string;
   message: string;
   userId: string;
