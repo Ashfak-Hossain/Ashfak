@@ -5,12 +5,19 @@
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
-  "plugins": ["simple-import-sort", "@tanstack/eslint-plugin-query"],
+  "plugins": ["simple-import-sort", "import"],
   "rules": {
+    "import/export": 0,
+    "import/first": "error",
+    "import/no-duplicates": "error",
+    "react/no-unescaped-entities": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "react/no-unescaped-entities": "off",
-    "import/export": 0
+    "import/newline-after-import": "error"
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
   },
   "overrides": [
     {

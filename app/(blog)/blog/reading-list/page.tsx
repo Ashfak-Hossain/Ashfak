@@ -1,3 +1,5 @@
+import { FC, Fragment } from 'react';
+
 import { getAllPublishedBlogs } from '@/actions/blog/blog.action';
 import BlogCard from '@/components/blog/cards/BlogCard';
 import PaginationControl from '@/components/blog/shared/pagination';
@@ -5,21 +7,20 @@ import { Separator } from '@/components/ui/separator';
 import { getUserById } from '@/database/user';
 import { CurrentUser } from '@/lib/auth';
 import { BlogPageProps } from '@/types/blog';
-import { FC, Fragment } from 'react';
 
 const ReadingListPage: FC<BlogPageProps> = async ({ searchParams }) => {
   const user = await CurrentUser();
   const currentUser = await getUserById(user?.id ?? '');
 
-  const page = searchParams['page'] ?? 1;
-  const per_page = 10;
+  const page = searchParams.page ?? 1;
+  const perPage = 10;
 
   const {
     data: blogs,
     metadata: { hasNextPage, totalPages },
   } = await getAllPublishedBlogs({
-    skip: (Number(page) - 1) * per_page,
-    take: per_page,
+    skip: (Number(page) - 1) * perPage,
+    take: perPage,
     savedBlogs: true,
   });
 
@@ -41,6 +42,7 @@ const ReadingListPage: FC<BlogPageProps> = async ({ searchParams }) => {
                 reactions={blog.likes}
                 views={blog.views}
                 // comments={blog.comments}
+                comments={20}
                 likedBy={!!liked?.includes(blog.id)}
                 bookmarkedBy={!!bookmarked?.includes(blog.id)}
                 coverImage={blog.coverImage}
@@ -53,7 +55,7 @@ const ReadingListPage: FC<BlogPageProps> = async ({ searchParams }) => {
           <p className="text-center text-lg font-bold">No blogs found</p>
         )}
 
-        {blogs.length > per_page && (
+        {blogs.length > perPage && (
           <PaginationControl
             totalPages={totalPages}
             hasNextPage={hasNextPage}

@@ -32,6 +32,6 @@ export interface CommentModel {
   parentId: string | null;
   createdAt: Date;
   updatedAt: Date;
-  user: { name: string | null; image: string | null };
+  user: { name: string | null; image: string | null; id: string };
   children: CommentModel[];
 }

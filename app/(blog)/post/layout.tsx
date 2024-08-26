@@ -54,7 +54,7 @@ export default async function BlogLayout({
     <main>
       <Navbar />
       <div className={cn('m-auto flex max-w-6xl px-3', !user ? 'pt-20' : '')}>
-        <section className="flex flex-col flex-1">
+        <section className="flex flex-1 flex-col">
           <Search className="mb-6 w-full md:hidden" />
           <div>{children}</div>
         </section>

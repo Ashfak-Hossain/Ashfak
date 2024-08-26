@@ -1,14 +1,15 @@
 'use client';
 
-import LoginModal from '@/components/shared/modals/login-modal';
+import { FC, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { Bookmark, Ellipsis, MessageSquare, Zap } from 'lucide-react';
+
+// import LoginModal from '@/components/shared/modals/login-modal';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useBookmark } from '@/hooks/zustand/use-bookmark';
 import { useLike } from '@/hooks/zustand/use-like';
 import { useLoginModal } from '@/hooks/zustand/use-login';
 import { cn } from '@/lib/utils';
-import { Bookmark, Ellipsis, MessageSquare, Zap } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { FC, useEffect } from 'react';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -64,8 +65,8 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 py-20 px-2 mx-4 text-sm sticky top-0 h-full rounded-xl">
-      <div className="flex items-center gap-2 flex-col">
+    <div className="sticky top-0 mx-4 flex h-full flex-col gap-8 rounded-xl px-2 py-20 text-sm">
+      <div className="flex flex-col items-center gap-2">
         <Zap
           size={30}
           strokeWidth={hasLiked ? 0 : 1.5}
@@ -79,16 +80,16 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
         <span>{storeLikeCount}</span>
       </div>
 
-      <div className="flex items-center gap-2 flex-col">
+      <div className="flex flex-col items-center gap-2">
         <MessageSquare
           size={30}
           strokeWidth={1.5}
-          className="hover:scale-110 hover:transition cursor-pointer hover:text-yellow-600"
+          className="cursor-pointer hover:scale-110 hover:text-yellow-600 hover:transition"
         />
         <span>20</span>
       </div>
 
-      <div className="flex items-center gap-2 flex-col">
+      <div className="flex flex-col items-center gap-2">
         <Bookmark
           size={30}
           strokeWidth={hasBookmarked ? 0 : 1.5}
@@ -102,11 +103,11 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
         <span>{totalBookmarks}</span>
       </div>
 
-      <div className="flex items-center gap-2 flex-col">
+      <div className="flex flex-col items-center gap-2">
         <Ellipsis
           size={30}
           strokeWidth={1.5}
-          className="hover:scale-110 hover:transition cursor-pointer hover:text-green-700"
+          className="cursor-pointer hover:scale-110 hover:text-green-700 hover:transition"
         />
       </div>
     </div>

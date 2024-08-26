@@ -1,30 +1,31 @@
 'use client';
 
+import { useState } from 'react';
+import { Reply, Zap } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+import { togglecommentLike } from '@/actions/blog/comment.action';
+import CommentOption from '@/components/blog/comment/comment-option';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
   FormMessage,
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { useComment } from '@/hooks/zustand/use-Comment';
 import { formatDateFromNow } from '@/lib/utils';
 import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Zap, Reply } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import CommentOption from '@/components/blog/comment/comment-option';
-import { useComment } from '@/hooks/zustand/use-Comment';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { toast } from 'sonner';
-import { togglecommentLike } from '@/actions/blog/comment.action';
 
 interface CommentProps {
   comment: CommentModel;
@@ -60,33 +61,36 @@ const Comment = ({ comment, addReply, slug }: CommentProps) => {
     const status = await togglecommentLike({ commentId: comment.id });
     if (status?.error) {
       toast.error(status.error);
-      return;
+    } else {
+      toggleLike(comment.id, user.id!);
     }
-    toggleLike(comment.id, user?.id!);
   };
 
   return (
     <div className="grid gap-8 py-6" key={comment.id}>
-      <div className="text-sm flex items-start gap-4">
-        <div className="flex flex-col h-full items-center gap-2">
-          <Avatar className="w-10 h-10 border">
+      <div className="flex items-start gap-4 text-sm">
+        <div className="flex h-full flex-col items-center gap-2">
+          <Avatar className="size-10 border">
             <AvatarImage src={comment.user?.image || ''} />
             <AvatarFallback>{comment.user?.name?.[0]}</AvatarFallback>
           </Avatar>
           <Separator orientation="vertical" className="shrink" />
         </div>
 
-        <div className="flex flex-col w-full">
-          <div className="grid gap-2 py-2 mb-1">
+        <div className="flex w-full flex-col">
+          <div className="mb-1 grid gap-2 py-2">
             <div className="flex justify-between">
               <div className="flex items-center gap-3">
                 <div className="font-semibold">{comment.user?.name}</div>
-                <div className="text-gray-500 text-xs dark:text-gray-400">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                   {formatDateFromNow(comment.createdAt)}
                 </div>
               </div>
               <div>
-                <CommentOption />
+                <CommentOption
+                  commentId={comment.id}
+                  commentUserId={comment.user.id!}
+                />
               </div>
             </div>
             <div>{comment.message}</div>
@@ -138,7 +142,7 @@ const Comment = ({ comment, addReply, slug }: CommentProps) => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(handleReplySubmit)}
-                  className="space-y-5 mb-6 p-2"
+                  className="mb-6 space-y-5 p-2"
                 >
                   <FormField
                     control={form.control}
@@ -148,7 +152,7 @@ const Comment = ({ comment, addReply, slug }: CommentProps) => {
                         <FormControl>
                           <AutosizeTextarea
                             {...field}
-                            className="border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-300"
+                            className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:placeholder:text-gray-300"
                             placeholder="Write a comment..."
                           />
                         </FormControl>

@@ -3,12 +3,12 @@ import { Metadata } from 'next';
 
 import { getAllPublishedBlogs } from '@/actions/blog/blog.action';
 import BlogCard from '@/components/blog/cards/BlogCard';
+import PaginationControl from '@/components/blog/shared/pagination';
 import Sort from '@/components/blog/shared/Sort';
 import { Separator } from '@/components/ui/separator';
-import PaginationControl from '@/components/blog/shared/pagination';
-import { BlogPageProps } from '@/types/blog';
-import { CurrentUser } from '@/lib/auth';
 import { getUserById } from '@/database/user';
+import { CurrentUser } from '@/lib/auth';
+import { BlogPageProps } from '@/types/blog';
 
 export const metadata: Metadata = {
   title: 'Ashfak Hossain | Blog',
@@ -20,16 +20,16 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
   const user = await CurrentUser();
   const currentUser = await getUserById(user?.id ?? '');
 
-  const sort = searchParams['sort'] ?? '';
-  const page = searchParams['page'] ?? 1;
-  const per_page = 5;
+  const sort = searchParams.sort ?? '';
+  const page = searchParams.page ?? 1;
+  const perPage = 5;
 
   const {
     data: blogs,
     metadata: { hasNextPage, totalPages },
   } = await getAllPublishedBlogs({
-    skip: (Number(page) - 1) * per_page,
-    take: per_page,
+    skip: (Number(page) - 1) * perPage,
+    take: perPage,
     sort: sort.toString(),
   });
   const pageNumber = Number(searchParams?.page || 1);

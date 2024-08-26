@@ -15,8 +15,9 @@ import {
   UpdateBlogCoverParams,
 } from '@/actions/blog/shared.types';
 import { checkAdmin } from '@/actions/utils.action';
-import { db } from '@/lib/db';
 import { CurrentUser } from '@/lib/auth';
+import { db } from '@/lib/db';
+import { CommentModel } from '@/types/blog';
 import { BlogStatus } from '@prisma/client';
 
 const ERROR_MESSAGES = {
@@ -143,7 +144,7 @@ export const getAllPublishedBlogs = async ({
     orderBy,
   });
 
-  const total_blogs = await db.blog.count({
+  const totalBlogs = await db.blog.count({
     where: { status: 'published' },
   });
 
@@ -165,8 +166,8 @@ export const getAllPublishedBlogs = async ({
   return {
     data: blogsWithImages,
     metadata: {
-      hasNextPage: skip + take < total_blogs,
-      totalPages: Math.ceil(total_blogs / take),
+      hasNextPage: skip + take < totalBlogs,
+      totalPages: Math.ceil(totalBlogs / take),
     },
   };
 };
@@ -175,18 +176,21 @@ export const deleteBlogbySlug = async (slug: string) => {
   // Check if the user is an admin
   checkAdmin();
 
-  const blog = await db.blog.findUnique({ where: { slug } });
+  const blog = await db.blog.findUnique({
+    where: { slug },
+    include: { likedBy: true, bookmarkedBy: true },
+  });
 
   if (!blog) {
     return { error: 'Invalid url' };
   }
 
   try {
+    // Delete the cover image from S3
     const response = await deleteFileFromS3(
       blog.coverImageName,
       BLOG_COVER_IMAGE_PATH
     );
-
     if (!response.success) {
       return {
         error: 500,
@@ -194,8 +198,37 @@ export const deleteBlogbySlug = async (slug: string) => {
       };
     }
 
+    // Delete the blog itself
     await db.blog.delete({ where: { slug } });
 
+    // Remove the blog from the likedBy and bookmarkedBy users
+    await db.user.updateMany({
+      where: {
+        id: { in: blog.likedByIds },
+      },
+      data: {
+        likedBlogIds: {
+          set: blog.likedByIds.filter((id) => id !== blog.id),
+        },
+      },
+    });
+
+    // Remove the blog from the likedBy and bookmarkedBy users
+    await db.user.updateMany({
+      where: {
+        id: { in: blog.bookmarkedByIds },
+      },
+      data: {
+        bookmarkedBlogIds: {
+          set: blog.bookmarkedByIds.filter((id) => id !== blog.id),
+        },
+      },
+    });
+
+    // Delete the comments associated with the blog
+    await db.comment.deleteMany({ where: { blogId: blog.id } });
+
+    // Remove the blog from the tags
     for (const tagId of blog.tagIds) {
       const tag = await db.tags.findUnique({ where: { id: tagId } });
       if (tag) {
@@ -206,7 +239,6 @@ export const deleteBlogbySlug = async (slug: string) => {
         });
       }
     }
-    // delete likes relation from user and blog
 
     revalidatePath('/dashboard/blogs');
     return {
@@ -218,7 +250,7 @@ export const deleteBlogbySlug = async (slug: string) => {
   }
 };
 
-export const getBlogBySlug = async (slug: string) => {
+export const incrementBlogView = async (slug: string) => {
   await db.blog.update({
     where: { slug },
     data: {
@@ -227,6 +259,10 @@ export const getBlogBySlug = async (slug: string) => {
       },
     },
   });
+};
+
+export const getBlogBySlug = async (slug: string) => {
+  await incrementBlogView(slug);
 
   const blog = await db.blog.findUnique({
     where: { slug },
@@ -237,22 +273,69 @@ export const getBlogBySlug = async (slug: string) => {
           id: true,
         },
       },
+      comments: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+          commentLikes: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
     },
   });
 
-  if (!blog) {
-    return false;
-  }
+  if (!blog) return false;
 
+  // Get the signed URL for the cover image
   const signedCoverImageUrl = await getSignedCloudfrontUrl(
     blog.coverImageName,
-    'blog_cover_image'
+    BLOG_COVER_IMAGE_PATH
   );
+
+  // Create a map of comments with commentId as key
+  const commentMap: Record<string, CommentModel> = {};
+
+  // Initialize the comments with empty children arrays and actual commentLikes
+  const structuredComments = blog.comments.map((comment) => {
+    const commentModel: CommentModel = {
+      ...comment,
+      children: [],
+      commentLikes: comment.commentLikes.map((like) => ({
+        userId: like.userId,
+        commentId: like.commentId,
+      })),
+    };
+    commentMap[comment.id] = commentModel;
+    return commentModel;
+  });
+
+  // Nest the comments based on their parentId
+  structuredComments.forEach((comment) => {
+    if (comment.parentId) {
+      const parentComment = commentMap[comment.parentId];
+      if (parentComment) {
+        parentComment.children.push(comment);
+      } else {
+        console.warn(`Parent comment with id ${comment.parentId} not found.`);
+      }
+    }
+  });
+
+  // Return only the top-level comments
+  const comments = structuredComments.filter((comment) => !comment.parentId);
 
   return {
     success: 200,
     ...blog,
     coverImage: signedCoverImageUrl,
+    comments,
   };
 };
 
@@ -323,7 +406,5 @@ export const getBlogsForDashboardTable = async () => {
       },
     });
     return blogs;
-  } catch (error) {
-    return;
-  }
+  } catch (error) {}
 };

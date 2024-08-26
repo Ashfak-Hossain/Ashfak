@@ -1,12 +1,14 @@
 'use client';
 
+import { useEffect, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
+import { createComment, createReply } from '@/actions/blog/comment.action';
+import Comment from '@/components/blog/comment/comment';
 import { AutosizeTextarea } from '@/components/ui/auto-resize-textarea';
 import { Button } from '@/components/ui/button';
-import { useEffect, useTransition } from 'react';
-import Comment from '@/components/blog/comment/comment';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { commentSchema } from '@/schema/validation/comment-schema';
 import {
   Form,
   FormControl,
@@ -14,13 +16,12 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { createComment, createReply } from '@/actions/blog/comment.action';
 import { Spinner } from '@/components/ui/spinner';
-import { z } from 'zod';
-import { useComment } from '@/hooks/zustand/use-Comment';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import { useComment } from '@/hooks/zustand/use-Comment';
+import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
-import { toast } from 'sonner';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface CommentProps {
   slug: string;
@@ -42,17 +43,23 @@ const Comments = ({ slug, comments }: CommentProps) => {
     setInitialComments(comments);
   }, [comments, setInitialComments]);
 
-  const newCommentSubmit = (value: z.infer<typeof commentSchema>) => {
+  const onSubmitComment = (value: z.infer<typeof commentSchema>) => {
     startTransition(async () => {
       const status = await createComment({ slug, message: value.message });
       if (status?.success) {
         addComment({
           ...status.data,
-          user: { name: user?.name ?? '', image: user?.image ?? '' },
+          user: {
+            name: user?.name ?? '',
+            image: user?.image ?? '',
+            id: user?.id ?? '',
+          },
           children: [],
           commentLikes: [],
         });
         form.reset();
+      } else {
+        toast.error(status.error || 'Failed to post comment.');
       }
     });
   };
@@ -64,22 +71,27 @@ const Comments = ({ slug, comments }: CommentProps) => {
         ...status.data,
         children: [],
         commentLikes: [],
+        user: {
+          name: user?.name ?? '',
+          image: user?.image ?? '',
+          id: user?.id ?? '',
+        },
       });
     } else {
-      toast.error(status?.error);
+      toast.error(status?.error || 'Failed to post reply.');
     }
   };
 
   return (
-    <section className="w-full max-w-4xl mx-auto my-12">
-      <h2 className="text-lg lg:text-2xl font-bold mb-6">
+    <section className="mx-auto my-12 w-full max-w-4xl">
+      <h2 className="mb-6 text-lg font-bold lg:text-2xl">
         {`Discussion (${initialComments.length})`}
       </h2>
 
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(newCommentSubmit)}
-          className="space-y-8 mb-6"
+          onSubmit={form.handleSubmit(onSubmitComment)}
+          className="mb-6 space-y-8"
         >
           <FormField
             control={form.control}
@@ -90,7 +102,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
                   <AutosizeTextarea
                     {...field}
                     disabled={isPending}
-                    className="border border-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-300"
+                    className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:placeholder:text-gray-300"
                     placeholder="Write a comment..."
                     minHeight={140}
                   />
@@ -101,7 +113,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
           />
           <Button
             type="submit"
-            className="py-2.5 px-4 text-xs font-medium"
+            className="px-4 py-2.5 text-xs font-medium"
             disabled={isPending}
           >
             <Spinner

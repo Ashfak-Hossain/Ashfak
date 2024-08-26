@@ -7,6 +7,7 @@ type CommentStore = {
   addComment: (comment: CommentModel) => void;
   addReply: (reply: CommentModel) => void;
   toggleLike: (commentId: string, userId: string) => void;
+  deleteInitialComment: (commentId: string) => void;
 };
 
 export const useComment = create<CommentStore>((set) => ({
@@ -68,6 +69,22 @@ export const useComment = create<CommentStore>((set) => ({
 
       return {
         initialComments: toggleLikeInComments(state.initialComments),
+      };
+    }),
+
+  deleteInitialComment: (commentId: string) =>
+    set((state) => {
+      const removeComment = (comments: CommentModel[]): CommentModel[] => {
+        return comments
+          .filter((comment) => comment.id !== commentId)
+          .map((comment) => ({
+            ...comment,
+            children: removeComment(comment.children),
+          }));
+      };
+
+      return {
+        initialComments: removeComment(state.initialComments),
       };
     }),
 }));

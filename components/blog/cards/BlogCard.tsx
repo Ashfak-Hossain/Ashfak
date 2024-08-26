@@ -1,11 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bookmark, Eye, MessageSquare, Telescope, Zap } from 'lucide-react';
+import { Bookmark, MessageSquare, Telescope, Zap } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { formatDate } from '@/lib/utils';
-import { CommentModel } from '@/types/blog';
 
 interface BlogCardProps {
   slug: string;

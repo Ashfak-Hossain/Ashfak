@@ -1,12 +1,13 @@
 import { FC } from 'react';
+
 import {
   Pagination,
   PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationLink,
   PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
   PaginationNext,
+  PaginationPrevious,
 } from '@/components/ui/pagination';
 
 interface PaginationControlProps {

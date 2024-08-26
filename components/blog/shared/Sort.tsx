@@ -1,8 +1,9 @@
 import { FC } from 'react';
+import Link from 'next/link';
+
+import { buttonVariants } from '@/components/ui/button';
 import { HomePageSorting } from '@/constants/blog';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/button';
 
 interface HomePageSortingProps {
   activeSort?: string;
