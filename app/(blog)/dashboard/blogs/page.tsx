@@ -1,12 +1,12 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { getBlogsForDashboardTable } from '@/actions/blog/blog.action';
 import { columns } from '@/components/blog/dataTable/columns';
 import { DataTable } from '@/components/blog/dataTable/data-table';
 import { Button } from '@/components/ui/button';
-import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Ashfak Hossain | All Blogs',
