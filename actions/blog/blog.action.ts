@@ -262,8 +262,6 @@ export const incrementBlogView = async (slug: string) => {
 };
 
 export const getBlogBySlug = async (slug: string) => {
-  await incrementBlogView(slug);
-
   const blog = await db.blog.findUnique({
     where: { slug },
     include: {

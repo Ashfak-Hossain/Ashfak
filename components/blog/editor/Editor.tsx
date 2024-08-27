@@ -1,5 +1,6 @@
 'use client';
 
+import { FC } from 'react';
 import { useTheme } from 'next-themes';
 
 import { getSignedCloudfrontUrl, uploadFileToS3 } from '@/actions/aws';
@@ -10,7 +11,6 @@ import { BlockNoteView } from '@blocknote/shadcn';
 
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/shadcn/style.css';
-import { FC } from 'react';
 
 interface EditorProps {
   onChange?: (value: string) => void;

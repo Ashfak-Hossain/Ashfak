@@ -7,6 +7,7 @@ import Providers from '@/components/providers/Providers';
 import { inter } from '@/fonts';
 
 import '@/app/globals.css';
+import '@/styles/prosemirror.css';
 
 const data = {
   title: 'Ashfak Hossain - Software Engineer',
@@ -50,6 +51,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
+      {/* suppressHydrationWarning */}
       <html lang="en">
         <body className={inter.className}>
           <Providers>{children}</Providers>

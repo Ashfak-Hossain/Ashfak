@@ -15,7 +15,7 @@ import { formatDate } from '@/lib/utils';
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
-  const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
+  const NovelEditor = dynamic(() => import('@/components/editor/editor'), {
     ssr: false,
     loading: () => <EditorSkeleton />,
   });
@@ -94,8 +94,8 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
             </div>
           </div>
 
-          <article>
-            <Editor initialContent={content as string} editable={false} />
+          <article className="flex justify-center px-11">
+            <NovelEditor initialContent={content as string} editable={false} />
           </article>
         </div>
       </div>

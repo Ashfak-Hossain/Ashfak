@@ -1,15 +1,15 @@
 'use client';
 
-import React, { useEffect, useMemo, useState, useTransition } from 'react';
-import dynamic from 'next/dynamic';
+import { FC, useTransition } from 'react';
 import { toast } from 'sonner';
-import { useDebouncedCallback } from 'use-debounce';
 
 import { updateBlogContent } from '@/actions/blog/blog.action';
-import EditorSkeleton from '@/components/blog/editor/editor-skeleton';
 import Cover from '@/components/blog/shared/Cover';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useContent } from '@/hooks/zustand/use-content';
+
+import NovelEditorWrapper from './NovelEditorWrapper';
 
 interface EditBlogProps {
   blogData: {
@@ -25,60 +25,31 @@ interface EditBlogProps {
   };
 }
 
-const saveToLocalStorage = async (content: string) => {
-  localStorage.setItem('editorContent', content);
-};
-
-const loadFromStorage = () => {
-  const storageString = localStorage.getItem('editorContent');
-  return storageString || undefined;
-};
-
-const EditBlog: React.FC<EditBlogProps> = ({
+const EditBlog: FC<EditBlogProps> = ({
   blogData: {
     title,
-    content,
-    tags: initialTags,
+    content: initialContent,
+    // tags: initialTags,
     slug,
     coverImage,
     coverImageName,
   },
 }) => {
-  const Editor = useMemo(
-    () =>
-      dynamic(() => import('@/components/blog/editor/Editor'), {
-        ssr: false,
-        loading: () => <EditorSkeleton />,
-      }),
-    []
-  );
   const [isPending, startTransition] = useTransition();
-  let [initialContent, setInitialContent] = useState<string | undefined>();
-  const [post, setPost] = useState('');
-
-  useEffect(() => {
-    const content = loadFromStorage();
-    setInitialContent(content);
-  }, [setInitialContent]);
-
-  initialContent = initialContent || content;
+  const { content } = useContent();
 
   const handleClick = async () => {
     startTransition(async () => {
-      const result = await updateBlogContent(slug, post);
+      const result = await updateBlogContent(slug, content);
       if (result.success) {
         toast.success('Blog updated successfully');
+        localStorage.removeItem('novel-content');
+        localStorage.removeItem('html-content');
       } else {
         toast.error('Failed to update blog');
       }
     });
-    localStorage.removeItem('editorContent');
   };
-
-  const onChange = useDebouncedCallback((content: string) => {
-    setPost(content);
-    saveToLocalStorage(content);
-  }, 300);
 
   return (
     <div className="rounded-base border-2 border-border bg-white text-text dark:border-darkBorder dark:bg-gray-600 dark:text-darkText">
@@ -88,13 +59,7 @@ const EditBlog: React.FC<EditBlogProps> = ({
           <h1 className="text-5xl font-bold">{title}</h1>
         </div>
 
-        <div className="py-5">
-          <Editor
-            initialContent={initialContent}
-            onChange={onChange}
-            editable={!isPending}
-          />
-        </div>
+        <NovelEditorWrapper editable initialContent={initialContent} />
         <div>
           <Button
             onClick={handleClick}
