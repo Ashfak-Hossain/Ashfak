@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState, useTransition } from 'react';
 import dynamic from 'next/dynamic';
+import { toast } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { updateBlogContent } from '@/actions/blog/blog.action';
@@ -28,7 +29,7 @@ const saveToLocalStorage = async (content: string) => {
   localStorage.setItem('editorContent', content);
 };
 
-const loadFromStorage = async () => {
+const loadFromStorage = () => {
   const storageString = localStorage.getItem('editorContent');
   return storageString || undefined;
 };
@@ -56,10 +57,9 @@ const EditBlog: React.FC<EditBlogProps> = ({
   const [post, setPost] = useState('');
 
   useEffect(() => {
-    loadFromStorage().then((content) => {
-      setInitialContent(content);
-    });
-  }, []);
+    const content = loadFromStorage();
+    setInitialContent(content);
+  }, [setInitialContent]);
 
   initialContent = initialContent || content;
 
@@ -67,9 +67,9 @@ const EditBlog: React.FC<EditBlogProps> = ({
     startTransition(async () => {
       const result = await updateBlogContent(slug, post);
       if (result.success) {
-        alert('Blog updated successfully');
+        toast.success('Blog updated successfully');
       } else {
-        alert('Failed to update blog');
+        toast.error('Failed to update blog');
       }
     });
     localStorage.removeItem('editorContent');
@@ -78,7 +78,7 @@ const EditBlog: React.FC<EditBlogProps> = ({
   const onChange = useDebouncedCallback((content: string) => {
     setPost(content);
     saveToLocalStorage(content);
-  }, 500);
+  }, 300);
 
   return (
     <div className="rounded-base border-2 border-border bg-white text-text dark:border-darkBorder dark:bg-gray-600 dark:text-darkText">
