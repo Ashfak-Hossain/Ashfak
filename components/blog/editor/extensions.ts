@@ -29,6 +29,7 @@ import { UploadImagesPlugin } from 'novel/plugins';
 const aiHighlight = AIHighlight;
 // You can overwrite the placeholder with your own configuration
 const placeholder = Placeholder;
+
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
     class: cx(

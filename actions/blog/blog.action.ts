@@ -17,16 +17,15 @@ import {
 import { checkAdmin } from '@/actions/utils.action';
 import { CurrentUser } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { CommentModel } from '@/types/blog';
 import { BlogStatus } from '@prisma/client';
+
+const BLOG_COVER_IMAGE_PATH = 'blog_cover_image';
 
 const ERROR_MESSAGES = {
   TITLE_AVAILABLE: 'Title already available. Please change the title.',
   CREATE_FAILED: 'Failed to create',
   UPDATE_FAILED: 'Failed to update',
 };
-
-const BLOG_COVER_IMAGE_PATH = 'blog_cover_image';
 
 export const createBlog = async ({
   base64CoverImage,
@@ -259,82 +258,6 @@ export const incrementBlogView = async (slug: string) => {
       },
     },
   });
-};
-
-export const getBlogBySlug = async (slug: string) => {
-  const blog = await db.blog.findUnique({
-    where: { slug },
-    include: {
-      tags: true,
-      likedBy: {
-        select: {
-          id: true,
-        },
-      },
-      comments: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              image: true,
-            },
-          },
-          commentLikes: true,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      },
-    },
-  });
-
-  if (!blog) return false;
-
-  // Get the signed URL for the cover image
-  const signedCoverImageUrl = await getSignedCloudfrontUrl(
-    blog.coverImageName,
-    BLOG_COVER_IMAGE_PATH
-  );
-
-  // Create a map of comments with commentId as key
-  const commentMap: Record<string, CommentModel> = {};
-
-  // Initialize the comments with empty children arrays and actual commentLikes
-  const structuredComments = blog.comments.map((comment) => {
-    const commentModel: CommentModel = {
-      ...comment,
-      children: [],
-      commentLikes: comment.commentLikes.map((like) => ({
-        userId: like.userId,
-        commentId: like.commentId,
-      })),
-    };
-    commentMap[comment.id] = commentModel;
-    return commentModel;
-  });
-
-  // Nest the comments based on their parentId
-  structuredComments.forEach((comment) => {
-    if (comment.parentId) {
-      const parentComment = commentMap[comment.parentId];
-      if (parentComment) {
-        parentComment.children.push(comment);
-      } else {
-        console.warn(`Parent comment with id ${comment.parentId} not found.`);
-      }
-    }
-  });
-
-  // Return only the top-level comments
-  const comments = structuredComments.filter((comment) => !comment.parentId);
-
-  return {
-    success: 200,
-    ...blog,
-    coverImage: signedCoverImageUrl,
-    comments,
-  };
 };
 
 export const updateBlogContent = async (slug: string, content: string) => {

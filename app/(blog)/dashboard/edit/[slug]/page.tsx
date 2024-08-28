@@ -1,7 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 
-import { getBlogBySlug } from '@/actions/blog/blog.action';
+import { getBlogBySlug } from '@/actions/blog/getBlog.action';
 import EditBlog from '@/components/blog/content-writing/edit-blog';
 
 const page = async ({ params }: { params: { slug: string } }) => {

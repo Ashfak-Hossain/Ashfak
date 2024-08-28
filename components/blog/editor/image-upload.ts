@@ -55,26 +55,6 @@ const onUpload = (file: File) => {
   });
 };
 
-// // Successfully uploaded image
-// if (res.status === 200) {
-//   const { url } = (await res.json()) as { url: string };
-//   // preload the image
-//   const image = new Image();
-//   image.src = url;
-//   image.onload = () => {
-//     resolve(url);
-//   };
-//   // No blob store configured
-// } else if (res.status === 401) {
-//   resolve(file);
-//   throw new Error(
-//     '`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead.'
-//   );
-//   // Unknown error
-// } else {
-//   throw new Error('Error uploading image. Please try again.');
-// }
-
 export const uploadFn = createImageUpload({
   onUpload,
   validateFn: (file) => {

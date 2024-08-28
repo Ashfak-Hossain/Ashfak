@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CalendarIcon, Telescope } from 'lucide-react';
 
-import { getBlogBySlug } from '@/actions/blog/blog.action';
+import { getBlogBySlug } from '@/actions/blog/getBlog.action';
 import Comments from '@/components/blog/comment/comments';
 import EditorSkeleton from '@/components/blog/editor/editor-skeleton';
 import InteractionPanel from '@/components/blog/sidebar/InteractionPanel';
@@ -87,14 +87,14 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
               <h1 className="text-6xl font-bold">{title}</h1>
             </div>
 
-            <div className="mb-10 flex space-x-2">
+            <div className="mb-7 flex space-x-2">
               {tags.map((tag) => (
                 <Badge variant="neutral" key={tag.id}>{`#${tag.label}`}</Badge>
               ))}
             </div>
           </div>
 
-          <article className="flex justify-center px-11">
+          <article className="flex justify-center px-11 py-5">
             <NovelEditor initialContent={content as string} editable={false} />
           </article>
         </div>
