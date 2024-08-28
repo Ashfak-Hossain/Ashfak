@@ -3,7 +3,7 @@ import { EditorBubble, useEditor } from 'novel';
 import { removeAIHighlight } from 'novel/extensions';
 import {} from 'novel/plugins';
 
-import Magic from '@/components/editor/icons/magic';
+import Magic from '@/components/blog/editor/icons/magic';
 import { Button } from '@/components/ui/button';
 
 import { AISelector } from './ai-selector';

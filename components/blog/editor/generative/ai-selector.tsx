@@ -8,8 +8,8 @@ import { addAIHighlight } from 'novel/extensions';
 import Markdown from 'react-markdown';
 import { toast } from 'sonner';
 
-import CrazySpinner from '@/components/editor/icons/crazy-spinner';
-import Magic from '@/components/editor/icons/magic';
+import CrazySpinner from '@/components/blog/editor/icons/crazy-spinner';
+import Magic from '@/components/blog/editor/icons/magic';
 import { Button } from '@/components/ui/button';
 import { Command, CommandInput } from '@/components/ui/command';
 import { ScrollArea } from '@/components/ui/scroll-area';

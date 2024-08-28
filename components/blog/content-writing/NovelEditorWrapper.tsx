@@ -16,7 +16,7 @@ const NovelEditorWrapper = ({
 }: NovelEditorWrapperProps) => {
   const NovelEditor = useMemo(
     () =>
-      dynamic(() => import('@/components/editor/editor'), {
+      dynamic(() => import('@/components/blog/editor/editor'), {
         ssr: false,
         loading: () => <EditorSkeleton />,
       }),

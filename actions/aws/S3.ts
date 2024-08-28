@@ -27,7 +27,7 @@ export const uploadFileToS3 = async (
   path?: string
 ) => {
   const uniqueId = uuidv4();
-  let buffer = Buffer.from(base64File, 'base64');
+  const buffer = Buffer.from(base64File, 'base64');
 
   const asciiName = originalName
     .replace(/[^\x20-\x7E]/g, '')
