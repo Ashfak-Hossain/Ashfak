@@ -7,7 +7,7 @@ import { updateBlogContent } from '@/actions/blog/blog.action';
 import Cover from '@/components/blog/shared/Cover';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { useContent } from '@/hooks/zustand/use-content';
+import { useContent } from '@/zustand/use-content';
 
 import NovelEditorWrapper from './NovelEditorWrapper';
 

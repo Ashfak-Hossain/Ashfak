@@ -6,7 +6,7 @@ import { ImageIcon, Undo2Icon } from 'lucide-react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
-import { useCoverImage } from '@/hooks/zustand/use-cover-image';
+import { useCoverImage } from '@/zustand/use-cover-image';
 
 const CoverImageUploader = () => {
   const { file, onOpen, onReset } = useCoverImage();

@@ -40,56 +40,6 @@ export const createComment = async ({
   }
 };
 
-/**
- *
- * @param blogId The id of the blog to get comments for
- * @returns The comments for the blog
- * @description This function fetches the comments for a blog and nests them based on their parentId to create a tree structure of comments
- */
-// export const getCommentsByBlogId = async (
-//   blogId: string
-// ): Promise<CommentModel[]> => {
-//   const comments = await db.comment.findMany({
-//     where: { blogId },
-//     include: {
-//       user: true,
-//       commentLikes: true,
-//     },
-//     orderBy: { createdAt: 'desc' },
-//   });
-
-//   const commentMap: Record<string, CommentModel> = {};
-
-//   // Initialize the comments with empty children arrays and actual commentLikes
-//   const structuredComments = comments.map((comment) => {
-//     const commentModel: CommentModel = {
-//       ...comment,
-//       children: [],
-//       commentLikes: comment.commentLikes.map((like) => ({
-//         userId: like.userId,
-//         commentId: like.commentId,
-//       })),
-//     };
-//     commentMap[comment.id] = commentModel;
-//     return commentModel;
-//   });
-
-//   // Nest the comments based on their parentId
-//   structuredComments.forEach((comment) => {
-//     if (comment.parentId) {
-//       const parentComment = commentMap[comment.parentId];
-//       if (parentComment) {
-//         parentComment.children.push(comment);
-//       } else {
-//         console.warn(`Parent comment with id ${comment.parentId} not found.`);
-//       }
-//     }
-//   });
-
-//   // Return only the top-level comments
-//   return structuredComments.filter((comment) => !comment.parentId);
-// };
-
 export const createReply = async ({
   slug,
   parentId,

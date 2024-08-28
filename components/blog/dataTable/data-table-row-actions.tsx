@@ -4,7 +4,7 @@ import { Ellipsis } from 'lucide-react';
 import slugify from 'slugify';
 import { toast } from 'sonner';
 
-import { deleteBlogbySlug } from '@/actions/blog/blog.action';
+import { deleteBlogbySlug } from '@/actions/blog/delete-blog.action';
 import {
   updateBlogPriority,
   updateBlogStatus,
@@ -69,13 +69,11 @@ export function DataTableRowActions<TData>({
 
   const handleDeleteClick = async () => {
     try {
-      const response = await deleteBlogbySlug(slug);
-
-      if (response.success) {
-        toast.success(response.message);
-      } else if (response.error) {
-        toast.error(response.message);
-      }
+      toast.promise(deleteBlogbySlug(slug), {
+        loading: 'Deleting blog...',
+        success: 'Blog deleted successfully.',
+        error: "Oops! Couldn't delete blog.",
+      });
     } catch (error) {
       toast.error("Why are you deleting this! Couldn't delete blog.");
     }
@@ -93,6 +91,14 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        <DropdownMenuItem
+          onClick={() => {
+            router.push(`/post/${slug}`);
+          }}
+        >
+          View
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
             router.push(`/dashboard/edit/${slug}`);

@@ -2,14 +2,16 @@
 
 import { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { Bookmark, Ellipsis, MessageSquare, Zap } from 'lucide-react';
+import { Bookmark, MessageSquare, Zap } from 'lucide-react';
 
 // import LoginModal from '@/components/shared/modals/login-modal';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { useBookmark } from '@/hooks/zustand/use-bookmark';
-import { useLike } from '@/hooks/zustand/use-like';
-import { useLoginModal } from '@/hooks/zustand/use-login';
 import { cn } from '@/lib/utils';
+import { useBookmark } from '@/zustand/use-bookmark';
+import { useLike } from '@/zustand/use-like';
+import { useLoginModal } from '@/zustand/use-login';
+
+import InteractionOption from './interaction-option';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -96,20 +98,14 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
           fill={hasBookmarked ? '#4d80e6' : 'none'}
           className={cn(
             'hover:scale-110 hover:transition cursor-pointer',
-            !hasBookmarked ? 'hover:bg-mainAccent' : ''
+            !hasBookmarked ? 'hover:text-mainAccent' : ''
           )}
           onClick={() => handleClick({ type: 'bookmark', slug })}
         />
         <span>{totalBookmarks}</span>
       </div>
 
-      <div className="flex flex-col items-center gap-2">
-        <Ellipsis
-          size={30}
-          strokeWidth={1.5}
-          className="cursor-pointer hover:scale-110 hover:text-green-700 hover:transition"
-        />
-      </div>
+      <InteractionOption slug={slug} />
     </div>
   );
 };

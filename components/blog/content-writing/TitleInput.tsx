@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { Input } from '@/components/ui/input';
-import { useContent } from '@/hooks/zustand/use-content';
+import { useContent } from '@/zustand/use-content';
 
 const TitleInput = ({ isPending }: { isPending: boolean }) => {
   const { title, setTitle } = useContent();

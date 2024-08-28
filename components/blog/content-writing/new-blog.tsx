@@ -11,8 +11,8 @@ import TagSelector from '@/components/blog/content-writing/TagSelector';
 import TitleInput from '@/components/blog/content-writing/TitleInput';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { useContent } from '@/hooks/zustand/use-content';
-import { useCoverImage } from '@/hooks/zustand/use-cover-image';
+import { useContent } from '@/zustand/use-content';
+import { useCoverImage } from '@/zustand/use-cover-image';
 import { readFileAsBase64 } from '@/lib/utils';
 
 const NewBlog = ({

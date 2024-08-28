@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache';
 import slugify from 'slugify';
 
 import {
-  deleteFileFromS3,
   getSignedCloudfrontUrl,
   invalidateCloudfront,
   replaceFileToS3,
@@ -169,84 +168,6 @@ export const getAllPublishedBlogs = async ({
       totalPages: Math.ceil(totalBlogs / take),
     },
   };
-};
-
-export const deleteBlogbySlug = async (slug: string) => {
-  // Check if the user is an admin
-  checkAdmin();
-
-  const blog = await db.blog.findUnique({
-    where: { slug },
-    include: { likedBy: true, bookmarkedBy: true },
-  });
-
-  if (!blog) {
-    return { error: 'Invalid url' };
-  }
-
-  try {
-    // Delete the cover image from S3
-    const response = await deleteFileFromS3(
-      blog.coverImageName,
-      BLOG_COVER_IMAGE_PATH
-    );
-    if (!response.success) {
-      return {
-        error: 500,
-        message: 'Stupid! Anything Wrong in the S3 server!',
-      };
-    }
-
-    // Delete the blog itself
-    await db.blog.delete({ where: { slug } });
-
-    // Remove the blog from the likedBy and bookmarkedBy users
-    await db.user.updateMany({
-      where: {
-        id: { in: blog.likedByIds },
-      },
-      data: {
-        likedBlogIds: {
-          set: blog.likedByIds.filter((id) => id !== blog.id),
-        },
-      },
-    });
-
-    // Remove the blog from the likedBy and bookmarkedBy users
-    await db.user.updateMany({
-      where: {
-        id: { in: blog.bookmarkedByIds },
-      },
-      data: {
-        bookmarkedBlogIds: {
-          set: blog.bookmarkedByIds.filter((id) => id !== blog.id),
-        },
-      },
-    });
-
-    // Delete the comments associated with the blog
-    await db.comment.deleteMany({ where: { blogId: blog.id } });
-
-    // Remove the blog from the tags
-    for (const tagId of blog.tagIds) {
-      const tag = await db.tags.findUnique({ where: { id: tagId } });
-      if (tag) {
-        const filteredBlogIds = tag.blogIds.filter((id) => id !== blog.id);
-        await db.tags.update({
-          where: { id: tagId },
-          data: { blogIds: filteredBlogIds },
-        });
-      }
-    }
-
-    revalidatePath('/dashboard/blogs');
-    return {
-      success: 200,
-      message: 'Good job boy! You deleted the blog successfully.',
-    };
-  } catch (error) {
-    return { error: 500, message: 'Stupid! Anything Wrong in the server!' };
-  }
 };
 
 export const incrementBlogView = async (slug: string) => {

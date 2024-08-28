@@ -1,8 +1,7 @@
+import { useRouter } from 'next/navigation';
 import { Ellipsis } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { deleteComment } from '@/actions/blog/comment.action';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,34 +9,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { useComment } from '@/zustand/use-Comment';
+import { useCurrentRole } from '@/hooks/use-current-role';
+import { useDeleteBlogModal } from '@/zustand/use-delete-blog';
 
-interface CommentOptionProps {
-  commentId: string;
-  commentUserId: string;
+interface InteractionOptionProps {
+  slug: string;
 }
 
-const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
-  const { deleteInitialComment } = useComment();
-  const user = useCurrentUser();
-  const isOwner = user?.id === commentUserId;
+const InteractionOption = ({ slug }: InteractionOptionProps) => {
+  const role = useCurrentRole();
+  const router = useRouter();
+  const { onOpen, setSlug } = useDeleteBlogModal();
 
   const handleEdit = () => {
-    console.log('Edit');
+    router.push(`/dashboard/edit/${slug}`);
   };
 
   const handleDelete = async () => {
     try {
-      const status = await deleteComment({ commentId });
-      if (status?.error) {
-        toast.error(status.error);
-      } else {
-        deleteInitialComment(commentId);
-        toast.success('Comment deleted successfully');
-      }
+      setSlug(slug);
+      onOpen();
     } catch (error) {
-      toast.error('An error occurred while deleting the comment');
+      toast.error('An error occurred ');
     }
   };
 
@@ -48,12 +41,14 @@ const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button asChild variant="ghost" size="xs" className="h-5">
-          <Ellipsis size={28} />
-        </Button>
+        <Ellipsis
+          size={30}
+          strokeWidth={1.5}
+          className="cursor-pointer hover:scale-110 hover:text-green-700 hover:transition"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32 p-2 font-medium" align="end">
-        {isOwner && (
+        {role === 'ADMIN' && (
           <>
             <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -67,4 +62,4 @@ const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
   );
 };
 
-export default CommentOption;
+export default InteractionOption;

@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { useComment } from '@/hooks/zustand/use-Comment';
+import { useComment } from '@/zustand/use-Comment';
 import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';

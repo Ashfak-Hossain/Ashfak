@@ -4,7 +4,7 @@ import React from 'react';
 import { toast } from 'sonner';
 
 import MultipleSelector from '@/components/ui/multi-select';
-import { useContent } from '@/hooks/zustand/use-content';
+import { useContent } from '@/zustand/use-content';
 
 const TagSelector = ({
   initialTags,

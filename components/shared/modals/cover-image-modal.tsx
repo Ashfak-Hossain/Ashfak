@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { FileInput, FileUploader } from '@/components/ui/file-uploader';
-import { useCoverImage } from '@/hooks/zustand/use-cover-image';
+import { useCoverImage } from '@/zustand/use-cover-image';
 
 interface CoverImageModalProps {
   onFileSelect?: (file: File) => void;

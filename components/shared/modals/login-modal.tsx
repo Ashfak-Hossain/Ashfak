@@ -2,7 +2,7 @@
 
 import { LoginForm } from '@/components/auth/login-form';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useLoginModal } from '@/hooks/zustand/use-login';
+import { useLoginModal } from '@/zustand/use-login';
 
 const LoginModal = () => {
   const { isOpen, onClose } = useLoginModal();

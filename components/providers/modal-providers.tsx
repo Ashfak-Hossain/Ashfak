@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { CoverImageModal } from '@/components/shared/modals/cover-image-modal';
+import DeleteBlogModal from '@/components/shared/modals/delete-blog-modal';
 import LoginModal from '@/components/shared/modals/login-modal';
 
 export const ModalProvider = () => {
@@ -16,6 +17,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <DeleteBlogModal />
       <LoginModal />
       <CoverImageModal />
     </>

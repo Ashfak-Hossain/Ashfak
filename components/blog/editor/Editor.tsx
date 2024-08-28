@@ -29,7 +29,7 @@ import {
   suggestionItems,
 } from '@/components/blog/editor/slash-command';
 import { Separator } from '@/components/ui/separator';
-import { useContent } from '@/hooks/zustand/use-content';
+import { useContent } from '@/zustand/use-content';
 
 const extensions = [...defaultExtensions, slashCommand];
 

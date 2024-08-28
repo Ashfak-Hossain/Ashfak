@@ -8,7 +8,7 @@ import { CalendarIcon, Telescope } from 'lucide-react';
 import { getBlogBySlug } from '@/actions/blog/getBlog.action';
 import Comments from '@/components/blog/comment/comments';
 import EditorSkeleton from '@/components/blog/editor/editor-skeleton';
-import InteractionPanel from '@/components/blog/sidebar/InteractionPanel';
+import InteractionPanel from '@/components/blog/interactionPanel/InteractionPanel';
 import { Badge } from '@/components/ui/badge';
 import { CurrentUser } from '@/lib/auth';
 import { formatDate } from '@/lib/utils';
