@@ -1,4 +1,5 @@
 import { Ellipsis } from 'lucide-react';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { deleteComment } from '@/actions/blog/comment.action';
@@ -11,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { useComment } from '@/zustand/use-Comment';
+import { deleteInitialComment } from '@/redux/features/comments/commentsSlice';
 
 interface CommentOptionProps {
   commentId: string;
@@ -19,7 +20,7 @@ interface CommentOptionProps {
 }
 
 const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
-  const { deleteInitialComment } = useComment();
+  const dispatch = useDispatch();
   const user = useCurrentUser();
   const isOwner = user?.id === commentUserId;
 
@@ -29,12 +30,12 @@ const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
 
   const handleDelete = async () => {
     try {
-      const status = await deleteComment({ commentId });
-      if (status?.error) {
-        toast.error(status.error);
+      const { success, error } = await deleteComment({ commentId });
+      if (success) {
+        dispatch(deleteInitialComment(commentId));
+        toast.success(success);
       } else {
-        deleteInitialComment(commentId);
-        toast.success('Comment deleted successfully');
+        toast.error(error);
       }
     } catch (error) {
       toast.error('An error occurred while deleting the comment');

@@ -21,8 +21,9 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { useComment } from '@/zustand/use-Comment';
 import { formatDateFromNow } from '@/lib/utils';
+import { toggleLike } from '@/redux/features/comments/commentsSlice';
+import { useAppDispatch } from '@/redux/hooks';
 import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,7 +36,7 @@ interface CommentProps {
 
 const Comment = ({ comment, addReply, slug }: CommentProps) => {
   const user = useCurrentUser();
-  const { toggleLike } = useComment();
+  const dispatch = useAppDispatch();
   const [showReplyBox, setShowReplyBox] = useState(false);
 
   const form = useForm<z.infer<typeof commentSchema>>({
@@ -58,11 +59,13 @@ const Comment = ({ comment, addReply, slug }: CommentProps) => {
       toast.error('You need to be logged in to like a comment');
       return;
     }
-    const status = await togglecommentLike({ commentId: comment.id });
-    if (status?.error) {
-      toast.error(status.error);
+    const { error, success } = await togglecommentLike({
+      commentId: comment.id,
+    });
+    if (success) {
+      dispatch(toggleLike({ commentId: comment.id, userId: user.id! }));
     } else {
-      toggleLike(comment.id, user.id!);
+      toast.error(error);
     }
   };
 

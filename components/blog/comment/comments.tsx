@@ -17,8 +17,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Spinner } from '@/components/ui/spinner';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { useComment } from '@/zustand/use-Comment';
+import {
+  addComment,
+  addReply,
+  hydrateComments,
+} from '@/redux/features/comments/commentsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
 import { commentSchema } from '@/schema/validation/comment-schema';
 import { CommentModel } from '@/types/blog';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,10 +35,10 @@ interface CommentProps {
 }
 
 const Comments = ({ slug, comments, totalCommentsCount }: CommentProps) => {
-  const user = useCurrentUser();
+  const dispatch = useAppDispatch();
   const [isPending, startTransition] = useTransition();
-  const { initialComments, setInitialComments, addComment, addReply } =
-    useComment();
+  const { comments: initialComments, totalCommentsCount: storeCommentsCount } =
+    useAppSelector((state: RootState) => state.comments);
 
   const form = useForm<z.infer<typeof commentSchema>>({
     resolver: zodResolver(commentSchema),
@@ -41,52 +46,37 @@ const Comments = ({ slug, comments, totalCommentsCount }: CommentProps) => {
   });
 
   useEffect(() => {
-    setInitialComments(comments);
-  }, [comments, setInitialComments]);
+    dispatch(hydrateComments({ comments, totalCommentsCount }));
+  }, [dispatch, comments, totalCommentsCount]);
 
   const onSubmitComment = (value: z.infer<typeof commentSchema>) => {
     startTransition(async () => {
-      const status = await createComment({ slug, message: value.message });
-      if (status?.success) {
-        addComment({
-          ...status.data,
-          user: {
-            name: user?.name ?? '',
-            image: user?.image ?? '',
-            id: user?.id ?? '',
-          },
-          children: [],
-          commentLikes: [],
-        });
+      const { data, error } = await createComment({
+        slug,
+        message: value.message,
+      });
+      if (data) {
+        dispatch(addComment(data));
         form.reset();
       } else {
-        toast.error(status.error || 'Failed to post comment.');
+        toast.error(error);
       }
     });
   };
 
   const handleAddReply = async (parentId: string, message: string) => {
-    const status = await createReply({ slug, parentId, message });
-    if (status?.success) {
-      addReply({
-        ...status.data,
-        children: [],
-        commentLikes: [],
-        user: {
-          name: user?.name ?? '',
-          image: user?.image ?? '',
-          id: user?.id ?? '',
-        },
-      });
+    const { data } = await createReply({ slug, parentId, message });
+    if (data) {
+      dispatch(addReply(data));
     } else {
-      toast.error(status?.error || 'Failed to post reply.');
+      toast.error('Failed to post reply.');
     }
   };
 
   return (
     <section className="mx-auto my-12 w-full max-w-4xl">
       <h2 className="mb-6 text-lg font-bold lg:text-2xl">
-        {`Discussion (${totalCommentsCount})`}
+        {`Discussion (${storeCommentsCount})`}
       </h2>
 
       <Form {...form}>

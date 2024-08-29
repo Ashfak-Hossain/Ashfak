@@ -4,14 +4,14 @@ import { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Bookmark, MessageSquare, Zap } from 'lucide-react';
 
-// import LoginModal from '@/components/shared/modals/login-modal';
+import InteractionOption from '@/components/blog/interactionPanel/interaction-option';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { cn } from '@/lib/utils';
+import { useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
 import { useBookmark } from '@/zustand/use-bookmark';
 import { useLike } from '@/zustand/use-like';
 import { useLoginModal } from '@/zustand/use-login';
-
-import InteractionOption from './interaction-option';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -27,6 +27,9 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   totalBookmarks,
 }) => {
   const user = useCurrentUser();
+  const { totalCommentsCount } = useAppSelector(
+    (state: RootState) => state.comments
+  );
   const params = useParams();
   const slug = params.slug as string;
   const {
@@ -88,7 +91,7 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
           strokeWidth={1.5}
           className="cursor-pointer hover:scale-110 hover:text-yellow-600 hover:transition"
         />
-        <span>20</span>
+        <span>{totalCommentsCount}</span>
       </div>
 
       <div className="flex flex-col items-center gap-2">

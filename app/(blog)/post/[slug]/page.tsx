@@ -14,6 +14,8 @@ import { CurrentUser } from '@/lib/auth';
 import { formatDate } from '@/lib/utils';
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 
+import { type Comment } from '@prisma/client';
+
 const page = async ({ params: { slug } }: { params: { slug: string } }) => {
   const NovelEditor = dynamic(() => import('@/components/blog/editor/editor'), {
     ssr: false,

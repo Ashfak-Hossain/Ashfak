@@ -2,7 +2,6 @@
 
 import { CurrentUser } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { CommentModel } from '@/types/blog';
 
 export const createComment = async ({
   slug,
@@ -32,8 +31,16 @@ export const createComment = async ({
     });
 
     return {
-      success: true,
-      data: comment,
+      data: {
+        ...comment,
+        children: [],
+        commentLikes: [],
+        user: {
+          id: user?.id ?? '',
+          name: user?.name ?? '',
+          image: user?.image ?? '',
+        },
+      },
     };
   } catch (error) {
     return { error: 'Failed to create comment' };
@@ -73,7 +80,18 @@ export const createReply = async ({
       },
     });
 
-    return { success: true, data: reply };
+    return {
+      data: {
+        ...reply,
+        children: [],
+        commentLikes: [],
+        user: {
+          id: user?.id ?? '',
+          name: user?.name ?? '',
+          image: user?.image ?? '',
+        },
+      },
+    };
   } catch (error) {
     return { error: 'Failed to create reply' };
   }
@@ -97,9 +115,9 @@ export const deleteComment = async ({ commentId }: { commentId: string }) => {
 
     await deleteCommentAndChildren(commentId);
 
-    return { success: true };
+    return { success: 'Comment deleted successfully' };
   } catch (error) {
-    return { error: 'Failed to delete comment' };
+    return { error: 'Failed to delete comment !' };
   }
 };
 
@@ -140,7 +158,7 @@ export const togglecommentLike = async ({
       where: {
         userId_commentId: {
           userId: user.id!,
-          commentId: commentId,
+          commentId,
         },
       },
     });
@@ -151,7 +169,7 @@ export const togglecommentLike = async ({
         where: {
           userId_commentId: {
             userId: user.id!,
-            commentId: commentId,
+            commentId,
           },
         },
       });
@@ -160,14 +178,13 @@ export const togglecommentLike = async ({
       await db.commentLike.create({
         data: {
           userId: user.id!,
-          commentId: commentId,
+          commentId,
         },
       });
     }
 
-    return { success: true };
+    return { success: 'Comment Deleted!' };
   } catch (error) {
-    console.error('Error toggling like:', error);
     return { error: 'Failed to toggle like' };
   }
 };
