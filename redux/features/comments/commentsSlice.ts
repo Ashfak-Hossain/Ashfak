@@ -1,12 +1,19 @@
 import { CommentModel } from '@/types/blog';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface CommentsState {
+  comments: CommentModel[];
+  totalCommentsCount: number;
+}
+
+const initialState: CommentsState = {
+  comments: [],
+  totalCommentsCount: 0,
+};
+
 const commentsSlice = createSlice({
   name: 'comments',
-  initialState: {
-    comments: [] as CommentModel[],
-    totalCommentsCount: 0,
-  },
+  initialState,
   reducers: {
     hydrateComments: (
       state,

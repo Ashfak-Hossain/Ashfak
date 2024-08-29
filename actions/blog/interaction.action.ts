@@ -74,72 +74,156 @@ export const unlikePost = async ({ slug }: { slug: string }) => {
   }
 };
 
-export const bookmarkPost = async ({ slug }: { slug: string }) => {
+export const toggleZap = async ({ slug }: { slug: string }) => {
   const user = await CurrentUser();
   if (!user) {
     return;
   }
 
   try {
-    await db.user.update({
-      where: { id: user.id },
-      data: {
-        bookmarkedBlogs: {
-          connect: { slug },
-        },
-      },
-    });
-
-    const data = await db.blog.update({
+    const blog = await db.blog.findUnique({
       where: { slug },
-      data: {
-        bookmarkedBy: {
-          connect: { id: user.id },
-        },
-        bookmarks: {
-          increment: 1,
-        },
-      },
+      include: { likedBy: true },
     });
 
-    revalidatePath(`/blogs`);
-    return { bookmarkCount: data.bookmarks };
+    if (!blog) {
+      return { error: 'Blog not found' };
+    }
+
+    // Check if the user has liked the blog
+    const hasLiked = blog.likedBy.some((user) => user.id === user.id);
+
+    // If the user has liked the blog, remove the like
+    if (hasLiked) {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          likedBlogs: {
+            disconnect: { slug },
+          },
+        },
+      });
+
+      // Decrement the like count
+      const data = await db.blog.update({
+        where: { slug },
+        data: {
+          likedBy: {
+            disconnect: { id: user.id },
+          },
+          likes: {
+            decrement: 1,
+          },
+        },
+      });
+
+      revalidatePath(`/blog`);
+      return { success: 'Like removed!' };
+    } else {
+      // If the user has not liked the blog, add the like
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          likedBlogs: {
+            connect: { slug },
+          },
+        },
+      });
+
+      // Increment the like count
+      const data = await db.blog.update({
+        where: { slug },
+        data: {
+          likedBy: {
+            connect: { id: user.id },
+          },
+          likes: {
+            increment: 1,
+          },
+        },
+      });
+
+      revalidatePath(`/blog`);
+      return { success: 'Like added!' };
+    }
   } catch (error) {
-    console.error('Failed to bookmark post', error);
+    console.error('Failed to toggle like', error);
   }
 };
 
-export const unSavePost = async ({ slug }: { slug: string }) => {
+export const toggleBookmark = async ({ slug }: { slug: string }) => {
   const user = await CurrentUser();
   if (!user) {
     return;
   }
 
   try {
-    await db.user.update({
-      where: { id: user.id },
-      data: {
-        bookmarkedBlogs: {
-          disconnect: { slug },
-        },
-      },
-    });
-
-    const data = await db.blog.update({
+    const blog = await db.blog.findUnique({
       where: { slug },
-      data: {
-        bookmarkedBy: {
-          disconnect: { id: user.id },
-        },
-        bookmarks: {
-          decrement: 1,
-        },
-      },
+      include: { bookmarkedBy: true },
     });
 
-    revalidatePath(`/blogs`);
-    return { bookmarkCount: data.bookmarks };
+    if (!blog) {
+      return { error: 'Blog not found' };
+    }
+
+    // Check if the user has bookmarked the blog
+    const hasBookmarked = blog.bookmarkedBy.some((user) => user.id === user.id);
+
+    // If the user has bookmarked the blog, remove the bookmark
+    if (hasBookmarked) {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          bookmarkedBlogs: {
+            disconnect: { slug },
+          },
+        },
+      });
+
+      // Decrement the bookmark count
+      const data = await db.blog.update({
+        where: { slug },
+        data: {
+          bookmarkedBy: {
+            disconnect: { id: user.id },
+          },
+          bookmarks: {
+            decrement: 1,
+          },
+        },
+      });
+
+      revalidatePath(`/blog`);
+      return { success: 'Bookmark removed! ' };
+    } else {
+      // If the user has not bookmarked the blog, add the bookmark
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          bookmarkedBlogs: {
+            connect: { slug },
+          },
+        },
+      });
+
+      // Increment the bookmark count
+      const data = await db.blog.update({
+        where: { slug },
+        data: {
+          bookmarkedBy: {
+            connect: { id: user.id },
+          },
+          bookmarks: {
+            increment: 1,
+          },
+        },
+      });
+
+      revalidatePath(`/blog`);
+      return { success: 'Bookmark added!' };
+    }
   } catch (error) {
-    console.error('Failed to unsave post', error);
+    console.error('Failed to toggle bookmark', error);
   }
 };

@@ -7,11 +7,15 @@ import { Bookmark, MessageSquare, Zap } from 'lucide-react';
 import InteractionOption from '@/components/blog/interactionPanel/interaction-option';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { cn } from '@/lib/utils';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-import { useBookmark } from '@/zustand/use-bookmark';
-import { useLike } from '@/zustand/use-like';
 import { useLoginModal } from '@/zustand/use-login';
+import {
+  hydrateBookmark,
+  toggleStoreBookmark,
+} from '@/redux/features/bookmarks/bookmarksSlice';
+import { toggleBookmark, toggleZap } from '@/actions/blog/interaction.action';
+import { hydrateZap, toggleStoreZap } from '@/redux/features/zaps/zapsSlice';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -24,33 +28,39 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   isLiked,
   likeCount,
   isBookmarked,
-  totalBookmarks,
+  totalBookmarks: totalBookmarksProps,
 }) => {
   const user = useCurrentUser();
+  const params = useParams();
+  const slug = params.slug as string;
+
+  const dispatch = useAppDispatch();
   const { totalCommentsCount } = useAppSelector(
     (state: RootState) => state.comments
   );
-  const params = useParams();
-  const slug = params.slug as string;
-  const {
-    hasLiked,
-    toggleLike,
-    initializeLike,
-    likeCount: storeLikeCount,
-  } = useLike();
 
-  const { hasBookmarked, toggleBookmark, initializeBookmark } = useBookmark();
+  const { totalBookmarks, bookmarked } = useAppSelector(
+    (state: RootState) => state.bookmarks
+  );
+
+  const { zaped, totalZaps } = useAppSelector((state: RootState) => state.zaps);
+
   const { onOpen } = useLoginModal();
 
   useEffect(() => {
-    initializeLike(isLiked, likeCount);
-  }, [isLiked, likeCount, initializeLike]);
+    dispatch(
+      hydrateBookmark({
+        bookmarked: isBookmarked,
+        totalBookmarks: totalBookmarksProps,
+      })
+    );
+  }, [dispatch, isBookmarked, totalBookmarks]);
 
   useEffect(() => {
-    initializeBookmark(isBookmarked, totalBookmarks);
-  }, [isBookmarked, totalBookmarks, initializeBookmark]);
+    dispatch(hydrateZap({ zaped: isLiked, totalZaps: likeCount }));
+  }, [dispatch, zaped, totalZaps]);
 
-  const handleClick = ({
+  const handleClick = async ({
     type,
     slug,
   }: {
@@ -63,9 +73,11 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
     }
 
     if (type === 'like') {
-      toggleLike(slug);
+      await toggleZap({ slug });
+      dispatch(toggleStoreZap());
     } else {
-      toggleBookmark(slug);
+      await toggleBookmark({ slug });
+      dispatch(toggleStoreBookmark());
     }
   };
 
@@ -74,15 +86,15 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
       <div className="flex flex-col items-center gap-2">
         <Zap
           size={30}
-          strokeWidth={hasLiked ? 0 : 1.5}
-          fill={hasLiked ? '#f43f5e' : 'none'}
+          strokeWidth={zaped ? 0 : 1.5}
+          fill={zaped ? '#f43f5e' : 'none'}
           className={cn(
             'hover:scale-110 hover:transition cursor-pointer',
-            !hasLiked ? 'hover:text-rose-500' : ''
+            !zaped ? 'hover:text-rose-500' : ''
           )}
           onClick={() => handleClick({ type: 'like', slug })}
         />
-        <span>{storeLikeCount}</span>
+        <span>{totalZaps}</span>
       </div>
 
       <div className="flex flex-col items-center gap-2">
@@ -97,11 +109,11 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
       <div className="flex flex-col items-center gap-2">
         <Bookmark
           size={30}
-          strokeWidth={hasBookmarked ? 0 : 1.5}
-          fill={hasBookmarked ? '#4d80e6' : 'none'}
+          strokeWidth={bookmarked ? 0 : 1.5}
+          fill={bookmarked ? '#4d80e6' : 'none'}
           className={cn(
             'hover:scale-110 hover:transition cursor-pointer',
-            !hasBookmarked ? 'hover:text-mainAccent' : ''
+            !bookmarked ? 'hover:text-mainAccent' : ''
           )}
           onClick={() => handleClick({ type: 'bookmark', slug })}
         />

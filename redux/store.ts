@@ -1,10 +1,14 @@
+import bookmarksReducer from '@/redux/features/bookmarks/bookmarksSlice';
 import commentsReducer from '@/redux/features/comments/commentsSlice';
+import zapsReducer from '@/redux/features/zaps/zapsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       comments: commentsReducer,
+      bookmarks: bookmarksReducer,
+      zaps: zapsReducer,
     },
   });
 };
