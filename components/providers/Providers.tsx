@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { ModalProvider } from '@/components/providers/modal-providers';
-import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ModalProvider } from '@/components/providers/ModalProviders';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import ModeToggle from '@/components/shared/Theme-switch';
 import { Toaster } from '@/components/ui/sonner';
 import ActiveSectionContextProvider from '@/context/active-section-context';
