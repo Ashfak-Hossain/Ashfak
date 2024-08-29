@@ -14,7 +14,7 @@ export const updateBlogPriority = async (slug: string, priority: string) => {
     const blog = await db.blog.findUnique({ where: { slug } });
 
     if (!blog) {
-      return { error: 404, message: 'Blog not found' };
+      return { error: 'Blog not found' };
     }
 
     await db.blog.update({
@@ -24,10 +24,9 @@ export const updateBlogPriority = async (slug: string, priority: string) => {
       },
     });
 
-    revalidatePath('/');
-    return { success: 200, message: 'Blog priority updated' };
+    return { success: 'Good job! Priority updated successfully.' };
   } catch (error) {
-    return { error: 500, message: 'Failed to update blog priority' };
+    return { error: 'Failed to update blog priority' };
   }
 };
 
@@ -38,9 +37,7 @@ export const updateBlogStatus = async (slug: string, status: string) => {
   try {
     const blog = await db.blog.findUnique({ where: { slug } });
 
-    if (!blog) {
-      return { error: 404, message: 'Blog not found' };
-    }
+    if (!blog) return { error: 'Blog not found' };
 
     await db.blog.update({
       where: { slug },
@@ -49,9 +46,8 @@ export const updateBlogStatus = async (slug: string, status: string) => {
       },
     });
 
-    revalidatePath('/');
-    return { success: 200, message: 'Blog status updated' };
+    return { success: 'Good job boy! You updated the status' };
   } catch (error) {
-    return { error: 500, message: 'Failed to update blog status' };
+    return { error: 'Failed to update blog status' };
   }
 };

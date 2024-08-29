@@ -26,9 +26,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 interface CommentProps {
   slug: string;
   comments: CommentModel[];
+  totalCommentsCount: number;
 }
 
-const Comments = ({ slug, comments }: CommentProps) => {
+const Comments = ({ slug, comments, totalCommentsCount }: CommentProps) => {
   const user = useCurrentUser();
   const [isPending, startTransition] = useTransition();
   const { initialComments, setInitialComments, addComment, addReply } =
@@ -85,7 +86,7 @@ const Comments = ({ slug, comments }: CommentProps) => {
   return (
     <section className="mx-auto my-12 w-full max-w-4xl">
       <h2 className="mb-6 text-lg font-bold lg:text-2xl">
-        {`Discussion (${initialComments.length})`}
+        {`Discussion (${totalCommentsCount})`}
       </h2>
 
       <Form {...form}>

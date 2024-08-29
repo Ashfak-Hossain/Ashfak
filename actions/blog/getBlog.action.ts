@@ -120,5 +120,6 @@ export const getBlogBySlug = async (slug: string) => {
     ...blog,
     coverImage: signedCoverImageUrl,
     comments,
+    totalCommentsCount: blog.comments.length,
   };
 };

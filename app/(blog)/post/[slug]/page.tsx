@@ -40,6 +40,7 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
     likes,
     bookmarks,
     comments,
+    totalCommentsCount,
   } = blog;
 
   return (
@@ -101,7 +102,11 @@ const page = async ({ params: { slug } }: { params: { slug: string } }) => {
       </div>
 
       <Suspense fallback={<div>Loading</div>}>
-        <Comments slug={slug} comments={comments} />
+        <Comments
+          slug={slug}
+          comments={comments}
+          totalCommentsCount={totalCommentsCount}
+        />
       </Suspense>
     </section>
   );

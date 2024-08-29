@@ -3,10 +3,10 @@ import { CurrentUser } from '@/lib/auth';
 export const checkAdmin = async () => {
   const user = await CurrentUser();
   if (!user || user.role !== 'ADMIN') {
-    return { error: 401, message: 'Unauthorized' };
+    return { error: 'Unauthorized' };
   }
 
-  return { success: 202, message: 'Authorized' };
+  return { success: 'Authorized' };
 };
 
 // Utility function to extract all image URLs from the content

@@ -42,12 +42,8 @@ export function DataTableRowActions<TData>({
 
   const handlePriorityChange = async (newPriority: string) => {
     try {
-      const status = await updateBlogPriority(slug, newPriority);
-      if (status.success) {
-        toast.success('Good job! Priority updated successfully.');
-      } else if (status.error) {
-        toast.error(status.message);
-      }
+      const { success, error } = await updateBlogPriority(slug, newPriority);
+      success ? toast.success(success) : toast.error(error);
     } catch (error) {
       toast.error("Oops! Couldn't update priority.");
     }
@@ -55,15 +51,10 @@ export function DataTableRowActions<TData>({
 
   const handleStatusChange = async (newStatus: string) => {
     try {
-      const status = await updateBlogStatus(slug, newStatus);
-
-      if (status.success) {
-        toast.success('Good job! Status updated successfully.');
-      } else if (status.error) {
-        toast.error(status.message);
-      }
+      const { success, error } = await updateBlogStatus(slug, newStatus);
+      success ? toast.success(success) : toast.error(error);
     } catch (error) {
-      toast.error("Oops! Couldn't update status.");
+      toast.error("Stupid! Couldn't update status.");
     }
   };
 
