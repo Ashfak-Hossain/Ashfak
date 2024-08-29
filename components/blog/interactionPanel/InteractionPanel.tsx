@@ -3,19 +3,20 @@
 import { FC, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { Bookmark, MessageSquare, Zap } from 'lucide-react';
+import { toast } from 'sonner';
 
+import { toggleBookmark, toggleZap } from '@/actions/blog/interaction.action';
 import InteractionOption from '@/components/blog/interactionPanel/interaction-option';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { cn } from '@/lib/utils';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { RootState } from '@/redux/store';
-import { useLoginModal } from '@/zustand/use-login';
 import {
   hydrateBookmark,
   toggleStoreBookmark,
 } from '@/redux/features/bookmarks/bookmarksSlice';
-import { toggleBookmark, toggleZap } from '@/actions/blog/interaction.action';
 import { hydrateZap, toggleStoreZap } from '@/redux/features/zaps/zapsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import { useLoginModal } from '@/zustand/use-login';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -54,11 +55,11 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
         totalBookmarks: totalBookmarksProps,
       })
     );
-  }, [dispatch, isBookmarked, totalBookmarks]);
+  }, [dispatch, isBookmarked, totalBookmarks, totalBookmarksProps]);
 
   useEffect(() => {
     dispatch(hydrateZap({ zaped: isLiked, totalZaps: likeCount }));
-  }, [dispatch, zaped, totalZaps]);
+  }, [dispatch, zaped, totalZaps, isLiked, likeCount]);
 
   const handleClick = async ({
     type,
@@ -72,12 +73,16 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
       return;
     }
 
-    if (type === 'like') {
-      await toggleZap({ slug });
-      dispatch(toggleStoreZap());
-    } else {
-      await toggleBookmark({ slug });
-      dispatch(toggleStoreBookmark());
+    try {
+      if (type === 'like') {
+        await toggleZap({ slug });
+        dispatch(toggleStoreZap());
+      } else {
+        await toggleBookmark({ slug });
+        dispatch(toggleStoreBookmark());
+      }
+    } catch (error) {
+      toast.error('Something went wrong. Please try again later');
     }
   };
 

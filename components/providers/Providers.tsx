@@ -3,13 +3,13 @@
 import React from 'react';
 
 import { ModalProvider } from '@/components/providers/ModalProviders';
+import { StoreProvider } from '@/components/providers/StoreProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import ModeToggle from '@/components/shared/Theme-switch';
 import { Toaster } from '@/components/ui/sonner';
 import ActiveSectionContextProvider from '@/context/active-section-context';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { StoreProvider } from '@/components/providers/StoreProvider';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

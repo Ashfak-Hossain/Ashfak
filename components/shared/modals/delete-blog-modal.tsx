@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
+import { deleteBlogbySlug } from '@/actions/blog/delete-blog.action';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +13,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteBlogModal } from '@/zustand/use-delete-blog';
-import { deleteBlogbySlug } from '@/actions/blog/delete-blog.action';
 
 const DeleteBlogModal = () => {
   const { isOpen, onClose, slug } = useDeleteBlogModal();

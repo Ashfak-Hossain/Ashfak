@@ -1,12 +1,13 @@
 'use client';
 
-import { AppStore, makeStore } from '@/redux/store';
-import { useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 // import { setupListeners } from '@reduxjs/toolkit/query';
 import { Provider } from 'react-redux';
 
+import { AppStore, makeStore } from '@/redux/store';
+
 interface StoreProviderProps {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
 }
 
 export const StoreProvider = ({ children }: StoreProviderProps) => {
