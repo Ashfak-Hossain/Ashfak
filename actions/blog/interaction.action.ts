@@ -1,8 +1,9 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 import { CurrentUser } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { revalidatePath } from 'next/cache';
 
 export const likePost = async ({ slug }: { slug: string }) => {
   const user = await CurrentUser();

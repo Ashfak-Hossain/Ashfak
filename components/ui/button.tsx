@@ -19,6 +19,7 @@ const buttonVariants = cva(
           'border-2 border-border bg-main hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-light dark:border-darkBorder dark:hover:shadow-dark',
         ghost:
           'border-none bg-transparent/0 text-primary hover:bg-transparent/10 dark:text-primary dark:hover:bg-transparent/30',
+        icon: 'border-none bg-transparent/0 text-text dark:text-darkText',
       },
       size: {
         default: 'h-10 px-4 py-2',

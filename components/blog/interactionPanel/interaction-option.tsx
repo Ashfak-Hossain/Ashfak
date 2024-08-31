@@ -1,4 +1,7 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { Ellipsis } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -44,11 +47,13 @@ const InteractionOption = ({ slug }: InteractionOptionProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Ellipsis
-          size={30}
-          strokeWidth={1.5}
-          className="cursor-pointer hover:scale-110 hover:text-green-700 hover:transition"
-        />
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Ellipsis
+            size={30}
+            strokeWidth={1.5}
+            className="cursor-pointer hover:scale-110 hover:text-green-700 hover:transition"
+          />
+        </motion.div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32 p-2 font-medium" align="end">
         {role === 'ADMIN' && (

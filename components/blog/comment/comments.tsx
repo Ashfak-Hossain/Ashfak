@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useTransition } from 'react';
+import { Suspense, useEffect, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -74,48 +74,51 @@ const Comments = ({ slug, comments, totalCommentsCount }: CommentProps) => {
   };
 
   return (
-    <section className="mx-auto my-12 w-full max-w-4xl">
+    <section id="comments" className="mx-auto my-12 w-full max-w-4xl">
       <h2 className="mb-6 text-lg font-bold lg:text-2xl">
         {`Discussion (${storeCommentsCount})`}
       </h2>
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmitComment)}
-          className="mb-6 space-y-8"
-        >
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <AutosizeTextarea
-                    {...field}
-                    disabled={isPending}
-                    className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:placeholder:text-gray-300"
-                    placeholder="Write a comment..."
-                    minHeight={140}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            className="px-4 py-2.5 text-xs font-medium"
-            disabled={isPending}
+      <Suspense fallback={<Spinner size="large" />}>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmitComment)}
+            className="mb-6 space-y-8"
           >
-            <Spinner
-              size="small"
-              className="mr-2 text-black"
-              show={isPending}
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AutosizeTextarea
+                      {...field}
+                      disabled={isPending}
+                      className="border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:placeholder:text-gray-300"
+                      placeholder="Write a comment..."
+                      minHeight={140}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            Post comment
-          </Button>
-        </form>
-      </Form>
+
+            <Button
+              type="submit"
+              className="px-4 py-2.5 text-xs font-medium"
+              disabled={isPending}
+            >
+              <Spinner
+                size="small"
+                className="mr-2 text-black"
+                show={isPending}
+              />
+              Post comment
+            </Button>
+          </form>
+        </Form>
+      </Suspense>
 
       <div>
         {initialComments.map((comment: any) => (
