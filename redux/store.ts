@@ -1,5 +1,7 @@
 import bookmarksReducer from '@/redux/features/bookmarks/bookmarksSlice';
 import commentsReducer from '@/redux/features/comments/commentsSlice';
+import modalsReducer from '@/redux/features/modals/modalsSlice';
+import postsReducer from '@/redux/features/posts/postsSlice';
 import zapsReducer from '@/redux/features/zaps/zapsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -9,6 +11,8 @@ export const makeStore = () => {
       comments: commentsReducer,
       bookmarks: bookmarksReducer,
       zaps: zapsReducer,
+      modals: modalsReducer,
+      posts: postsReducer,
     },
   });
 };

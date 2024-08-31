@@ -4,14 +4,12 @@ import React from 'react';
 import { toast } from 'sonner';
 
 import MultipleSelector from '@/components/ui/multi-select';
-import { useContent } from '@/zustand/use-content';
+import { setTags } from '@/redux/features/posts/postsSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import { Tag } from '@/types/blog';
 
-const TagSelector = ({
-  initialTags,
-}: {
-  initialTags: { value: string; label: string }[];
-}) => {
-  const { setTags } = useContent();
+const TagSelector = ({ initialTags }: { initialTags: Tag[] }) => {
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -20,7 +18,7 @@ const TagSelector = ({
         onMaxSelected={(maxLimit) => {
           toast.error(`You have reached max selected: ${maxLimit}`);
         }}
-        onChange={(tags) => setTags(tags)}
+        onChange={(tags) => dispatch(setTags(tags))}
         creatable
         defaultOptions={initialTags}
         placeholder="Select Tags (Max 3)"

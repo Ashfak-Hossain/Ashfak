@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -12,29 +13,37 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useDeleteBlogModal } from '@/zustand/use-delete-blog';
+import { closeDeleteBlogModal } from '@/redux/features/modals/modalsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const DeleteBlogModal = () => {
-  const { isOpen, onClose, slug } = useDeleteBlogModal();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { isOpen, slug } = useAppSelector(
+    (state) => state.modals.deleteBlogModal
+  );
+
+  const handleOpenChange = () => {
+    dispatch(closeDeleteBlogModal());
+  };
 
   const handleClick = async () => {
-    toast.promise(
-      deleteBlogbySlug(slug)
-        .then(() => {
-          router.push('/blog');
-        })
-        .catch(() => {}),
-      {
-        loading: 'Deleting blog...',
-        success: 'Blog deleted successfully.',
-        error: "Oops! Couldn't delete blog.",
+    try {
+      const { success, error } = await deleteBlogbySlug(slug);
+      if (success) {
+        toast.success('Blog deleted successfully');
+        revalidatePath('/blog');
+        router.push('/blog');
+      } else {
+        toast.error(error);
       }
-    );
+    } catch (error) {
+      toast.error('An error occurred');
+    }
   };
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={onClose}>
+    <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-lg font-bold text-red-500">

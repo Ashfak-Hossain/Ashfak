@@ -35,3 +35,5 @@ export interface CommentModel {
   user: { name: string | null; image: string | null; id: string };
   children: CommentModel[];
 }
+
+export type Tag = { value: string; label: string };

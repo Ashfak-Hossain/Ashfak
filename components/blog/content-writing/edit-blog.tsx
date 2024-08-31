@@ -4,21 +4,18 @@ import { FC, useTransition } from 'react';
 import { toast } from 'sonner';
 
 import { updateBlogContent } from '@/actions/blog/blog.action';
+import NovelEditorWrapper from '@/components/blog/content-writing/NovelEditorWrapper';
 import Cover from '@/components/blog/shared/Cover';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { useContent } from '@/zustand/use-content';
-
-import NovelEditorWrapper from './NovelEditorWrapper';
+import { useAppSelector } from '@/redux/hooks';
+import { Tag } from '@/types/blog';
 
 interface EditBlogProps {
   blogData: {
     slug: string;
     title: string;
-    tags: {
-      label: string;
-      value: string;
-    }[];
+    tags: Tag[];
     content: string;
     coverImage: string;
     coverImageName: string;
@@ -36,17 +33,17 @@ const EditBlog: FC<EditBlogProps> = ({
   },
 }) => {
   const [isPending, startTransition] = useTransition();
-  const { content } = useContent();
+  const content = useAppSelector((state) => state.posts.content);
 
   const handleClick = async () => {
     startTransition(async () => {
-      const result = await updateBlogContent(slug, content);
-      if (result.success) {
+      const { success, error } = await updateBlogContent(slug, content);
+      if (success) {
         toast.success('Blog updated successfully');
         localStorage.removeItem('novel-content');
         localStorage.removeItem('html-content');
       } else {
-        toast.error('Failed to update blog');
+        toast.error(error);
       }
     });
   };

@@ -1,17 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { FileInput, FileUploader } from '@/components/ui/file-uploader';
-import { useCoverImage } from '@/zustand/use-cover-image';
+import {
+  closeCoverImageModal,
+  setCoverImageFile,
+} from '@/redux/features/posts/postsSlice';
+import { RootState } from '@/redux/store';
 
 interface CoverImageModalProps {
   onFileSelect?: (file: File) => void;
 }
 
 export const CoverImageModal: React.FC<CoverImageModalProps> = () => {
-  const coverImage = useCoverImage();
+  const dispatch = useDispatch();
+  const coverImage = useSelector((state: RootState) => state.posts.coverImage);
 
   const [cover, setCover] = useState<File[] | null>(null);
 
@@ -23,19 +29,19 @@ export const CoverImageModal: React.FC<CoverImageModalProps> = () => {
 
   const onClose = () => {
     setCover(null);
-    coverImage.onClose();
+    dispatch(closeCoverImageModal());
   };
 
   const onValueChange = (img: File[] | null) => {
-    const selectdImg = img ? img[0] : null;
-    if (selectdImg) {
-      coverImage.onReplace(selectdImg);
+    const selectedImg = img ? img[0] : null;
+    if (selectedImg) {
+      dispatch(setCoverImageFile(selectedImg));
       onClose();
     }
   };
 
   return (
-    <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
+    <Dialog open={coverImage.isOpen} onOpenChange={onClose}>
       <DialogContent aria-describedby="cover_image_selection">
         <DialogHeader>
           <h2 className="text-center text-lg font-semibold">Cover Image</h2>

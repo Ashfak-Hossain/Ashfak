@@ -29,7 +29,8 @@ import {
   suggestionItems,
 } from '@/components/blog/editor/slash-command';
 import { Separator } from '@/components/ui/separator';
-import { useContent } from '@/zustand/use-content';
+import { setContent } from '@/redux/features/posts/postsSlice';
+import { useAppDispatch } from '@/redux/hooks';
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -42,7 +43,7 @@ const NovelEditor = ({
   initialContent: propInitialContent,
   editable = true,
 }: NovelEditorProps) => {
-  const { setContent } = useContent();
+  const dispatch = useAppDispatch();
   const [initialContent, setInitialContent] = useState<JSONContent | undefined>(
     undefined
   );
@@ -67,7 +68,7 @@ const NovelEditor = ({
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
       const json = editor.getJSON();
-      setContent(JSON.stringify(json));
+      dispatch(setContent(JSON.stringify(json)));
       setCharsCount(editor.storage.characterCount.words());
       window.localStorage.setItem(
         'html-content',

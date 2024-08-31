@@ -13,10 +13,10 @@ import {
   hydrateBookmark,
   toggleStoreBookmark,
 } from '@/redux/features/bookmarks/bookmarksSlice';
+import { openLoginModal } from '@/redux/features/modals/modalsSlice';
 import { hydrateZap, toggleStoreZap } from '@/redux/features/zaps/zapsSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { RootState } from '@/redux/store';
-import { useLoginModal } from '@/zustand/use-login';
 
 interface InteractionPanelProps {
   isLiked: boolean;
@@ -36,6 +36,7 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   const slug = params.slug as string;
 
   const dispatch = useAppDispatch();
+
   const { totalCommentsCount } = useAppSelector(
     (state: RootState) => state.comments
   );
@@ -45,8 +46,6 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
   );
 
   const { zaped, totalZaps } = useAppSelector((state: RootState) => state.zaps);
-
-  const { onOpen } = useLoginModal();
 
   useEffect(() => {
     dispatch(
@@ -69,7 +68,7 @@ const InteractionPanel: FC<InteractionPanelProps> = ({
     slug: string;
   }) => {
     if (!user) {
-      onOpen();
+      dispatch(openLoginModal());
       return;
     }
 

@@ -1,14 +1,15 @@
 'use server';
 
-import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+
 import { deleteFileFromS3 } from '@/actions/aws';
+import { deleteComment } from '@/actions/blog/comment.action';
 import {
   checkAdmin,
   extractImageNameFromUrl,
   extractImageUrlsFromContent,
 } from '@/actions/utils.action';
-import { deleteComment } from '@/actions/blog/comment.action';
+import { db } from '@/lib/db';
 
 const BLOG_COVER_IMAGE_PATH = 'blog_cover_image';
 const BLOG_CONTENT_IMAGE_PATH = 'blog_body_files';
@@ -118,7 +119,6 @@ export const deleteBlogbySlug = async (slug: string) => {
       success: 'Blog deleted successfully.',
     };
   } catch (error) {
-    console.error('Error deleting blog:', error);
     return {
       error: 'An error occurred while deleting the blog. Please try again.',
     };

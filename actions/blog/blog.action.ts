@@ -193,9 +193,9 @@ export const updateBlogContent = async (slug: string, content: string) => {
       },
     });
 
-    return { success: true };
+    return { success: 'Blog updated successfully' };
   } catch (error) {
-    return { error: ERROR_MESSAGES.UPDATE_FAILED };
+    return { error: 'Failed to update blog!' };
   }
 };
 
@@ -228,7 +228,7 @@ export const updateBlogCover = async ({
     });
 
     revalidatePath(`/dashboard/edit/${slug}`);
-    return { success: true };
+    return { success: 'Image upadted successfully' };
   } catch (error) {
     return { error: ERROR_MESSAGES.UPDATE_FAILED };
   }

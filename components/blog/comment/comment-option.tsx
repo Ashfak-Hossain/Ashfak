@@ -1,5 +1,4 @@
 import { Ellipsis } from 'lucide-react';
-import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { deleteComment } from '@/actions/blog/comment.action';
@@ -13,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { deleteInitialComment } from '@/redux/features/comments/commentsSlice';
+import { useAppDispatch } from '@/redux/hooks';
 
 interface CommentOptionProps {
   commentId: string;
@@ -20,7 +20,7 @@ interface CommentOptionProps {
 }
 
 const CommentOption = ({ commentId, commentUserId }: CommentOptionProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useCurrentUser();
   const isOwner = user?.id === commentUserId;
 

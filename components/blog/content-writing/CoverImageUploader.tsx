@@ -6,10 +6,24 @@ import { ImageIcon, Undo2Icon } from 'lucide-react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
-import { useCoverImage } from '@/zustand/use-cover-image';
+import {
+  openCoverImageModal,
+  resetCoverImage,
+} from '@/redux/features/posts/postsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const CoverImageUploader = () => {
-  const { file, onOpen, onReset } = useCoverImage();
+  const dispatch = useAppDispatch();
+  const file = useAppSelector((state) => state.posts.coverImage.file);
+
+  const handleClick = (type: 'select' | 'remove') => {
+    if (type === 'select') {
+      dispatch(openCoverImageModal());
+    }
+    if (type === 'remove') {
+      dispatch(resetCoverImage());
+    }
+  };
 
   const memoizedImage = useMemo(() => {
     if (file) {
@@ -33,12 +47,12 @@ const CoverImageUploader = () => {
     <div className="flex flex-col gap-y-3">
       {memoizedImage}
       <div className="flex space-x-3 py-2">
-        <Button onClick={onOpen} className="p-2">
+        <Button onClick={() => handleClick('select')} className="p-2">
           <ImageIcon className="mr-2 size-4" />
           Select Cover
         </Button>
         {file && (
-          <Button onClick={onReset} className="p-2">
+          <Button onClick={() => handleClick('remove')} className="p-2">
             <Undo2Icon className="mr-2 size-4" />
             Remove
           </Button>

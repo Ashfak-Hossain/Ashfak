@@ -10,7 +10,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useCurrentRole } from '@/hooks/use-current-role';
-import { useDeleteBlogModal } from '@/zustand/use-delete-blog';
+import {
+  openDeleteBlogModal,
+  setSlug,
+} from '@/redux/features/modals/modalsSlice';
+import { useAppDispatch } from '@/redux/hooks';
 
 interface InteractionOptionProps {
   slug: string;
@@ -19,7 +23,7 @@ interface InteractionOptionProps {
 const InteractionOption = ({ slug }: InteractionOptionProps) => {
   const role = useCurrentRole();
   const router = useRouter();
-  const { onOpen, setSlug } = useDeleteBlogModal();
+  const dispatch = useAppDispatch();
 
   const handleEdit = () => {
     router.push(`/dashboard/edit/${slug}`);
@@ -27,8 +31,7 @@ const InteractionOption = ({ slug }: InteractionOptionProps) => {
 
   const handleDelete = async () => {
     try {
-      setSlug(slug);
-      onOpen();
+      dispatch(openDeleteBlogModal(), setSlug(slug));
     } catch (error) {
       toast.error('An error occurred ');
     }

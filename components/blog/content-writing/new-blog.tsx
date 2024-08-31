@@ -12,18 +12,20 @@ import TitleInput from '@/components/blog/content-writing/TitleInput';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { readFileAsBase64 } from '@/lib/utils';
-import { useContent } from '@/zustand/use-content';
-import { useCoverImage } from '@/zustand/use-cover-image';
+import { resetCoverImage } from '@/redux/features/posts/postsSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { Tag } from '@/types/blog';
 
-const NewBlog = ({
-  initialTags,
-}: {
-  initialTags: { value: string; label: string }[];
-}) => {
+const NewBlog = ({ initialTags }: { initialTags: Tag[] }) => {
   const router = useRouter();
-  const { file, onReset } = useCoverImage();
+  const dispatch = useAppDispatch();
+  const {
+    title,
+    tags,
+    content,
+    coverImage: { file },
+  } = useAppSelector((state) => state.posts);
   const [isPending, startTransition] = useTransition();
-  const { title, content, tags } = useContent();
 
   const handleClick = async () => {
     if (!file) {
@@ -47,7 +49,7 @@ const NewBlog = ({
         if (success) {
           toast.success('You did it! You wrote another great blog');
           router.push('/dashboard/blogs');
-          onReset();
+          dispatch(resetCoverImage());
           localStorage.removeItem('novel-content');
         } else {
           toast.error(message);
