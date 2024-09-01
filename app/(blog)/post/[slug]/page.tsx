@@ -14,7 +14,7 @@ import { CurrentUser } from '@/lib/auth';
 import { formatDate } from '@/lib/utils';
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 
-const NovelEditor = dynamic(() => import('@/components/blog/editor/editor'), {
+const NovelEditor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
   loading: () => <EditorSkeleton />,
 });
