@@ -24,7 +24,7 @@
     "@aws-sdk/cloudfront-signer": "^3.621.0",
     "@aws-sdk/s3-request-presigner": "^3.627.0",
     "@hookform/resolvers": "^3.7.0",
-    "@prisma/client": "^5.18.0",
+    "@prisma/client": "^5.19.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -104,7 +104,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "postcss": "^8",
-    "prisma": "^5.18.0",
+    "prisma": "^5.19.0",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
