@@ -40,7 +40,7 @@ export const uploadFileToS3 = async (
   //   .toBuffer();
 
   const params: PutObjectCommandInput = {
-    Bucket: process.env.AWS_S3_BUCKET as string,
+    Bucket: process.env.EAWS_S3_BUCKET as string,
     Key: path ? `${path}/${fileName}` : fileName,
     Body: buffer,
     ContentType: contentType,
@@ -70,7 +70,7 @@ export const replaceFileToS3 = async (
   const buffer = Buffer.from(base64File, 'base64');
 
   const params: PutObjectCommandInput = {
-    Bucket: process.env.AWS_S3_BUCKET as string,
+    Bucket: process.env.EAWS_S3_BUCKET as string,
     Key: path ? `${path}/${fileName}` : fileName,
     Body: buffer,
     ContentType: contentType,
@@ -92,7 +92,7 @@ export const replaceFileToS3 = async (
  */
 export const deleteFileFromS3 = async (fileName: string, path?: string) => {
   const params = {
-    Bucket: process.env.AWS_S3_BUCKET as string,
+    Bucket: process.env.EAWS_S3_BUCKET as string,
     Key: path ? `${path}/${fileName}` : fileName,
   };
 

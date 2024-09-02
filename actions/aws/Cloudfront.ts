@@ -13,8 +13,8 @@ export const getSignedCloudfrontUrl = async (
       ? `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}/${path}/${imageName}`
       : `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}/${imageName}`,
     dateLessThan: new Date(Date.now() + 1000 * 60 * 60).toString(), // 1 hour
-    privateKey: process.env.AWS_CLOUDFRONT_PRIVATE_KEY as string,
-    keyPairId: process.env.AWS_CLOUDFRONT_KEY_PAIR_ID as string,
+    privateKey: process.env.EAWS_CLOUDFRONT_PRIVATE_KEY as string,
+    keyPairId: process.env.EAWS_CLOUDFRONT_KEY_PAIR_ID as string,
   });
 
   return url;
@@ -22,7 +22,7 @@ export const getSignedCloudfrontUrl = async (
 
 export const invalidateCloudfront = async (path: string) => {
   const params = {
-    DistributionId: process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID as string,
+    DistributionId: process.env.EAWS_CLOUDFRONT_DISTRIBUTION_ID as string,
     InvalidationBatch: {
       CallerReference: new Date().toISOString(),
       Paths: {
