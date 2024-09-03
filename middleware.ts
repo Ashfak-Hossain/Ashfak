@@ -22,6 +22,7 @@ export default auth((req): any => {
     } else if (route.includes(':slug')) {
       return true;
     }
+    return false;
   });
 
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
