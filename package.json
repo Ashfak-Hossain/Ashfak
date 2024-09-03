@@ -8,7 +8,7 @@
   "homepage": "https://www.ashfak.me/",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start"
